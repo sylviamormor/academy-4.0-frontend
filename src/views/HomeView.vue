@@ -13,7 +13,8 @@ import { RouterLink } from "vue-router";
       <div class="links">
         <RouterLink class="link1" to="/dashboard">Home</RouterLink>
         <RouterLink class="link1" to="/admin/dashboard">Sign in</RouterLink>
-        <RouterLink class="btn" to="/admin/dashboard">Register Now</RouterLink>
+        <RouterLink class="btn" to="/application">Register Now</RouterLink>
+        
       </div>
     </div>
     <div class="sectionTwo">
@@ -135,7 +136,7 @@ main {
 
 }
 
-.headerImage {}
+.headerImage 
 
 hr {
   width: 34px;
