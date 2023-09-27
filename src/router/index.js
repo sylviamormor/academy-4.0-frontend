@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import UserDashboardLayout from "../layouts/UserDashboardLayout.vue";
+import ApplicationView from "../views/ApplicationView.vue"
+import AssessmentView from "../views/AssessmentView.vue"
 import UserDashboardView from "../views/users/UserDashboardView.vue"
 import QuestionView from "../views/users/QuestionView.vue"
 import SignUpView from "../views/SignUpView.vue";
@@ -19,6 +21,17 @@ const router = createRouter({
       path: "/signin",
       name: "sign in",
       component: HomeView, //change path name
+    },
+    {
+      path: "/application",
+      name: "application",
+      component: ApplicationView,
+    },
+
+    {
+      path: "/assessment",
+      name: "assessment",
+      component: AssessmentView
     },
     
     /*

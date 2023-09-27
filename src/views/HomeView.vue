@@ -136,7 +136,6 @@ main {
 }
 
 
-
 hr {
   width: 34px;
   height: 2px;
