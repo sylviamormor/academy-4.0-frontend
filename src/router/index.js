@@ -3,6 +3,8 @@ import HomeView from "../views/HomeView.vue";
 import UserDashboardLayout from "../layouts/UserDashboardLayout.vue";
 import ApplicationView from "../views/ApplicationView.vue"
 import AssessmentView from "../views/AssessmentView.vue"
+import SignUpView from "../views/SignUpView.vue";
+import LogInView from  "../views/LogInView.vue"
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -32,6 +34,22 @@ const router = createRouter({
     /*
      * USER ROUTES
      */
+
+
+    {
+      path: "/SignUp",
+      name: "SignUp",
+      component: SignUpView,
+    },
+    
+
+    {
+      path: "/LogIn",
+      name: "LogIn",
+      component: LogInView,
+    },
+  
+
     {
       path: "/",
       component: UserDashboardLayout,
