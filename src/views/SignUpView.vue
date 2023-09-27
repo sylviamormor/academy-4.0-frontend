@@ -1,8 +1,8 @@
 <script setup>
 import ButtonComponent from '../components/ButtonComponent.vue';
 import { ref } from 'vue';
-import { faEye } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+// import { faEye } from '@fortawesome/free-solid-svg-icons';
+// import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 const showPassword = ref(false);
 function togglePasswordVisibility(text) {

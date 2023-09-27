@@ -11,9 +11,9 @@ import { RouterLink } from "vue-router";
         <img src="../assets/icons/enyatalogo.png" alt="logo">
       </div>
       <div class="links">
-        <RouterLink class="link1" to="/dashboard">Home</RouterLink>
-        <RouterLink class="link1" to="/admin/dashboard">Sign in</RouterLink>
-        <RouterLink class="btn" to="/admin/dashboard">Register Now</RouterLink>
+        <RouterLink class="link1" to="/">Home</RouterLink>
+        <RouterLink class="link1" to="/LogIn">Sign in</RouterLink>
+        <RouterLink class="btn" to="/SignUp">Register Now</RouterLink>
       </div>
     </div>
     <div class="sectionTwo">
@@ -23,7 +23,7 @@ import { RouterLink } from "vue-router";
             Becoming a Software 
             <span>Engineer?</span></h3>
           <p>Join enyata academy today and bring your long awaiting dream to reality.</p>
-          <RouterLink class="btn2" to="/admin/dashboard">Register Now</RouterLink>
+          <RouterLink class="btn2" to="/SignUp">Register Now</RouterLink>
         </div>
         <img src="../assets/icons/Group 21.png" alt="">
       </div>
@@ -135,7 +135,7 @@ main {
 
 }
 
-.headerImage {}
+
 
 hr {
   width: 34px;
