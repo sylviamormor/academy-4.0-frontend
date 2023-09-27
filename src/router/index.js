@@ -38,11 +38,6 @@ const router = createRouter({
   
 
     {
-      path: "/UserDashboard",
-      name: "UserDashboard",
-      component: UserDashboardView,
-    },
-    {
       path: "/",
       component: UserDashboardLayout,
       children: [
