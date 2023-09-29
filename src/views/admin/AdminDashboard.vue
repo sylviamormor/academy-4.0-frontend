@@ -1,11 +1,12 @@
 <script setup>
-
+import DashboardHeader from '../components/DashboardHeaderComponent.vue';
 </script>
 
 <template>
-<div>
-    <form action=""></form>
-</div>
+<section>
+<DashboardHeader/>
+</section>
+
 
 </template>
 
