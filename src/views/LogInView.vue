@@ -138,5 +138,6 @@ text-decoration-line: underline;
     display: flex;
     justify-content: center;
     align-items: center;
+    
 }
 </style>

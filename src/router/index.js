@@ -1,8 +1,10 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import UserDashboardLayout from "../layouts/UserDashboardLayout.vue";
-import ApplicationView from "../views/ApplicationView.vue";
-import AssessmentView from "../views/AssessmentView.vue";
+import ApplicationView from "../views/ApplicationView.vue"
+import AssessmentView from "../views/AssessmentView.vue"
+import UserDashboardView from "../views/users/UserDashboardView.vue"
+import QuestionView from "../views/users/QuestionView.vue"
 import SignUpView from "../views/SignUpView.vue";
 import LogInView from "../views/LogInView.vue";
 // admin
@@ -54,11 +56,16 @@ const router = createRouter({
       component: UserDashboardLayout,
       children: [
         {
-          path: "dashboard",
+          path: "/dashboard",
+          name: "dashboard",
+          component: UserDashboardView,
         },
         {
-          path: "assessment",
+          path: "/question",
+          name: "question",
+          component: QuestionView,
         },
+       
       ],
     },
     /*

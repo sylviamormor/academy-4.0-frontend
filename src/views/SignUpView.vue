@@ -5,9 +5,8 @@ import { ref } from 'vue';
 // import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 const showPassword = ref(false);
-function togglePasswordVisibility(text) {
+function togglePasswordVisibility() {
       showPassword.value = !showPassword.value;
-      return ;
     }
 </script>
 
