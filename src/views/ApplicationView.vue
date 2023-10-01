@@ -1,11 +1,32 @@
 <script setup>
 import { ref } from 'vue';
+import axios from 'axios'
 
+const userInfo = ref({
+firstName: '',
+lastName: '',
+emailAddress: '',
+dateOfBirth: '',
+address: "",
+university: '',
+course: '',
+cgpa: '',
+cv: null,
+photo: null,
+})
 
-const input = ref('')
-
+// upload files
+const fileUpload = ref({
+    cv: { accept:'file_extention',
+      label: 'Upload CV'},
+      photo: {
+        accept:'jpg', 
+        label: 'Upload Photo'
+      }
+})
+// for catching errors
 const onSubmit =() => {
-    if(!input.value === ""){
+    if(!userInfo.value === ""){
         alert('this field is required')
     }
 }
@@ -20,33 +41,35 @@ const onSubmit =() => {
 </div>
 <div class="main">
         <div class="uploader">
-         <input type="file" placeholder="+upload CV" class="uploads"> 
-        <!-- <div><label class="uploads" for="file">+upload CV</label> </div> -->
-         <input type="file" class="uploads"> 
-        <!-- <div><label class="uploads" for="file">+Upload Photo</label></div> -->
+         <div v-for ="(input,index) in fileUpload" :key="index">
+            <input class="upload" type="file" :id="index"
+            :name="index"
+            :accept="input.accept">
+            
+        </div> 
     </div>
    
   
 <form class="form" @submit.prevent="onSubmit">
     <div>
     <label for="first Name">First Name</label>
-    <input type="text" id="first" v-model="input.first" required>
+    <input type="text" id="first" v-model="userInfo.first" required>
     <label for="email">Email</label>
-    <input type="text" id="email" v-model="input.email" required>
+    <input type="text" id="email" v-model="userInfo.email" required>
     <label for="address">Address</label>
-    <input type="text" id="address" v-model="input.address" required>
+    <input type="text" id="address" v-model="userInfo.address" required>
     <label for="course">Course Of Study</label>
-    <input type="text" id="course" v-model="input.course"  required>
+    <input type="text" id="course" v-model="userInfo.course"  required>
 </div>
     <div>
     <label for="last name">Lastname</label>
-    <input type="text" id="last" v-model="input.last" required>
+    <input type="text" id="last" v-model="userInfo.last" required>
     <label for="date of birth">Date of Birth</label>
-    <input type="text" id="date" v-model="input.date" placeholde ="dd/mm/yy" required>
+    <input type="text" id="date" v-model="userInfo.date" placeholde ="dd/mm/yy" required>
     <label for="university">University</label>
-    <input type="text" id="uni" v-model="input.uni" required>
+    <input type="text" id="uni" v-model="userInfo.uni" required>
     <label  for="CGPA">CGPA</label>
-    <input type="text" id="CGPA" v-model="input.CGPA" required>
+    <input type="text" id="CGPA" v-model="userInfo.CGPA" required>
 </div>
 </form>
 </div>
@@ -62,7 +85,7 @@ const onSubmit =() => {
 
 }
 
-.uploads{
+.upload{
      /* display: flex;
     flex-direction: column; */
     justify-content: center;

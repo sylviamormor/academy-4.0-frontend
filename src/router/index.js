@@ -1,10 +1,21 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import UserDashboardLayout from "../layouts/UserDashboardLayout.vue";
-import ApplicationView from "../views/ApplicationView.vue"
-import AssessmentView from "../views/AssessmentView.vue"
+import ApplicationView from "../views/ApplicationView.vue";
+import AssessmentView from "../views/AssessmentView.vue";
 import SignUpView from "../views/SignUpView.vue";
-import LogInView from  "../views/LogInView.vue"
+import LogInView from "../views/LogInView.vue";
+// admin
+import AdminDashboardLayout from "../layouts/AdminDashboardLayout.vue";
+import AdminDashboardView from "../views/AdminLoginView.vue";
+import AdminDashboardView from "../views/AdminDashboardView.vue";
+import CreatAppView from "../views/CreatAppView.vue";
+import ApplicationEntriesView from "../views/ApplicationEntriesView.vue";
+import ComposeAssessmentView from "../views/ComposeAssessmentView.vue";
+import AssessmentHistoryView from "../views/AssessmentHistoryView.vue";
+import AssessmentResultView from "../views/AssessmentResultView.vue";
+import SettingsView from "../views/SettingsView.vue";
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -24,31 +35,19 @@ const router = createRouter({
       name: "application",
       component: ApplicationView,
     },
-
-    {
-      path: "/assessment",
-      name: "assessment",
-      component: AssessmentView
-    },
-    
-    /*
-     * USER ROUTES
-     */
-
-
     {
       path: "/SignUp",
       name: "SignUp",
       component: SignUpView,
     },
-    
-
     {
       path: "/LogIn",
       name: "LogIn",
       component: LogInView,
     },
-  
+    /*
+    * USER ROUTES
+    */
 
     {
       path: "/",
@@ -76,14 +75,49 @@ const router = createRouter({
           },
         },
         {
-          path: "dashboard",
+          path: "/signup",
+          name: "signup",
+          component: AdminLoginView
         },
         {
-          path: "create-application",
+          path: "/adminDashboard",
+          name: "Admindashboard",
+          component: AdminDashboardView
+        },
+        {
+          path: "/create-application",
+          name: "createApp",
+          component: CreateAppView
+        },
+        {
+          path: "/application-entries",
+          name: "applicationentries",
+          component: ApplicationEntriesView
+        },
+        {
+          path: "/compose-assessment",
+          name: "composeassessment",
+          component: ComposeAssessmentView
+        },
+        {
+          path: "/assessment-history",
+          name: "assessmentHistory",
+          component: AssessmentHistoryView
+        },
+        {
+          path: "/assessment-result",
+          name: "assessmentResult",
+          component: AssessmentResultView
+        },
+        {
+          path: "/profile-settings",
+          name: "settings",
+          component: settingsView
         },
       ],
     },
   ],
-});
+},
+);
 
 export default router;
