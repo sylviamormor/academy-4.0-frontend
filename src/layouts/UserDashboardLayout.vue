@@ -39,8 +39,75 @@ const route = useRoute();
   </div>
 </template>
 
-
 <style scoped>
+.sideNavigation {
+  
+  width: 292px;
+  height: 100vh;
+  font-family: 'Lato';
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0px 5px 15px rgba(33, 31, 38, 0.05);
+  
+}
+.layoutPart {
+  display: flex;
+}
+
+
+
+
+.profilePart {
+  background: #7557D3;
+  height: 255px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 13px;
+  align-items: center;
+  color: #fff;
+}
+
+.profile-img {
+  width: 80px;
+  border-radius: 80px;
+  height: 80px;
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  
+  gap: 5px;
+  align-items: center;
+}
+
+.profile-name {
+  font-family: 'Lato';
+  
+  color: #FFF;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: -0.4px;
+}
+
+.profile-gmail {
+  color: #FFF;
+  font-family: Lato;
+  font-size: 16px;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.32px;
+}
+
+.sideNavigation-links {
+  display: flex;
+  flex-direction: column;
+  padding: 45px;
+  gap: 28px;
+}
 .layout{
   display: flex;
 }
@@ -107,6 +174,13 @@ const route = useRoute();
   display: flex;
   gap: 21px;
   align-items: center;
+  font-family: 'Lato';
+  font-size: 16px;
+  font-weight: 400;
+  text-decoration: none;
+  color: #2B3C4E;
+  text-align: center;
+  
   text-decoration: none;
   color: #2B3C4E;
   text-align: center;
@@ -117,6 +191,8 @@ const route = useRoute();
 }
 
 .icons {
+ height: 15.789px;
+  width: 12px;
   width: 12px;
   height: 15.789px;
 }
@@ -124,6 +200,19 @@ const route = useRoute();
 .logout {
   margin-top: 32px;
 }
+.rightContent {
+  padding: 102px 47px;
+} 
+.active {
+  font-family: 'Lato';
+  font-size: 16px;
+  color: #2B3C4E;
+  text-align: center;
+  font-weight: 700;
+  font-style: normal;
+ 
+}
+
 .active{
     color: #2B3C4E;
     text-align: center;
