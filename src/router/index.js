@@ -9,7 +9,7 @@ import SignUpView from "../views/SignUpView.vue";
 import LogInView from "../views/LogInView.vue";
 // admin
 //import AdminDashboardLayout from "/home/asante/Desktop/academy-4.0-frontend/src/layouts/AdminDashboardLayout.vue";
-import AdminLoginView from "/home/asante/Desktop/academy-4.0-frontend/src/views/admin/AdminLoginView.vue";
+import AdminLoginView from "../views/admin/AdminLoginView.vue";
 import AdminDashboardView from "../views/admin/AdminDashboardView.vue";
 //import CreatAppView from "../views/CreatAppView.vue";
 //import ApplicationEntriesView from "../views/ApplicationEntriesView.vue";
