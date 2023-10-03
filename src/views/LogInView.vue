@@ -21,7 +21,7 @@ import ButtonComponent from '../components/ButtonComponent.vue'
                 </div>
                 </div>
             </div>
-            <div class="Btn"><RouterLink to="/UserDashboard"><ButtonComponent class="button-2" buttonText = 'Log In'/></RouterLink></div>
+            <div class="Btn"><RouterLink to="/dashboard"><ButtonComponent class="button-2" buttonText = 'Log In'/></RouterLink></div>
             <div class="contents">
                 <h4>Don’t have an account yet?<RouterLink to="/SignUp"><span>Sign Up</span></RouterLink></h4>
                 <h4>Forgot Password?</h4>
