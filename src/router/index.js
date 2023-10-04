@@ -1,3 +1,23 @@
+import { createRouter, createWebHistory } from "vue-router";
+import HomeView from "../views/HomeView.vue";
+import UserDashboardLayout from "../layouts/UserDashboardLayout.vue";
+import ApplicationView from "../views/ApplicationView.vue"
+//import AssessmentView from "../views/AssessmentView.vue"
+import UserDashboardView from "../views/users/UserDashboardView.vue"
+import QuestionView from "../views/users/QuestionView.vue"
+import SignUpView from "../views/SignUpView.vue";
+import LogInView from "../views/LogInView.vue";
+// admin
+//import AdminDashboardLayout from "../layouts/AdminDashboardLayout.vue";
+import AdminLoginView from "../views/admin/AdminLoginView.vue";
+import AdminDashboardView from "../views/admin/AdminDashboardView.vue";
+//import CreatAppView from "../views/CreatAppView.vue";
+//import ApplicationEntriesView from "../views/ApplicationEntriesView.vue";
+// import ComposeAssessmentView from "../views/ComposeAssessmentView.vue";
+// import AssessmentHistoryView from "../views/AssessmentHistoryView.vue";
+// import AssessmentResultView from "../views/AssessmentResultView.vue";
+//import SettingsView from "../views/SettingsView.vue";
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -45,7 +65,7 @@ const router = createRouter({
           name: "question",
           component: QuestionView,
         },
-       
+
       ],
     },
     /*
