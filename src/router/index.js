@@ -9,9 +9,9 @@ import SignUpView from "../views/SignUpView.vue";
 import LogInView from "../views/LogInView.vue";
 // admin
 import AdminDashboardLayout from "../layouts/AdminDashboardLayout.vue";
-import AdminDashboardView from "../views/AdminLoginView.vue";
-import AdminDashboardView from "../views/AdminDashboardView.vue";
-import CreatAppView from "../views/CreatAppView.vue";
+import AdminLoginView from "/Users/e/Documents/GitHub/academy-4.0-frontend/src/views/admin/AdminLoginView.vue";
+import AdminDashboardView from "/Users/e/Documents/GitHub/academy-4.0-frontend/src/views/admin/AdminDashboardView.vue";
+import CreatAppView from "/Users/e/Documents/GitHub/academy-4.0-frontend/src/views/admin/CreateAppView.vue";
 import ApplicationEntriesView from "../views/ApplicationEntriesView.vue";
 import ComposeAssessmentView from "../views/ComposeAssessmentView.vue";
 import AssessmentHistoryView from "../views/AssessmentHistoryView.vue";
