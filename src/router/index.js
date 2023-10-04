@@ -8,7 +8,7 @@ import QuestionView from "../views/users/QuestionView.vue"
 import SignUpView from "../views/SignUpView.vue";
 import LogInView from "../views/LogInView.vue";
 // admin
-
+//import AdminDashboardLayout from "../layouts/AdminDashboardLayout.vue";
 import AdminLoginView from "../views/admin/AdminLoginView.vue";
 import AdminDashboardView from "../views/admin/AdminDashboardView.vue";
 //import CreatAppView from "../views/CreatAppView.vue";
