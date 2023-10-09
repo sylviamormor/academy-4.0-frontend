@@ -4,81 +4,54 @@
 
 
 <template>
-    <div class="main">
-     <div class="flex-container">   
-     <!-- <div class="profile">
-<img src="../assets/icons/Ellipse.svg" alt="">
-<h2>Jane Doe</h2>
-<h4>doe@enyata.com</h4>
-</div>  -->
-<div class="second-assess">
-<div class="assess">
-    
-    <h1>Take Assessment</h1>
-    <p>Click the button below to start assessment, you have limited time for this test</p>
-</div>
-<div>
-<h5>Timer</h5>
-<p class="timer">00 <small>MM</small>000 <small>MM</small></p>
-</div>
-</div>
-</div>
 
-<!-- <div class="links">
-    <img src="../assets/icons/Vector(1).svg" alt="" class="icon">
-    <h4>Dashboard</h4>
-    <img src="../assets/icons/Vector.svg" alt="" class="icon">
-    <h4>Assessment</h4>
-    <img src="../assets/icons/Layer 6.svg" alt="" class="icon">
-    <h4>Log Out</h4> 
-</div> -->
+    <div class="assessment">
+        <div class="assess">
+        <h2>Take Assessment</h2>
+        <p>Click the button below to start assessment, you have limited time for this test</p>
+    </div>
+    <div class="timer">
+        <h5>Timer</h5>
+        <p><p class="time">00 <small>MM</small>000 <small>MM</small></p></p>
+    </div>
+    </div>
+    
 <div class="loading">
-    <img src="../assets/icons/hourglass (1).svg" alt="">
+    <img src="../assets/icons/hourglass.svg" alt="">
 <p>We have 4 days left until the next assessment
 Watch this space</p>
+<RouterLink class="btn" to="question">Take Assessment</RouterLink>
 </div>
-</div>
+
 
 
 </template>
 
 
 <style scope>
-.main{
-     display: flex;
-     flex-direction: column;
-    align-items: center;
-    justify-content: center; 
-    margin: 0 auto;
-    padding-top: 100px;
-    background-color: #FFFFFF;
+.assessment{
+    display: flex;
+    text-align: start;
+    justify-content: space-between;
+    gap: 200px;
 }
 
-.second-assess{
-    display: flex;
-}
-
-.static{
-    position: relative;
-}
-.flex-container{
-    display: flex;
-    align-items: center;
-    justify-content:space-between;
-    gap:30px
-}
-.profile{
-    background-color: #7557D3;
-    width: 292px;
-    height: 255px;
-    margin: 0 auto;
+.assess{
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    /* gap: 42px; */
-    color: #FFFFFF
-;
+    padding-bottom: 164px;
+}
+
+.assess h2{
+    /* font-family: Lato; */
+font-size: 44px;
+font-weight: 300;
+line-height: 52px;
+letter-spacing: -0.02em;
+text-align: left;
+color: #2B3C4E;
+padding-bottom: 14px;
+
 }
 
 .assess p{
@@ -87,39 +60,46 @@ font-size: 16px;
 font-style: italic;
 font-weight: 500;
 line-height: 19px;
-color: #2B3C4E;
-;
-/* letter-spacing: 0em; */
-/* text-align: left; */
+letter-spacing: 0em;
+text-align: left;
 
 }
 
-.assess h1{
-    /* font-family: Lato; */
-font-size: 44px;
+.timer p{
+    font-family: Lato;
+font-size: 48px;
 font-weight: 300;
-line-height: 52px;
-letter-spacing: -0.02em;
-/* text-align: left; */
-color: #2B3C4E;
+line-height: 58px;
+letter-spacing: 0em;
+text-align: center;
+color: #4F4F4F;
+
+    /* display: flex;
+    flex-direction: column; */
+    /* text-align: center;
+    justify-content: center; */
+}
+
+.time small{
+    font-family: Lato;
+font-size: 12px;
+font-weight: 400;
+line-height: 14px;
+letter-spacing: 0em;
+text-align: center;
+color: #4F4F4F;
+}
+
+.timer h5{
+    /* font-family: Lato; */
+font-size: 14px;
+font-weight: 400;
+line-height: 17px;
+letter-spacing: 0em;
+text-align: center;
 
 }
 
-.links{
-     display: grid;
-    grid-template-columns: repeat(2 , 1fr); 
-    /* display: flex; */
-
-    color: #2B3C4E;
-    font-size: 16px;
-    font-weight: 700;
-    line-height: 19.2px;
-    /* gap: 32px; */
-    margin-right: 1000px;
-}
- .icon{
-    width: 10px;
-}
 
 .loading{
     display: flex;
@@ -127,5 +107,44 @@ color: #2B3C4E;
     align-items: center;
     justify-content: center;
     margin: 0 auto;
+    gap: 21px;
+}
+
+.loading p{
+    width: 342.91px;
+height: 46px;
+/* font-family: Lato; */
+font-size: 17px;
+font-weight: 400;
+line-height: 20px;
+letter-spacing: 0em;
+text-align: center;
+color: #4F4F4F;
+
+/* top: 451px
+left: 642px */
+
+}
+
+.btn{
+    background: #B1B1B1;
+    width: 205px;
+height: 41px;
+color: #FFFFFF;
+padding: 11px ;
+text-decoration: none;
+text-align: center;
+font-family: Lato;
+font-size: 16px;
+font-weight: 700;
+line-height: 19px;
+letter-spacing: 0em;
+/* text-align: left; */
+color: #FFFFFF;
+
+/* top: 521px;
+left: 710px */
+
+    
 }
 </style>

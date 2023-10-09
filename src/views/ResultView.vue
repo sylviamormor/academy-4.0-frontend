@@ -24,7 +24,7 @@ import { RouterLink } from 'vue-router';
         </div>
 
         <div class="congrat">
-            <img src="src/assets/icons/confetti (1).svg" alt="">
+            <img src="../assets/icons/confetti (1).svg" alt="">
             <p>We have received your assessment test, we will get back to you soon.
              Best of luck</p>
          <RouterLink to="/">Home</RouterLink>

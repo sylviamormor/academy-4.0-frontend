@@ -48,7 +48,7 @@ import { RouterLink } from 'vue-router'
                   </p>
                   <div>
                     <button disabled>
-                        <RouterLink class="links" to="/question">Take Assessment</RouterLink>
+                        <RouterLink class="links" to="/assessment">Take Assessment</RouterLink>
                     </button>
                   </div>
                 </div>

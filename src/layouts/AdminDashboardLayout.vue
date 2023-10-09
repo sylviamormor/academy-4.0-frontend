@@ -5,28 +5,28 @@ const route = useRoute();
 
 <template>
     <div class="layout">
-        <div class="sidebar">
+        <div class="side-Navbar">
             <div class="sideNavigation">
-                <div class="profilePic">
+                <div class="profileimg">
                     <img class="profile" src="@/assets/icons/adminprofile.svg" alt="profile picture" />
-                    <div class="details">
-                        <h1 class="profile-name">Andy Cole</h1>
-                        <p mailto:class="profile-gmail">cole@gmail.com</p>
+                    <div class="sideDetails">
+                        <h1 class="profileName">Josh Doe</h1>
+                        <p mailto:class="profile-gmail">j.doe@enyata.com</p>
                     </div>
                 </div>
 
-                <div class="sideNavigation-links">
-                    <RouterLink class="links" :to="{ name: 'AdminDashboard' }" active-class="active">
+                <div class="sideNavbar-links">
+                    <RouterLink class="links" :to="{ name: 'admindashboard' }" active-class="active">
                         <div class="icons"><img src="@/assets/icons/dashboard.svg" alt="" /></div>
                         <p class="link-text">Dashboard</p>
                     </RouterLink>
 
-                    <RouterLink class="links" :to="{ name: 'creatApp' }" active-class="active">
+                      <RouterLink class="links" :to="{ name: 'createapp' }" active-class="active">
                         <div class="icons"><img src="@/assets/icons/create.svg" alt="" /></div>
                         <p class="link-text">Create Application</p>
-                    </RouterLink>
+                    </RouterLink> 
 
-                    <RouterLink class="links" :to="{ name: 'applicationentries' }" active-class="active">
+                    <!-- <RouterLink class="links" :to="{ name: 'applicationentries' }" active-class="active">
                             <div class="icons"><img src="@/assets/icons/application.svg" alt="" /></div>
                             <p class="link-text">Application Entries</p>
                         </RouterLink>
@@ -50,7 +50,7 @@ const route = useRoute();
                     <RouterLink class="links logout" :to="{ name: 'user' }">
                         <div class="icons"><img src="@/assets/icons/logout.svg" alt="" /></div>
                         <p class="link-text">Log Out</p>
-                    </RouterLink>
+                    </RouterLink> --> 
                 </div>
             </div>
         </div>
@@ -77,8 +77,8 @@ const route = useRoute();
     grid-template-columns: max-content max-content;
 }
 
-.profilepic {
-    background: #7557D3;
+.profileimg{
+    background-color: #7557D3;
     height: 255px;
     display: flex;
     flex-direction: column;
@@ -92,18 +92,20 @@ const route = useRoute();
     width: 80px;
     border-radius: 80px;
     height: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.details {
+.sideDetails {
     display: flex;
     flex-direction: column;
     justify-content: center;
-
     gap: 5px;
     align-items: center;
 }
 
-.profile-name {
+.profileName {
     font-family: 'Lato';
 
     color: #FFF;
@@ -122,7 +124,7 @@ const route = useRoute();
     letter-spacing: -0.32px;
 }
 
-.sideNavigation-links {
+.sideNavbar-links {
     display: flex;
     flex-direction: column;
     padding: 45px;
@@ -164,6 +166,7 @@ const route = useRoute();
     text-align: center;
     font-weight: 700;
     font-style: normal;
+    border-left: 4px solid #7557D3;
 
 }
 </style>

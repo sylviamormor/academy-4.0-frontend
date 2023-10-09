@@ -7,7 +7,7 @@
 <template>
   <div class="admin-login">
     <div class="logo">
-      <img src="../assets/icons/enyatalogo.png" alt="">
+      <img class="img" src="src/assets/icons/logo2.png" alt="">
       <h3>Admin Log In</h3>
     </div>
 
@@ -18,10 +18,10 @@
     </div>
       <div class="page">
       <label for="">Password</label>
-      <input type="text" class="password">
-      <img src="../assets/icons/eye.svg" alt="" class="eye">
+      <input type="pa" class="password">
+      <img src="src/assets/icons/eye.svg" alt="" class="eye">
     </div>
-      <RouterLink to="/">Sign Up</RouterLink>
+      <RouterLink class="button" to="/Admindashboard">Sign In</RouterLink>
 
     </form>
   </div>
@@ -31,19 +31,35 @@
 <style scoped>
 .admin-login {
   background-color: #7557D3;
-  background-image: url("../assets/icons/desktopsvg.svg");
+  background-image: url("../src/assets/icons/desktopsvg.svg");
   background-repeat: no-repeat;
   background-position: right;
   height: 100vh;
-  padding-top: 300px;
+  padding-top: 200px;
   
    margin: 0 auto; 
+}
+
+.img{
+  color: #FFFFFF;
+  margin-bottom: 29px;
 }
 
 .logo{
   display: flex;
   flex-direction: column;
   padding-bottom: 58px;
+}
+
+.logo h3{
+  font-family: Lato;
+font-size: 24px;
+font-style: italic;
+font-weight: 500;
+line-height: 29px;
+letter-spacing: 0em;
+text-align: left;
+color: #FFFFFF;
 }
 
 .login {
@@ -79,14 +95,18 @@ line-height: 17px;
 letter-spacing: 0em;
 text-align: left;
 color: #FFFFFF;
-;
+padding-bottom: 5px;
 }
 
 input{
   display: inline-block;
   background-color: transparent;
-  border: 1px solid white;
-  widows: 379px;
+  width: 379px;
+height: 48px;
+/* top: 22px */
+border-radius: 4px;
+border: 1.5px solid #FFFFFF;
+
 }
 
 .password{
@@ -97,7 +117,19 @@ input{
   display: inline-block;
   position: absolute;
   right:10px;
-  top:27px;
-  
+  top:35px;
+  color: #FFFFFF;
 } 
+
+.button{
+  background:#FFFFFF;
+  width: 379px;
+height: 50px;
+top: 8px;
+text-align: center;
+padding: 16px 150px;
+color: #7557D3;
+text-decoration: none;
+
+}
 </style>

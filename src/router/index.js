@@ -2,16 +2,16 @@ import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import UserDashboardLayout from "../layouts/UserDashboardLayout.vue";
 import ApplicationView from "../views/ApplicationView.vue"
-//import AssessmentView from "../views/AssessmentView.vue"
+import AssessmentView from "../views/AssessmentView.vue"
 import UserDashboardView from "../views/users/UserDashboardView.vue"
 import QuestionView from "../views/users/QuestionView.vue"
 import SignUpView from "../views/SignUpView.vue";
 import LogInView from "../views/LogInView.vue";
 // admin
-//import AdminDashboardLayout from "../layouts/AdminDashboardLayout.vue";
+import AdminDashboardLayout from "../layouts/AdminDashboardLayout.vue";
 import AdminLoginView from "../views/admin/AdminLoginView.vue";
 import AdminDashboardView from "../views/admin/AdminDashboardView.vue";
-//import CreatAppView from "../views/CreatAppView.vue";
+ import CreateAppView from "../views/admin/CreateAppView.vue";
 //import ApplicationEntriesView from "../views/ApplicationEntriesView.vue";
 // import ComposeAssessmentView from "../views/ComposeAssessmentView.vue";
 // import AssessmentHistoryView from "../views/AssessmentHistoryView.vue";
@@ -50,6 +50,7 @@ const router = createRouter({
     /*
     * USER ROUTES
     */
+   
 
     {
       path: "/",
@@ -65,6 +66,11 @@ const router = createRouter({
           name: "question",
           component: QuestionView,
         },
+        {
+          path: "/assessment",
+          name: "assessment",
+          component: AssessmentView,
+        },
        
       ],
     },
@@ -72,8 +78,13 @@ const router = createRouter({
      * ADMIN ROUTES
      */
     {
+      path: "/adminsignup",
+      name: "adminsignup",
+      component: AdminLoginView
+    },
+    {
       path: "/admin",
-      component: UserDashboardLayout,
+      component: AdminDashboardLayout,
       children: [
         {
           path: "login",
@@ -81,21 +92,17 @@ const router = createRouter({
             noAuth: true,
           },
         },
-        {
-          path: "/signup",
-          name: "signup",
-          component: AdminLoginView
-        },
+       
         {
           path: "/adminDashboard",
-          name: "Admindashboard",
+          name: "admindashboard",
           component: AdminDashboardView
         },
-        // {
-        //   path: "/create-application",
-        //   name: "createApp",
-        //   component: CreateAppView
-        // },
+        {
+            path: "/createapp",
+            name: "createapp",
+            component: CreateAppView
+         },
         // {
         //   path: "/application-entries",
         //   name: "applicationentries",
