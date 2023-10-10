@@ -9,7 +9,30 @@ function togglePasswordVisibility() {
   showPassword.value = !showPassword.value;
 }
 
+const firstName = ref("");
+const lastName = ref("");
+const email = ref("");
+const password = ref("");
+const phoneNumber = ref("");
+const confirmPassword = ref("");
+
 //TODO form validators component
+// sign up
+// log in
+// application
+
+const buttonState = ref(false);
+
+if (
+  firstName.value &&
+  lastName.value &&
+  email.value &&
+  password &&
+  phoneNumber &&
+  confirmPassword
+) {
+  buttonState.value = true;
+}
 </script>
 
 <template>
@@ -22,57 +45,72 @@ function togglePasswordVisibility() {
       <div class="Options">
         <div class="sectionInput">
           <label for="input">First Name</label>
-          <input type="text" class="input-field" />
+          <input type="text" class="input-field" v-model="firstName" />
+          <span v-if="!firstName" class="alert"> Enter first name! {{ firstName }}</span>
         </div>
         <div class="sectionInput">
           <label for="input">Last Name</label>
-          <input type="text" class="input-field" />
+          <input type="text" class="input-field" v-model="lastName" />
         </div>
       </div>
       <div class="Options">
         <div class="sectionInput">
           <label for="input">Email Address</label>
-          <input type="text" class="input-field" />
+          <input type="text" class="input-field" v-model="email" />
         </div>
         <div class="sectionInput">
           <label for="input">Phone Number</label>
-          <input type="text" class="input-field" />
+          <input type="text" class="input-field" v-model="phoneNumber" />
         </div>
       </div>
       <div class="Options">
         <div class="sectionInput">
           <label for="input">Password</label>
-          <input :type="showPassword ? 'text' : 'password'" class="input-field" />
+          <input
+            :type="showPassword ? 'text' : 'password'"
+            class="input-field"
+            v-model="password"
+          />
           <span @click="togglePasswordVisibility"><font-awesome-icon :icon="faEye" /></span>
         </div>
         <div class="sectionInput">
           <label for="input">Confirm Password</label>
-          <input :type="showPassword ? 'text' : 'password'" class="input-field" />
+          <input
+            :type="showPassword ? 'text' : 'password'"
+            class="input-field"
+            v-model="confirmPassword"
+          />
           <span @click="togglePasswordVisibility">
             <font-awesome-icon :icon="faEye" />
           </span>
         </div>
       </div>
+      <div class="Infor-class">
+
+
+<div>
+  
+  <ButtonComponent  id="custom-button_1" buttonText="Sign Up" />
+  </div>
+
+  <div >
+  <RouterLink to="/LogIn">
+    <ButtonComponent id="custom-button_1" buttonText="Sign Up"
+  /></RouterLink>
+</div>
+
+<h4>
+  Already have an account?<RouterLink to="/LogIn"><span>Sign In</span></RouterLink>
+</h4>
+</div>
     </div>
-    <div class="Infor-class">
-      <div class="Btn-class">
-        <RouterLink to="/LogIn"
-          ><ButtonComponent id="custom-button_1" buttonText="Sign Up"
-        /></RouterLink>
-      </div>
-      <h4>
-        Already have an account?<RouterLink to="/LogIn"><span>Sign In</span></RouterLink>
-      </h4>
-    </div>
+
   </section>
 </template>
 
 <style scoped>
 .sectionTwo {
   padding: 120px;
-  padding-right: 630px;
-  padding-bottom: 276px;
-  padding-left: 631px;
   font-family: Lato;
 }
 .logo-Div {
@@ -144,13 +182,6 @@ label {
   gap: 10px;
 }
 
-.Btn-class {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
 
 #custom-buton_1 {
   color: #fff;
@@ -184,5 +215,9 @@ span {
 
 input {
   padding: 20px;
+}
+
+.alert {
+  color: red;
 }
 </style>
