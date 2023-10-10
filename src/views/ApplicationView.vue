@@ -25,12 +25,12 @@ photo: null,
 //         label: 'Upload Photo'
 //       }
 // })
-// for catching errors
-const onSubmit =() => {
-    if(!userInfo.value === ""){
-        alert('this field is required')
-    }
-};
+//  for catching errors
+ const onSubmit =() => {
+     if(!userInfo.value === ""){
+         alert('Guy! this field is required 🐍')
+     }
+ };
 
 const errors = ref({
     firstName: '',
@@ -132,7 +132,9 @@ const createUser = async () => {
 </div>
 </form>
 </div>
-  <div><RouterLink class="btn-btn" to="dashboard"><ButtonComponent button text='Submint'/></RouterLink></div>
+  <div><RouterLink class="btn-btn" to="dashboard">
+  <button>Submit</button>
+</RouterLink></div>
 </div>
 
 </template>
@@ -258,6 +260,27 @@ letter-spacing: 0em;
 text-align: left;
 }
 
+.btn-btn button{
+    display: inline-block;
+    justify-content: center;
+    align-items: center;
+    margin-top: 43px;
+    width: 379px;
+height: 50px;
+color: #FFFFFF; 
+background:#7557D3;
+font-family: Lato;
+font-size: 16px;
+font-weight: 700;
+line-height: 19px;
+letter-spacing: 0em;
+/* text-align: left; */
+padding: 14px 163px 16px 165px;
+margin-top:43px;
+border: none;
+border-radius: 4px;
+
+}
 .btn-btn{
     display: inline-block;
     justify-content: center;
@@ -268,6 +291,11 @@ height: 50px;
 color: #FFFFFF;
 /* top: 829px
 left: 524px */
+/* width: 379px
+height: 50px
+top: 829px
+left: 524px */
+
 
 }
 
