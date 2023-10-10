@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 import axios from 'axios'
 import ButtonComponent from '../components/ButtonComponent.vue';
-
+import {RouterLink} from "vue-router";
 const userInfo = ref({
 firstName: '',
 lastName: '',
@@ -14,7 +14,7 @@ course: '',
 cgpa: '',
 cv: null,
 photo: null,
-})
+});
 
 // upload files
 // const fileUpload = ref({
@@ -30,7 +30,57 @@ const onSubmit =() => {
     if(!userInfo.value === ""){
         alert('this field is required')
     }
-}
+};
+
+const errors = ref({
+    firstName: '',
+    lastName: '',
+    emailAddress: '',
+    dateOfBirth: '',
+    address: '',
+    university: '',
+    course: '',
+    cgpa: '',
+    cv: '',
+    img: '',
+});
+
+const loading = ref(false);
+const error = ref('');
+
+const createUser = async () => {
+    loading.value = true;
+    const formData = new FormData();
+
+    for (const key in user.value) {
+        formData.append(key, user.value[key]);
+    }
+
+    try {
+        const token = localStorage.getItem('token');
+        const response = await axios.post('url', formData, {
+            headers: {
+                Authorization: `Basic ${token}`,
+            },
+        });
+
+        localStorage.removeItem('token');
+        const { data } = response.data;
+        localStorage.setItem('token', data.token);
+        loading.value = false;
+
+        if (data.details.applicant) {
+            // Assuming you have a router instance set up
+            // Use this.$router.push('/dashboard') to navigate
+        } else {
+            // Assuming you have a router instance set up
+            // Use this.$router.push('/pre-dashboard') to navigate
+        }
+    } catch (err) {
+        loading.value = false;
+        error.value = err.response.data.message;
+    }
+};
 </script>
 
 
