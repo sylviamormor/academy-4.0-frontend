@@ -24,12 +24,12 @@ const confirmPassword = ref("");
 const buttonState = ref(false);
 
 if (
-  firstName.value &&
-  lastName.value &&
-  email.value &&
-  password &&
-  phoneNumber &&
-  confirmPassword
+  firstName.value === true &&
+  lastName.value === true &&
+  email.value === true &&
+  password.value === true &&
+  phoneNumber.value === true &&
+  confirmPassword.value === true
 ) {
   buttonState.value = true;
 }
@@ -46,7 +46,7 @@ if (
         <div class="sectionInput">
           <label for="input">First Name</label>
           <input type="text" class="input-field" v-model="firstName" />
-          <span v-if="!firstName" class="alert"> Enter first name! {{ firstName }}</span>
+          <span v-if="!firstName" class="alert"> Enter first name!</span>
         </div>
         <div class="sectionInput">
           <label for="input">Last Name</label>
@@ -86,25 +86,21 @@ if (
         </div>
       </div>
       <div class="Infor-class">
+        <div v-if="buttonState === false">
+          <ButtonComponent id="custom-button_1" buttonText="Sign Up" />
+        </div>
 
+        <div>
+          <RouterLink to="/LogIn">
+            <ButtonComponent id="custom-button_2" buttonText="Sign Up"
+          /></RouterLink>
+        </div>
 
-<div>
-  
-  <ButtonComponent  id="custom-button_1" buttonText="Sign Up" />
-  </div>
-
-  <div >
-  <RouterLink to="/LogIn">
-    <ButtonComponent id="custom-button_1" buttonText="Sign Up"
-  /></RouterLink>
-</div>
-
-<h4>
-  Already have an account?<RouterLink to="/LogIn"><span>Sign In</span></RouterLink>
-</h4>
-</div>
+        <h4>
+          Already have an account?<RouterLink to="/LogIn"><span>Sign In</span></RouterLink>
+        </h4>
+      </div>
     </div>
-
   </section>
 </template>
 
@@ -182,8 +178,7 @@ label {
   gap: 10px;
 }
 
-
-#custom-buton_1 {
+#custom-button_1 {
   color: #fff;
   font-family: Lato;
   font-size: 16px;
@@ -191,6 +186,17 @@ label {
   font-weight: 700;
   line-height: normal;
   margin: 0 auto;
+}
+
+#custom-button_2{
+  color: #fff;
+  font-family: Lato;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  margin: 0 auto;
+  cursor: pointer;
 }
 
 .Infor-class h4 {
