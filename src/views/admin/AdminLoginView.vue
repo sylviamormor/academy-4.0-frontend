@@ -1,5 +1,48 @@
 <script setup>
+import {ref} from 'vue';
+import { RouterLink, useRouter } from "vue-router";
+import axios from "axios";
 
+
+const router = useRouter();
+const emailInput = ref("");
+const passwordInput = ref("");
+
+
+
+
+
+async function adminLogin(){
+  try {
+    const token = localStorage.getItem("token")
+    const response = await axios.post(
+      "url",
+      {
+      email: emailValue.value,
+      password: passwordValue.value
+    }, {headers: {
+      authorization: token
+      }})
+    console.log("res", response)
+    const { first_name, last_name, id, role, email } = response.data.data;
+    const user = { first_name, last_name, id, role, email };
+    localStorage.setItem("token", response.data.data.token)
+    localStorage.setItem("adminDetails", JSON.stringify(user))
+    // const adminDetails = JSON.parse(localStorage.getItem("adminDetails"))   when you want to get admin details
+    router.push({ name: "AdminDashboard" });
+  }
+  catch (error){
+    console.log(error)
+  }
+}
+
+// Define a reactive property to track the password visibility
+const passwordVisible = ref(false);
+
+// Function to toggle password visibility
+function togglePassword() {
+  passwordVisible.value = !passwordVisible.value;
+}
 </script>
 
 
@@ -14,14 +57,20 @@
     <form class="login">
       <div class="email">
       <label for="">Email Address</label>
-      <input type="text">
+      <input type="text" v-model="emailInput">
     </div>
       <div class="page">
       <label for="">Password</label>
-      <input type="pa" class="password">
+      <input :type="passwordVisible ? 'text' : 'password'" class="password" v-model="passwordInput">
+      <span @click="togglePassword">
       <img src="src/assets/icons/eye.svg" alt="" class="eye">
+    </span>
     </div>
-      <RouterLink class="button" to="/Admindashboard">Sign In</RouterLink>
+     <div @click="router.push({ name: 'adminDashboard' })" class="btn">
+          <RouterLink to="/adminDashboard">
+            <button @click="adminLogin">Sign In</button>
+           </RouterLink> 
+        </div>
 
     </form>
   </div>
@@ -119,6 +168,7 @@ border: 1.5px solid #FFFFFF;
   right:10px;
   top:35px;
   color: #FFFFFF;
+  cursor: pointer;
 } 
 
 .button{
@@ -130,6 +180,12 @@ text-align: center;
 padding: 16px 150px;
 color: #7557D3;
 text-decoration: none;
+font-size: 16px;
+font-weight: 700;
+border-radius: 4px;
+cursor: grab;
+border: none;
+line-height: normal;
 
 }
 </style>

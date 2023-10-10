@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 import axios from 'axios'
 import ButtonComponent from '../components/ButtonComponent.vue';
-
+import {RouterLink} from "vue-router";
 const userInfo = ref({
 firstName: '',
 lastName: '',
@@ -14,7 +14,7 @@ course: '',
 cgpa: '',
 cv: null,
 photo: null,
-})
+});
 
 // upload files
 // const fileUpload = ref({
@@ -25,12 +25,62 @@ photo: null,
 //         label: 'Upload Photo'
 //       }
 // })
-// for catching errors
-const onSubmit =() => {
-    if(!userInfo.value === ""){
-        alert('this field is required')
+//  for catching errors
+ const onSubmit =() => {
+     if(!userInfo.value === ""){
+         alert('Guy! this field is required 🐍')
+     }
+ };
+
+const errors = ref({
+    firstName: '',
+    lastName: '',
+    emailAddress: '',
+    dateOfBirth: '',
+    address: '',
+    university: '',
+    course: '',
+    cgpa: '',
+    cv: '',
+    img: '',
+});
+
+const loading = ref(false);
+const error = ref('');
+
+const createUser = async () => {
+    loading.value = true;
+    const formData = new FormData();
+
+    for (const key in user.value) {
+        formData.append(key, user.value[key]);
     }
-}
+
+    try {
+        const token = localStorage.getItem('token');
+        const response = await axios.post('url', formData, {
+            headers: {
+                Authorization: `Basic ${token}`,
+            },
+        });
+
+        localStorage.removeItem('token');
+        const { data } = response.data;
+        localStorage.setItem('token', data.token);
+        loading.value = false;
+
+        if (data.details.applicant) {
+            // Assuming you have a router instance set up
+            // Use this.$router.push('/dashboard') to navigate
+        } else {
+            // Assuming you have a router instance set up
+            // Use this.$router.push('/pre-dashboard') to navigate
+        }
+    } catch (err) {
+        loading.value = false;
+        error.value = err.response.data.message;
+    }
+};
 </script>
 
 
@@ -82,7 +132,9 @@ const onSubmit =() => {
 </div>
 </form>
 </div>
-  <div><RouterLink class="btn-btn" to="dashboard"><ButtonComponent button text='Submint'/></RouterLink></div>
+  <div><RouterLink class="btn-btn" to="dashboard">
+  <button>Submit</button>
+</RouterLink></div>
 </div>
 
 </template>
@@ -208,6 +260,27 @@ letter-spacing: 0em;
 text-align: left;
 }
 
+.btn-btn button{
+    display: inline-block;
+    justify-content: center;
+    align-items: center;
+    margin-top: 43px;
+    width: 379px;
+height: 50px;
+color: #FFFFFF; 
+background:#7557D3;
+font-family: Lato;
+font-size: 16px;
+font-weight: 700;
+line-height: 19px;
+letter-spacing: 0em;
+/* text-align: left; */
+padding: 14px 163px 16px 165px;
+margin-top:43px;
+border: none;
+border-radius: 4px;
+
+}
 .btn-btn{
     display: inline-block;
     justify-content: center;
@@ -218,6 +291,11 @@ height: 50px;
 color: #FFFFFF;
 /* top: 829px
 left: 524px */
+/* width: 379px
+height: 50px
+top: 829px
+left: 524px */
+
 
 }
 
