@@ -1,6 +1,6 @@
 <script setup>
 import ButtonComponent from "../components/ButtonComponent.vue";
-import { ref } from "vue";
+import { ref, computed } from "vue";
 // import { faEye } from '@fortawesome/free-solid-svg-icons';
 // import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
@@ -21,21 +21,61 @@ const confirmPassword = ref("");
 // log in
 // application
 
-const buttonState = ref(false);
+// const buttonState = ref(true);
+
+const startValidation = ref(false);
+
+function submit() {
+  startValidation.value = true;
+}
+
+const isEmailValid = computed(() => {
+  return startValidation.value
+    ? /^\w+([\.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email.value)
+    : null;
+});
+
+const checkPassword = computed(() => {
+  return startValidation.value
+    ? /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})/.test(password.value)
+    : null;
+});
+
+const isPasswordConfirmed = computed(() => {
+  return startValidation.value ? password.value === confirmPassword.value : null;
+});
+
+
+const isPhoneNumber = computed(() => {
+  return startValidation.value ? typeof parseInt(phoneNumber.value, 10) == "number" : null;
+});
+
+console.log(isPhoneNumber);
+
+const checkFirstName = computed(() => {
+  return startValidation.value ? typeof firstName.value == "string" : null;
+});
+
+const checkLastName = computed(() => {
+  return startValidation.value ? typeof lastName.value == "string" : null;
+});
 
 if (
-  firstName.value === true &&
-  lastName.value === true &&
-  email.value === true &&
-  password.value === true &&
-  phoneNumber.value === true &&
-  confirmPassword.value === true
-) {
-  buttonState.value = true;
+  checkPassword.value &&
+  checkFirstName.value &&
+  checkLastName.value &&
+  isEmailValid.value &&
+  isPhoneNumber.value &&
+  isPasswordConfirmed.value
+){
+
+// send data api for validation against the db
 }
+  
 </script>
 
 <template>
+  <span> {{ firstName }}</span>
   <section class="sectionTwo">
     <div class="logo-Div">
       <img src="../assets/icons/Main-logo.svg" alt="" class="logo" />
@@ -46,31 +86,40 @@ if (
         <div class="sectionInput">
           <label for="input">First Name</label>
           <input type="text" class="input-field" v-model="firstName" />
-          <span v-if="!firstName" class="alert"> Enter first name!</span>
+          <span v-if="!checkFirstName && firstName !== ''" class="alert"> Enter valid first name!</span>
         </div>
         <div class="sectionInput">
           <label for="input">Last Name</label>
           <input type="text" class="input-field" v-model="lastName" />
+          <span v-if="!checkLastName && lastName !== ''" class="alert"> Enter valid last name!</span>
         </div>
       </div>
       <div class="Options">
         <div class="sectionInput">
           <label for="input">Email Address</label>
           <input type="text" class="input-field" v-model="email" />
+          <span v-if="!isEmailValid && email !== ''" class="alert"> Enter a valid email</span>
         </div>
         <div class="sectionInput">
           <label for="input">Phone Number</label>
           <input type="text" class="input-field" v-model="phoneNumber" />
+          <span v-if="!isPhoneNumber && phoneNumber.length > 9" class="alert">
+            Enter a valid phone number!</span
+          >
         </div>
       </div>
       <div class="Options">
         <div class="sectionInput">
           <label for="input">Password</label>
+
           <input
             :type="showPassword ? 'text' : 'password'"
             class="input-field"
             v-model="password"
           />
+          <span v-if="!checkPassword && password !== ''" class="alert">
+            Password must have a number, uppercase and <br> lowecase letters and special characters</span
+          >
           <span @click="togglePasswordVisibility"><font-awesome-icon :icon="faEye" /></span>
         </div>
         <div class="sectionInput">
@@ -80,21 +129,27 @@ if (
             class="input-field"
             v-model="confirmPassword"
           />
-          <span @click="togglePasswordVisibility">
-            <font-awesome-icon :icon="faEye" />
-          </span>
+          <span v-if="!isPasswordConfirmed && confirmPassword !== ''" class="alert">
+            Passwords do not match!</span
+          >
         </div>
       </div>
       <div class="Infor-class">
-        <div v-if="buttonState === false">
-          <ButtonComponent id="custom-button_1" buttonText="Sign Up" />
+        <div>
+          <!-- <div v-if="!buttonState">
+            <ButtonComponent  id="custom-button_1" buttonText="Sign Up" />
+          </div>
+          
+          <div v-else >
+             <ButtonComponent @click="submit" id="custom-button_2" buttonText="Sign Up" />
+          </div> -->
+
+          <div>
+            <ButtonComponent @click="submit" id="custom-button_2" buttonText="Sign Up" />
+          </div>
         </div>
 
-        <div>
-          <RouterLink to="/LogIn">
-            <ButtonComponent id="custom-button_2" buttonText="Sign Up"
-          /></RouterLink>
-        </div>
+        <div></div>
 
         <h4>
           Already have an account?<RouterLink to="/LogIn"><span>Sign In</span></RouterLink>
@@ -188,7 +243,7 @@ label {
   margin: 0 auto;
 }
 
-#custom-button_2{
+#custom-button_2 {
   color: #fff;
   font-family: Lato;
   font-size: 16px;
@@ -225,5 +280,7 @@ input {
 
 .alert {
   color: red;
+  text-decoration-line: none;
+  font-style: none;
 }
 </style>
