@@ -47,17 +47,21 @@ const isPasswordConfirmed = computed(() => {
 
 
 const isPhoneNumber = computed(() => {
-  return startValidation.value ? typeof parseInt(phoneNumber.value, 10) == "number" : null;
+  return startValidation.value
+    ? phoneNumber.value.length >= 10 && /^[0-9]*$/.test(phoneNumber.value)
+    : null;
 });
 
-console.log(isPhoneNumber);
+
 
 const checkFirstName = computed(() => {
-  return startValidation.value ? typeof firstName.value == "string" : null;
+  //  return startValidation.value ? typeof firstName.value == "string" : null;
+
+  return startValidation.value ? /\d/.test(firstName.value) : null;
 });
 
 const checkLastName = computed(() => {
-  return startValidation.value ? typeof lastName.value == "string" : null;
+  return startValidation.value ? /\d/.test(lastName.value) : null;
 });
 
 if (
@@ -75,7 +79,7 @@ if (
 </script>
 
 <template>
-  <span> {{ firstName }}</span>
+
   <section class="sectionTwo">
     <div class="logo-Div">
       <img src="../assets/icons/Main-logo.svg" alt="" class="logo" />
@@ -86,12 +90,12 @@ if (
         <div class="sectionInput">
           <label for="input">First Name</label>
           <input type="text" class="input-field" v-model="firstName" />
-          <span v-if="!checkFirstName && firstName !== ''" class="alert"> Enter valid first name!</span>
+          <span v-if="checkFirstName && firstName !== ''" class="alert"> Enter valid first name!</span>
         </div>
         <div class="sectionInput">
           <label for="input">Last Name</label>
           <input type="text" class="input-field" v-model="lastName" />
-          <span v-if="!checkLastName && lastName !== ''" class="alert"> Enter valid last name!</span>
+          <span v-if="checkLastName && lastName !== ''" class="alert"> Enter valid last name!</span>
         </div>
       </div>
       <div class="Options">
@@ -103,7 +107,7 @@ if (
         <div class="sectionInput">
           <label for="input">Phone Number</label>
           <input type="text" class="input-field" v-model="phoneNumber" />
-          <span v-if="!isPhoneNumber && phoneNumber.length > 9" class="alert">
+          <span v-if="!isPhoneNumber && phoneNumber != ''" class="alert">
             Enter a valid phone number!</span
           >
         </div>

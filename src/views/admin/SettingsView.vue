@@ -1,11 +1,9 @@
 <script setup>
 import { ref } from 'vue';
-import DashboardTitleComponent from '../../components/DashboardTitleComponent.vue';
+import DashboardHeaderComponent from '../components/DashboardHeaderComponent.vue';
 import ProfileComponent from '../../components/ProfileComponent.vue'
 import TimerComponent from '../../components/TimerComponent.vue';
-
 const activeTab = ref('profile');
-
 const changeTab = (tab) => {
     activeTab.value = tab;
 };
@@ -15,12 +13,12 @@ const changeTab = (tab) => {
     <div class="container">
         <div class="section">
             <DashboardTitleComponent cardTitle="Profiles and Settings" cardText="Helps you set admin profile and give other users permissions"/>
-    
-    
+
+
             <div class="about-center section-center">
                 <article class="about">
                     <!-- btn section -->
-    
+
                     <div class="btn-section">
                         <button class="tab-btn" :class="{ active: activeTab === 'profile' }"
                             @click="changeTab('profile')">Admin Profile</button>
