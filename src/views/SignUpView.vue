@@ -75,6 +75,10 @@ const dbResponse = ref("");
   // send data api for validation against the db
   // const http = 
 
+  const data = {
+
+  }
+
 const applicantSignup = async () => {
   const data = {
 
