@@ -10,8 +10,8 @@ const route = useRoute();
         <div class="profile">
           <img class="profile-img" src="@/assets/icons/userprofile.png" alt="profile picture" />
           <div class="details">
-            <h1 class="profile-name">Andy Cole</h1>
-            <p class="profile-mail">cole@gmal.com</p>
+            <h1 class="profile-name">kwaku manu</h1>
+            <p class="profile-mail">manu@gmail.com</p>
           </div>
         </div>
 

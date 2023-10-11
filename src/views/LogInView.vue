@@ -1,6 +1,19 @@
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import ButtonComponent from "../components/ButtonComponent.vue";
+
+const email = ref("");
+
+const isEmailValid = computed(() => {
+  return email.value ? /^\w+([\.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email.value)
+    : null;
+});
+
+
+
+
+
+
 </script>
 
 <template>
@@ -12,8 +25,9 @@ import ButtonComponent from "../components/ButtonComponent.vue";
 <div class="registration-form">
 <div class="Options">
 <div class="sectionInput">
-<label for="input">Email</label>
-<input type="text" class="input-field" />
+    <label for="input">Email Address</label>
+    <input type="text" class="input-field" v-model="email" />
+    <span v-if="!isEmailValid && email !== ''" class="alert"> Enter a valid email</span>
 </div>
 <div class="sectionInput">
 <label for="input">Password</label>
@@ -141,5 +155,11 @@ align-items: center;
 
 input {
 padding: 20px;
+}
+
+.alert {
+  color: red;
+  text-decoration-line: none;
+  font-style: none;
 }
 </style>
