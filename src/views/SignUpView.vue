@@ -1,188 +1,286 @@
 <script setup>
-import ButtonComponent from '../components/ButtonComponent.vue';
-import { ref } from 'vue';
+import ButtonComponent from "../components/ButtonComponent.vue";
+import { ref, computed } from "vue";
 // import { faEye } from '@fortawesome/free-solid-svg-icons';
 // import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 const showPassword = ref(false);
 function togglePasswordVisibility() {
-      showPassword.value = !showPassword.value;
-    }
+  showPassword.value = !showPassword.value;
+}
+
+const firstName = ref("");
+const lastName = ref("");
+const email = ref("");
+const password = ref("");
+const phoneNumber = ref("");
+const confirmPassword = ref("");
+
+//TODO form validators component
+// sign up
+// log in
+// application
+
+// const buttonState = ref(true);
+
+const startValidation = ref(false);
+
+function submit() {
+  startValidation.value = true;
+}
+
+const isEmailValid = computed(() => {
+  return startValidation.value
+    ? /^\w+([\.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email.value)
+    : null;
+});
+
+const checkPassword = computed(() => {
+  return startValidation.value
+    ? /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})/.test(password.value)
+    : null;
+});
+
+const isPasswordConfirmed = computed(() => {
+  return startValidation.value ? password.value === confirmPassword.value : null;
+});
+
+
+const isPhoneNumber = computed(() => {
+  return startValidation.value ? typeof parseInt(phoneNumber.value, 10) == "number" : null;
+});
+
+console.log(isPhoneNumber);
+
+const checkFirstName = computed(() => {
+  return startValidation.value ? typeof firstName.value == "string" : null;
+});
+
+const checkLastName = computed(() => {
+  return startValidation.value ? typeof lastName.value == "string" : null;
+});
+
+if (
+  checkPassword.value &&
+  checkFirstName.value &&
+  checkLastName.value &&
+  isEmailValid.value &&
+  isPhoneNumber.value &&
+  isPasswordConfirmed.value
+){
+
+// send data api for validation against the db
+}
+  
 </script>
 
-
 <template>
-    <section class="sectionTwo">
-            <div class="logo-Div">
-                <img src="../assets/icons/Main-logo.svg" alt="" class="logo"/> 
-                <h4>Applicant Sign Up</h4>
-            </div>
-        <div class="registration-form">
-            <div class="Options">
-                <div class="sectionInput">
-                    <label for="input">First Name</label>
-                    <input type="text" class="input-field">
-                </div>
-                <div class="sectionInput">
-                    <label for="input">Last Name</label>
-                    <input type="text" class="input-field" >
-                </div>
-            </div>
-            <div class="Options">
-                <div class="sectionInput">
-                    <label for="input">Email Address</label>
-                    <input type="text" class="input-field">
-                </div>
-                <div class="sectionInput">
-                    <label for="input">Phone Number</label>
-                    <input type="text" class="input-field">
-                </div>
-            </div>
-            <div class="Options">
-                <div class="sectionInput">
-                    <label for="input">Password</label>
-                    <input :type="showPassword ? 'text' : 'password'" class="input-field">
-                    <span @click="togglePasswordVisibility"><font-awesome-icon :icon="faEye" /></span>
-                </div>
-                <div class="sectionInput">
-                    <label for="input">Confirm Password</label>
-                    <input :type="showPassword ? 'text' : 'password'" class="input-field">
-                    <span @click="togglePasswordVisibility">
-      <font-awesome-icon :icon="faEye" />
-    </span>
-                </div>
-            </div>
+  <span> {{ firstName }}</span>
+  <section class="sectionTwo">
+    <div class="logo-Div">
+      <img src="../assets/icons/Main-logo.svg" alt="" class="logo" />
+      <h4>Applicant Sign Up</h4>
+    </div>
+    <div class="registration-form">
+      <div class="Options">
+        <div class="sectionInput">
+          <label for="input">First Name</label>
+          <input type="text" class="input-field" v-model="firstName" />
+          <span v-if="!checkFirstName && firstName !== ''" class="alert"> Enter valid first name!</span>
         </div>
-        <div class="Infor-class">
+        <div class="sectionInput">
+          <label for="input">Last Name</label>
+          <input type="text" class="input-field" v-model="lastName" />
+          <span v-if="!checkLastName && lastName !== ''" class="alert"> Enter valid last name!</span>
+        </div>
+      </div>
+      <div class="Options">
+        <div class="sectionInput">
+          <label for="input">Email Address</label>
+          <input type="text" class="input-field" v-model="email" />
+          <span v-if="!isEmailValid && email !== ''" class="alert"> Enter a valid email</span>
+        </div>
+        <div class="sectionInput">
+          <label for="input">Phone Number</label>
+          <input type="text" class="input-field" v-model="phoneNumber" />
+          <span v-if="!isPhoneNumber && phoneNumber.length > 9" class="alert">
+            Enter a valid phone number!</span
+          >
+        </div>
+      </div>
+      <div class="Options">
+        <div class="sectionInput">
+          <label for="input">Password</label>
 
-     <div class="Btn-class"><RouterLink to="/LogIn"><ButtonComponent id="custom-button_1" buttonText = 'Sign Up'/></RouterLink></div>
-         <h4>Already have an account?<RouterLink to="/LogIn"><span>Sign In</span></RouterLink></h4>
+          <input
+            :type="showPassword ? 'text' : 'password'"
+            class="input-field"
+            v-model="password"
+          />
+          <span v-if="!checkPassword && password !== ''" class="alert">
+            Password must have a number, uppercase and <br> lowecase letters and special characters</span
+          >
+          <span @click="togglePasswordVisibility"><font-awesome-icon :icon="faEye" /></span>
         </div>
-    </section>
+        <div class="sectionInput">
+          <label for="input">Confirm Password</label>
+          <input
+            :type="showPassword ? 'text' : 'password'"
+            class="input-field"
+            v-model="confirmPassword"
+          />
+          <span v-if="!isPasswordConfirmed && confirmPassword !== ''" class="alert">
+            Passwords do not match!</span
+          >
+        </div>
+      </div>
+      <div class="Infor-class">
+        <div>
+          <!-- <div v-if="!buttonState">
+            <ButtonComponent  id="custom-button_1" buttonText="Sign Up" />
+          </div>
+          
+          <div v-else >
+             <ButtonComponent @click="submit" id="custom-button_2" buttonText="Sign Up" />
+          </div> -->
+
+          <div>
+            <ButtonComponent @click="submit" id="custom-button_2" buttonText="Sign Up" />
+          </div>
+        </div>
+
+        <div></div>
+
+        <h4>
+          Already have an account?<RouterLink to="/LogIn"><span>Sign In</span></RouterLink>
+        </h4>
+      </div>
+    </div>
+  </section>
 </template>
 
-
-
 <style scoped>
-.sectionTwo{
-    padding-top: 229.58px;   
-  padding-right: 630px;  
-  padding-bottom: 276px;
-  padding-left: 631px; 
+.sectionTwo {
+  padding: 120px;
   font-family: Lato;
-  
 }
-.logo-Div{
-    display: flex;
-    flex-direction: column;
-    align-content: center;
-    justify-content: center;
-    gap: 24px;
-}
-
-.logo{
-    max-width: 110.103px;
-    max-height: 20.845px;
-    width: 100%;
-    height: 100%;
-     flex-shrink: 0;
-     margin: 0 auto;
-}
-.logo-Div h4{
-    color: #2B3C4E;
-font-family: Lato;
-font-size: 24px;
-font-style: italic;
-font-weight: 500;
-line-height: normal;
-text-align: center;
+.logo-Div {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  gap: 24px;
 }
 
-.registration-form{
-    padding-top: 90.58px;
-     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap:15px;
+.logo {
+  max-width: 110.103px;
+  max-height: 20.845px;
+  width: 100%;
+  height: 100%;
+  flex-shrink: 0;
+  margin: 0 auto;
+}
+.logo-Div h4 {
+  color: #2b3c4e;
+  font-family: Lato;
+  font-size: 24px;
+  font-style: italic;
+  font-weight: 500;
+  line-height: normal;
+  text-align: center;
 }
 
-label{
-    color: #4F4F4F;
-font-family: Lato;
-font-size: 14px;
-font-style: normal;
-font-weight: 400;
-line-height: normal;
-}
-.sectionInput{
-    
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-
+.registration-form {
+  /* padding: 20px;  */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
 }
 
-.Options{
-    display: flex;
-    gap: 62px;
+label {
+  color: #4f4f4f;
+  font-family: Lato;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+.sectionInput {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
 
-
-.input-field{
-    border-radius: 4px;
-border: 1.5px solid #BDBDBD;
-width: 379px;
-height: 48px;
-flex-shrink: 0;
+.Options {
+  display: flex;
+  gap: 62px;
 }
 
-.Infor-class{
-    display: flex;
-    flex-direction: column;
-    padding-top: 40px;
-    gap: 10px;
+.input-field {
+  border-radius: 4px;
+  border: 1.5px solid #bdbdbd;
+  width: 379px;
+  height: 48px;
+  flex-shrink: 0;
 }
 
-.Btn-class{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
+.Infor-class {
+  display: flex;
+  flex-direction: column;
+  padding-top: 40px;
+  gap: 10px;
 }
 
-#custom-buton_1{
-    color: #FFF;
-font-family: Lato;
-font-size: 16px;
-font-style: normal;
-font-weight: 700;
-line-height: normal;
-margin: 0 auto;
+#custom-button_1 {
+  color: #fff;
+  font-family: Lato;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  margin: 0 auto;
 }
 
-
-
-
-.Infor-class h4{
-    color: #4F4F4F;
-font-family: Lato;
-font-size: 14px;
-font-style: italic;
-font-weight: 400;
-line-height: normal;
-text-align: center;
+#custom-button_2 {
+  color: #fff;
+  font-family: Lato;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  margin: 0 auto;
+  cursor: pointer;
 }
 
-span{
-    color: #1A2C56;
-font-family: Lato;
-font-size: 14px;
-font-style: italic;
-font-weight: 400;
-line-height: normal;
-text-decoration-line: underline;
+.Infor-class h4 {
+  color: #4f4f4f;
+  font-family: Lato;
+  font-size: 14px;
+  font-style: italic;
+  font-weight: 400;
+  line-height: normal;
+  text-align: center;
 }
 
+span {
+  color: #1a2c56;
+  font-family: Lato;
+  font-size: 14px;
+  font-style: italic;
+  font-weight: 400;
+  line-height: normal;
+  text-decoration-line: underline;
+}
+
+input {
+  padding: 20px;
+}
+
+.alert {
+  color: red;
+  text-decoration-line: none;
+  font-style: none;
+}
 </style>
