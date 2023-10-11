@@ -1,13 +1,20 @@
 <script setup>
 import ButtonComponent from "../components/ButtonComponent.vue";
 import { ref, computed } from "vue";
-// import { faEye } from '@fortawesome/free-solid-svg-icons';
-// import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
-const showPassword = ref(false);
-function togglePasswordVisibility() {
-  showPassword.value = !showPassword.value;
-}
+import axios from "axios";
+
+// const http = axios.create({
+//   baseURL: "http://localhost:7000/api/v1",
+//   headers: {
+//     "Content-type": "application/json",
+//   },
+// });
+
+// const applicantSignup = async (data) => {
+//   const response = await http.post("/apply", data);
+//   return response;
+// };
 
 const firstName = ref("");
 const lastName = ref("");
@@ -37,7 +44,8 @@ const isEmailValid = computed(() => {
 
 const checkPassword = computed(() => {
   return startValidation.value
-    ? /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})/.test(password.value)
+    ? // ? /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})/.test(password.value)
+      /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})/.test(password.value)
     : null;
 });
 
@@ -45,14 +53,11 @@ const isPasswordConfirmed = computed(() => {
   return startValidation.value ? password.value === confirmPassword.value : null;
 });
 
-
 const isPhoneNumber = computed(() => {
   return startValidation.value
     ? phoneNumber.value.length >= 10 && /^[0-9]*$/.test(phoneNumber.value)
     : null;
 });
-
-
 
 const checkFirstName = computed(() => {
   //  return startValidation.value ? typeof firstName.value == "string" : null;
@@ -64,22 +69,53 @@ const checkLastName = computed(() => {
   return startValidation.value ? /\d/.test(lastName.value) : null;
 });
 
-if (
-  checkPassword.value &&
-  checkFirstName.value &&
-  checkLastName.value &&
-  isEmailValid.value &&
-  isPhoneNumber.value &&
-  isPasswordConfirmed.value
-){
+const dbResponse = ref("");
 
-// send data api for validation against the db
-}
-  
+// if (checkFirstName.value && checkLastName.value) {
+  // send data api for validation against the db
+  // const http = 
+
+  const data = {
+    "email": "biology@efef.com",
+    "firstname": "house",
+    "lastname": "gregory",
+    "password": "letwaltwhite88io",
+    "phonenumber": "00000000000"
+  }
+
+const applicantSignup = async () => {
+  const data = {
+    "email": "biologythe@efef.com",
+    "firstname": "house",
+    "lastname": "gregory",
+    "password": "letwaltwhite88io",
+    "phonenumber": "00000000000"
+  }
+  const response = await axios
+    .create({
+  baseURL: "http://localhost:7000/api/v1/",
+  headers: {
+    "Content-type": "application/json",
+  },
+}).post("apply/signup", data);
+console.log(response)
+  return response;
+};
+
+
+//   applicantSignup
+//     .create()
+//     .then((response) => {
+//       dbResponse.value = response.data;
+//       console.log(response.data);
+//     })
+//     .catch((e) => {
+//       console.log(e);
+//     });
+// }
 </script>
 
 <template>
-
   <section class="sectionTwo">
     <div class="logo-Div">
       <img src="../assets/icons/Main-logo.svg" alt="" class="logo" />
@@ -90,7 +126,9 @@ if (
         <div class="sectionInput">
           <label for="input">First Name</label>
           <input type="text" class="input-field" v-model="firstName" />
-          <span v-if="checkFirstName && firstName !== ''" class="alert"> Enter valid first name!</span>
+          <span v-if="checkFirstName && firstName !== ''" class="alert">
+            Enter valid first name!</span
+          >
         </div>
         <div class="sectionInput">
           <label for="input">Last Name</label>
@@ -104,6 +142,7 @@ if (
           <input type="text" class="input-field" v-model="email" />
           <span v-if="!isEmailValid && email !== ''" class="alert"> Enter a valid email</span>
         </div>
+
         <div class="sectionInput">
           <label for="input">Phone Number</label>
           <input type="text" class="input-field" v-model="phoneNumber" />
@@ -112,27 +151,23 @@ if (
           >
         </div>
       </div>
+
       <div class="Options">
         <div class="sectionInput">
           <label for="input">Password</label>
 
-          <input
-            :type="showPassword ? 'text' : 'password'"
-            class="input-field"
-            v-model="password"
-          />
+          <input class="input-field" v-model="password" />
+
           <span v-if="!checkPassword && password !== ''" class="alert">
-            Password must have a number, uppercase and <br> lowecase letters and special characters</span
+            Password must have a number, uppercase and <br />
+            lowecase letters and special characters</span
           >
-          <span @click="togglePasswordVisibility"><font-awesome-icon :icon="faEye" /></span>
+          <!-- <span @click="togglePasswordVisibility"><font-awesome-icon :icon="faEye" /></span> -->
         </div>
+
         <div class="sectionInput">
           <label for="input">Confirm Password</label>
-          <input
-            :type="showPassword ? 'text' : 'password'"
-            class="input-field"
-            v-model="confirmPassword"
-          />
+          <input class="input-field" v-model="confirmPassword" />
           <span v-if="!isPasswordConfirmed && confirmPassword !== ''" class="alert">
             Passwords do not match!</span
           >
@@ -149,7 +184,7 @@ if (
           </div> -->
 
           <div>
-            <ButtonComponent @click="submit" id="custom-button_2" buttonText="Sign Up" />
+            <ButtonComponent @click="applicantSignup" id="custom-button_2" buttonText="Sign Up" />
           </div>
         </div>
 
