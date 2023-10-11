@@ -1,19 +1,19 @@
 <script setup>
-import { ref } from "vue";
-import axios from "axios";
-import ButtonComponent from "../components/ButtonComponent.vue";
-
+import { ref } from 'vue';
+import axios from 'axios'
+import ButtonComponent from '../components/ButtonComponent.vue';
+import {RouterLink} from "vue-router";
 const userInfo = ref({
-  firstName: "",
-  lastName: "",
-  emailAddress: "",
-  dateOfBirth: "",
-  address: "",
-  university: "",
-  course: "",
-  cgpa: "",
-  cv: null,
-  photo: null,
+firstName: '',
+lastName: '',
+emailAddress: '',
+dateOfBirth: '',
+address: "",
+university: '',
+course: '',
+cgpa: '',
+cv: null,
+photo: null,
 });
 
 // upload files
@@ -25,11 +25,61 @@ const userInfo = ref({
 //         label: 'Upload Photo'
 //       }
 // })
-// for catching errors
-const onSubmit = () => {
-  if (!userInfo.value === "") {
-    alert("this field is required");
-  }
+//  for catching errors
+ const onSubmit =() => {
+     if(!userInfo.value === ""){
+         alert('Guy! this field is required 🐍')
+     }
+ };
+
+const errors = ref({
+    firstName: '',
+    lastName: '',
+    emailAddress: '',
+    dateOfBirth: '',
+    address: '',
+    university: '',
+    course: '',
+    cgpa: '',
+    cv: '',
+    img: '',
+});
+
+const loading = ref(false);
+const error = ref('');
+
+const createUser = async () => {
+    loading.value = true;
+    const formData = new FormData();
+
+    for (const key in user.value) {
+        formData.append(key, user.value[key]);
+    }
+
+    try {
+        const token = localStorage.getItem('token');
+        const response = await axios.post('url', formData, {
+            headers: {
+                Authorization: `Basic ${token}`,
+            },
+        });
+
+        localStorage.removeItem('token');
+        const { data } = response.data;
+        localStorage.setItem('token', data.token);
+        loading.value = false;
+
+        if (data.details.applicant) {
+            // Assuming you have a router instance set up
+            // Use this.$router.push('/dashboard') to navigate
+        } else {
+            // Assuming you have a router instance set up
+            // Use this.$router.push('/pre-dashboard') to navigate
+        }
+    } catch (err) {
+        loading.value = false;
+        error.value = err.response.data.message;
+    }
 };
 </script>
 
@@ -79,15 +129,32 @@ const onSubmit = () => {
       </form>
     </div>
     <div>
-      <RouterLink class="btn-btn" to="dashboard"
-        ><ButtonComponent buttonText="Sign Up"
-      /></RouterLink>
-      <!-- <div class="subText">Already have an account? <a id="sigIn" href="#">Sign In</a></div> -->
-      <div class="subText">
-        Already have an account? <RouterLink id="signIn" to="SignUp">Sign In</RouterLink>
-      </div>
-    </div>
-  </div>
+    <label for="first Name">First Name</label>
+    <input type="text" id="first" v-model="userInfo.first" required>
+    <label for="email">Email</label>
+    <input type="text" id="email" v-model="userInfo.email" required>
+    <label for="address">Address</label>
+    <input type="text" id="address" v-model="userInfo.address" required>
+    <label for="course">Course Of Study</label>
+    <input type="text" id="course" v-model="userInfo.course"  required>
+</div>
+    <div>
+    <label for="last name">Lastname</label>
+    <input type="text" id="last" v-model="userInfo.last" required>
+    <label for="date of birth">Date of Birth</label>
+    <input type="text" id="date" v-model="userInfo.date" placeholder="dd/mm/yyyy" required>
+    <label for="university">University</label>
+    <input type="text" id="uni" v-model="userInfo.uni" required>
+    <label  for="CGPA">CGPA</label>
+    <input type="text" id="CGPA" v-model="userInfo.CGPA" required>
+</div>
+</form>
+</div>
+  <div><RouterLink class="btn-btn" to="dashboard">
+  <button>Submit</button>
+</RouterLink></div>
+</div>
+
 </template>
 
 <style scoped>
@@ -206,16 +273,43 @@ input placeholder {
   text-align: left;
 }
 
-.btn-btn {
-  display: inline-block;
-  justify-content: center;
-  align-items: center;
-  margin-top: 43px;
-  width: 500px;
-  height: 50px;
-  color: #ffffff;
-  /* top: 829px
+.btn-btn button{
+    display: inline-block;
+    justify-content: center;
+    align-items: center;
+    margin-top: 43px;
+    width: 379px;
+height: 50px;
+color: #FFFFFF; 
+background:#7557D3;
+font-family: Lato;
+font-size: 16px;
+font-weight: 700;
+line-height: 19px;
+letter-spacing: 0em;
+/* text-align: left; */
+padding: 14px 163px 16px 165px;
+margin-top:43px;
+border: none;
+border-radius: 4px;
+
+}
+.btn-btn{
+    display: inline-block;
+    justify-content: center;
+    align-items: center;
+    margin-top: 43px;
+    width: 379px;
+height: 50px;
+color: #FFFFFF;
+/* top: 829px
 left: 524px */
+/* width: 379px
+height: 50px
+top: 829px
+left: 524px */
+
+
 }
 
 .subText{
