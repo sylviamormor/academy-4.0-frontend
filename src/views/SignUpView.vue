@@ -76,19 +76,19 @@ const dbResponse = ref("");
   // const http = 
 
   const data = {
-    "email": "biology@efef.com",
-    "firstname": "house",
-    "lastname": "gregory",
-    "password": "letwaltwhite88io",
+    "email": "",
+    "firstname": "",
+    "lastname": "",
+    "password": "",
     "phonenumber": "00000000000"
   }
 
 const applicantSignup = async () => {
   const data = {
-    "email": "biologythe@efef.com",
-    "firstname": "house",
-    "lastname": "gregory",
-    "password": "letwaltwhite88io",
+    "email": "",
+    "firstname": "",
+    "lastname": "",
+    "password": "",
     "phonenumber": "00000000000"
   }
   const response = await axios
