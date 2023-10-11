@@ -49,50 +49,53 @@ const checkPassword = computed(() => {
     : null;
 });
 
+
 const isPasswordConfirmed = computed(() => {
   return startValidation.value ? password.value === confirmPassword.value : null;
 });
 
+// check if the phone number
+// is more than equal to 10 or more
+// if it consists of numbers
 const isPhoneNumber = computed(() => {
   return startValidation.value
     ? phoneNumber.value.length >= 10 && /^[0-9]*$/.test(phoneNumber.value)
     : null;
 });
 
+// check if the name has a number in it
 const checkFirstName = computed(() => {
   //  return startValidation.value ? typeof firstName.value == "string" : null;
 
   return startValidation.value ? /\d/.test(firstName.value) : null;
 });
 
+// check if the name has a number in it
 const checkLastName = computed(() => {
   return startValidation.value ? /\d/.test(lastName.value) : null;
 });
 
-const dbResponse = ref("");
 
-// if (checkFirstName.value && checkLastName.value) {
-  // send data api for validation against the db
-  // const http = 
 
-  const data = {
-
-  }
-
-const applicantSignup = async () => {
-  const data = {
-
-  }
-  const response = await axios
-    .create({
-  baseURL: "http://localhost:7000/api/v1/",
-  headers: {
-    "Content-type": "application/json",
-  },
-}).post("apply/signup", data);
-console.log(response)
-  return response;
-};
+// const applicantSignup = async () => {
+//   const data = {
+//     "email": "student@gmail.com",
+//     "firstname": "student",
+//     "lastname": "traveller",
+//     "password": "thetraveller?",
+//     "phonenumber": "00000000000"
+//   }
+//   const response = await axios
+//     .create({
+//   baseURL: "http://localhost:7000/api/v1/",
+//   headers: {
+//     "Content-type": "application/json",
+//   },
+// }).post("apply/signup", data);
+// console.log(response)
+//   this.$router.push("LogIn");
+//   return response;
+// };
 
 
 //   applicantSignup
@@ -132,13 +135,13 @@ console.log(response)
         <div class="sectionInput">
           <label for="input">Email Address</label>
           <input type="text" class="input-field" v-model="email" />
-          <span v-if="!isEmailValid && email !== ''" class="alert"> Enter a valid email</span>
+          <span v-if="startValidation && !isEmailValid && email !== ''" class="alert"> Enter a valid email</span>
         </div>
 
         <div class="sectionInput">
           <label for="input">Phone Number</label>
           <input type="text" class="input-field" v-model="phoneNumber" />
-          <span v-if="!isPhoneNumber && phoneNumber != ''" class="alert">
+          <span v-if="startValidation && !isPhoneNumber && phoneNumber != ''" class="alert">
             Enter a valid phone number!</span
           >
         </div>
@@ -150,7 +153,7 @@ console.log(response)
 
           <input class="input-field" v-model="password" />
 
-          <span v-if="!checkPassword && password !== ''" class="alert">
+          <span v-if="startValidation && !checkPassword && password !== ''" class="alert">
             Password must have a number, uppercase and <br />
             lowecase letters and special characters</span
           >
@@ -160,7 +163,10 @@ console.log(response)
         <div class="sectionInput">
           <label for="input">Confirm Password</label>
           <input class="input-field" v-model="confirmPassword" />
-          <span v-if="!isPasswordConfirmed && confirmPassword !== ''" class="alert">
+          <span
+            v-if="startValidation && !isPasswordConfirmed && confirmPassword !== ''"
+            class="alert"
+          >
             Passwords do not match!</span
           >
         </div>
@@ -176,7 +182,8 @@ console.log(response)
           </div> -->
 
           <div>
-            <ButtonComponent @click="applicantSignup" id="custom-button_2" buttonText="Sign Up" />
+            <ButtonComponent @click="submit" id="custom-button_2" buttonText="Sign Up" />
+            <!-- <ButtonComponent @click="applicantSignup" id="custom-button_2" buttonText="Sign Up" /> -->
           </div>
         </div>
 
