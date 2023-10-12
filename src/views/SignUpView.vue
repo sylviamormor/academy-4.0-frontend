@@ -1,9 +1,12 @@
 <script setup>
 import ButtonComponent from "../components/ButtonComponent.vue";
 import { ref, computed } from "vue";
-// import axios from "axios";
 import { applicantSignup } from "../utils/data-utils";
 // import axios from "axios";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+
 
 // const http = axios.create({
 //   baseURL: "http://localhost:7000/api/v1",
@@ -40,7 +43,6 @@ const confirmPassword = ref("");
 
 const startValidation = ref(false);
 
-
 // const applicantSignup = async (data) => {
 //   const response = await axios
 //     .create({
@@ -55,44 +57,50 @@ const startValidation = ref(false);
 // };
 
 async function submit() {
-  startValidation.value = true;
-  console.log('email', isEmailValid.value);
-  console.log('firstname', checkFirstName.value);
-  console.log('lastname', checkLastName.value);
-  console.log('check password', checkPassword.value);
-  console.log('password confirmed', isPasswordConfirmed.value);
-  // console.log('email', isEmailValid.value);
+  try {
+    // startValidation.value = true;
+    // console.log("email", isEmailValid.value);
+    // console.log("firstname", checkFirstName.value);
+    // console.log("lastname", checkLastName.value);
+    // console.log("check password", checkPassword.value);
+    // console.log("password confirmed", isPasswordConfirmed.value);
+    // console.log('email', isEmailValid.value);
 
-  if (
-    isEmailValid.value &&
-    !checkFirstName.value &&
-    !checkLastName.value &&
-    checkPassword.value &&
-    isPasswordConfirmed.value &&
-    isPhoneNumber.value
-  ) {
-    const data = {
-      email: email.value,
-      firstname: firstName.value,
-      lastname: lastName.value,
-      password: password.value,
-      phonenumber: phoneNumber.value,
-      // email: "ama1@gmail.com",
-      // firstname: "ama",
-      // lastname: "ghana",
-      // password: "kofiGhana001@",
-      // phonenumber: "0000000000",
-    };
+    if (
+      isEmailValid.value &&
+      !checkFirstName.value &&
+      !checkLastName.value &&
+      checkPassword.value &&
+      isPasswordConfirmed.value &&
+      isPhoneNumber.value
+    ) {
+      const data = {
+        email: email.value,
+        firstname: firstName.value,
+        lastname: lastName.value,
+        password: password.value,
+        phonenumber: phoneNumber.value,
+        // email: "ama1@gmail.com",
+        // firstname: "ama",
+        // lastname: "ghana",
+        // password: "kofiGhana001@",
+        // phonenumber: "0000000000",
+      };
 
-    const y = await applicantSignup(data);
-
-    console.log(y);
+      const response = await applicantSignup(data);
+      if (response.status === 201) {
+        router.push("LogIn");
+      } else {
+        // display error message
+      }
+    }
+  } catch (error) {
+    console.log(error);
     // console.log(response);
     // return response;
     // //if(response){}
   }
-};
-
+}
 const isEmailValid = computed(() => {
   return startValidation.value
     ? /^\w+([\.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email.value)
