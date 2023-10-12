@@ -11,12 +11,12 @@ import LogInView from "../views/LogInView.vue";
 import AdminDashboardLayout from "../layouts/AdminDashboardLayout.vue";
 import AdminLoginView from "../views/admin/AdminLoginView.vue";
 import AdminDashboardView from "../views/admin/AdminDashboardView.vue";
- import CreateAppView from "../views/admin/CreateAppView.vue";
-//import ApplicationEntriesView from "../views/ApplicationEntriesView.vue";
-// import ComposeAssessmentView from "../views/ComposeAssessmentView.vue";
-// import AssessmentHistoryView from "../views/AssessmentHistoryView.vue";
-// import AssessmentResultView from "../views/AssessmentResultView.vue";
-//import SettingsView from "../views/SettingsView.vue";
+import CreateAppView from "../views/admin/CreateAppView.vue";
+import ApplicationEntriesView from "../views/admin/ApplicationEntriesView.vue";
+import ComposeAssessmentView from "../views/admin/ComposeAssessmentView.vue";
+import AssessmentHistoryView from "../views/admin/AssessmentHistoryView.vue";
+import AssessmentResultView from "../views/admin/AssessmentResultView.vue";
+import SettingsView from "../views/admin/SettingsView.vue";
 
 
 const router = createRouter({
@@ -103,31 +103,31 @@ const router = createRouter({
             name: "createapp",
             component: CreateAppView
          },
-        // {
-        //   path: "/application-entries",
-        //   name: "applicationentries",
-        //   component: ApplicationEntriesView
-        // },
-        // {
-        //   path: "/compose-assessment",
-        //   name: "composeassessment",
-        //   component: ComposeAssessmentView
-        // },
-        // {
-        //   path: "/assessment-history",
-        //   name: "assessmentHistory",
-        //   component: AssessmentHistoryView
-        // },
-        // {
-        //   path: "/assessment-result",
-        //   name: "assessmentResult",
-        //   component: AssessmentResultView
-        // },
-        // {
-        //   path: "/profile-settings",
-        //   name: "settings",
-        //   component: settingsView
-        // },
+        {
+          path: "/application-entries",
+          name: "applicationentries",
+          component: ApplicationEntriesView
+        },
+        {
+          path: "/compose-assessment",
+          name: "composeassessment",
+          component: ComposeAssessmentView
+        },
+        {
+          path: "/assessment-history",
+          name: "assessmentHistory",
+          component: AssessmentHistoryView
+        },
+        {
+          path: "/assessment-result",
+          name: "assessmentResult",
+          component: AssessmentResultView
+        },
+        {
+          path: "/profile-settings",
+          name: "settings",
+          component: SettingsView
+        },
       ],
     },
   ],
