@@ -1,6 +1,8 @@
 // import http from "./http-utils";
 import axios from "axios";
 
+const baseUrl = "http://localhost:7000/api/v1/";
+
 // const http = async () => {
 //   const axiosInstance = await axios.create({
 //     baseURL: "http://localhost:7000/api/v1/",
@@ -14,7 +16,7 @@ import axios from "axios";
 const applicantSignup = async (data) => {
   const response = await axios
     .create({
-      baseURL: "http://localhost:7000/api/v1/",
+      baseURL: baseUrl,
       headers: {
         "Content-type": "application/json",
       },
@@ -24,7 +26,16 @@ const applicantSignup = async (data) => {
   return response;
 };
 
-export { applicantSignup };
+
+
+const applicantLogIn = async (data) => {
+  const response = await axios.post(`${baseUrl}apply/login`, data);
+  // this.$router.push("LogIn");
+  return response;
+};
+
+
+export { applicantSignup, applicantLogIn };
 //   update(id, data) {
 //     return http.put(`/admin/${id}`, data);
 //   }
