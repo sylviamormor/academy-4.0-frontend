@@ -17,19 +17,19 @@ import { applicantSignup } from "../utils/data-utils";
 //   return response;
 // };
 
-// const firstName = ref("");
-// const lastName = ref("");
-// const email = ref("");
-// const password = ref("");
-// const phoneNumber = ref("");
-// const confirmPassword = ref("");
+const firstName = ref("");
+const lastName = ref("");
+const email = ref("");
+const password = ref("");
+const phoneNumber = ref("");
+const confirmPassword = ref("");
 
-const firstName = ref("ama");
-const lastName = ref("ghana");
-const email = ref("ama@gmail.com");
-const password = ref("kofiGhana001@");
-const phoneNumber = ref("0000000000");
-const confirmPassword = ref("kofiGhana001@");
+// const firstName = ref("ama");
+// const lastName = ref("ghana");
+// const email = ref("ama@gmail.com");
+// const password = ref("kofiGhana001@");
+// const phoneNumber = ref("0000000000");
+// const confirmPassword = ref("kofiGhana001@");
 
 //TODO form validators component
 // sign up
@@ -72,16 +72,16 @@ async function submit() {
     isPhoneNumber.value
   ) {
     const data = {
-      // email: email.value,
-      // firstname: firstName.value,
-      // lastname: lastName.value,
-      // password: password.value,
-      // phonenumber: phoneNumber.value,
-      email: "ama1@gmail.com",
-      firstname: "ama",
-      lastname: "ghana",
-      password: "kofiGhana001@",
-      phonenumber: "0000000000",
+      email: email.value,
+      firstname: firstName.value,
+      lastname: lastName.value,
+      password: password.value,
+      phonenumber: phoneNumber.value,
+      // email: "ama1@gmail.com",
+      // firstname: "ama",
+      // lastname: "ghana",
+      // password: "kofiGhana001@",
+      // phonenumber: "0000000000",
     };
 
     const y = await applicantSignup(data);
