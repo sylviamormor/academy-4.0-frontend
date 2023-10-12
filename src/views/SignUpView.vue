@@ -1,12 +1,12 @@
 <script setup>
 import ButtonComponent from "../components/ButtonComponent.vue";
+import AlertMessageComponent from "../components/AlertMessageComponent.vue";
 import { ref, computed } from "vue";
 import { applicantSignup } from "../utils/data-utils";
 // import axios from "axios";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
-
 
 // const http = axios.create({
 //   baseURL: "http://localhost:7000/api/v1",
@@ -39,10 +39,16 @@ const confirmPassword = ref("");
 // log in
 // application
 
-// const buttonState = ref(true);
+const existingAccount = ref(false);
+const signUpState = ref(false);
+const errorSignUpState = ref(false);
+const errorState = ref(false);
 
 const startValidation = ref(false);
 
+function reloadPage() {
+  window.location.reload();
+}
 // const applicantSignup = async (data) => {
 //   const response = await axios
 //     .create({
@@ -58,13 +64,13 @@ const startValidation = ref(false);
 
 async function submit() {
   try {
-    // startValidation.value = true;
-    // console.log("email", isEmailValid.value);
-    // console.log("firstname", checkFirstName.value);
-    // console.log("lastname", checkLastName.value);
-    // console.log("check password", checkPassword.value);
-    // console.log("password confirmed", isPasswordConfirmed.value);
-    // console.log('email', isEmailValid.value);
+    startValidation.value = true;
+    console.log("email", isEmailValid.value);
+    console.log("firstname", checkFirstName.value);
+    console.log("lastname", checkLastName.value);
+    console.log("check password", checkPassword.value);
+    console.log("password confirmed", isPasswordConfirmed.value);
+    console.log("email", isEmailValid.value);
 
     if (
       isEmailValid.value &&
@@ -88,13 +94,45 @@ async function submit() {
       };
 
       const response = await applicantSignup(data);
+      console.log(response);
       if (response.status === 201) {
+
+        console.log(response);
+
+        signUpState.value = true;
+
+        setTimeout(() => {
+          signUpState.value = false;
+        }, 2000);
+
         router.push("LogIn");
-      } else {
+
+      } else if (response.status === 409) {
         // display error message
+
+        existingAccount.value = true;
+
+        setTimeout(() => {
+          existingAccount.value = false;
+        }, 4000);
+
+        reloadPage();
+
+        console.log(response);
       }
+    } else {
+      errorSignUpState.value = true;
+      setTimeout(() => {
+        errorSignUpState.value = false;
+      }, 2500);
     }
   } catch (error) {
+
+    errorState.value = true;
+    setTimeout(() => {
+      errorState.value = false;
+    }, 4000);
+    reloadPage();
     console.log(error);
     // console.log(response);
     // return response;
@@ -103,7 +141,7 @@ async function submit() {
 }
 const isEmailValid = computed(() => {
   return startValidation.value
-    ? /^\w+([\.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email.value)
+    ? /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email.value)
     : null;
 });
 
@@ -172,7 +210,16 @@ const checkLastName = computed(() => {
 </script>
 
 <template>
-  <section class="sectionTwo">
+  <div class="sectionTwo">
+    <div v-if="errorSignUpState">
+      <AlertMessageComponent message="Input fields cannot be empty!" />
+    </div>
+    <div v-if="existingAccount">
+      <AlertMessageComponent message="The account already exists!" />
+    </div>
+    <div v-if="errorState">
+      <AlertMessageComponent message="An error occured. Try again!" />
+    </div>
     <div class="logo-Div">
       <img src="../assets/icons/Main-logo.svg" alt="" class="logo" />
       <h4>Applicant Sign Up</h4>
@@ -257,20 +304,24 @@ const checkLastName = computed(() => {
         </h4>
       </div>
     </div>
-  </section>
+  </div>
 </template>
 
 <style scoped>
 .sectionTwo {
-  padding: 120px;
-  font-family: Lato;
+  /* padding: 50px;
+  font-family: Lato; */
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .logo-Div {
   display: flex;
   flex-direction: column;
-  align-content: center;
-  justify-content: center;
-  gap: 24px;
+  gap: 15px;
+  padding-top: 30px;
+  padding-bottom: 30px;
 }
 
 .logo {

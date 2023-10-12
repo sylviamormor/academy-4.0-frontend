@@ -20,7 +20,6 @@ const applicantSignup = async (data) => {
       },
     })
     .post("apply/signup", data);
-  console.log(response);
   // this.$router.push("LogIn");
   return response;
 };
