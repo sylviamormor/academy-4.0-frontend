@@ -1,19 +1,21 @@
-// import http from "/home/asante/Desktop/academy-4.0-frontend/src/utils/http-utils.js";
+// import http from "./http-utils";
+import axios from "axios";
 
-// export const applicantData = class ApplicantDataService {
-//   getAll() {
-//     return http.get("/admin");
-//   }
+const applicantSignup = async (data) => {
+  const response = await axios
+    .create({
+  baseURL: "http://localhost:7000/api/v1/",
+  headers: {
+    "Content-type": "application/json",
+  },
+}).post("apply/signup", data);
+console.log(response)
+  // this.$router.push("LogIn");
+  return response;
+};
 
-//   get(id) {
-//     return http.get(`/admin/${id}`);
-//   }
 
-// export const applicantSignup = async (data) => {
-//   const response = await http.post("/apply", data);
-//   return response;
-// };
-
+export { applicantSignup };
 //   update(id, data) {
 //     return http.put(`/admin/${id}`, data);
 //   }
@@ -29,4 +31,3 @@
 //   findByTitle(title) {
 //     return http.get(`/admin?title=${title}`);
 //   }
-//}

@@ -1,8 +1,9 @@
 <script setup>
 import ButtonComponent from "../components/ButtonComponent.vue";
 import { ref, computed } from "vue";
-
-import axios from "axios";
+// import axios from "axios";
+import { applicantSignup } from "../utils/data-utils";
+// import axios from "axios";
 
 // const http = axios.create({
 //   baseURL: "http://localhost:7000/api/v1",
@@ -16,12 +17,19 @@ import axios from "axios";
 //   return response;
 // };
 
-const firstName = ref("");
-const lastName = ref("");
-const email = ref("");
-const password = ref("");
-const phoneNumber = ref("");
-const confirmPassword = ref("");
+// const firstName = ref("");
+// const lastName = ref("");
+// const email = ref("");
+// const password = ref("");
+// const phoneNumber = ref("");
+// const confirmPassword = ref("");
+
+const firstName = ref("ama");
+const lastName = ref("ghana");
+const email = ref("ama@gmail.com");
+const password = ref("kofiGhana001@");
+const phoneNumber = ref("0000000000");
+const confirmPassword = ref("kofiGhana001@");
 
 //TODO form validators component
 // sign up
@@ -32,9 +40,58 @@ const confirmPassword = ref("");
 
 const startValidation = ref(false);
 
-function submit() {
+
+// const applicantSignup = async (data) => {
+//   const response = await axios
+//     .create({
+//   baseURL: "http://localhost:7000/api/v1/",
+//   headers: {
+//     "Content-type": "application/json",
+//   },
+// }).post("apply/signup", data);
+// console.log(response)
+//   // this.$router.push("LogIn");
+//   return response;
+// };
+
+async function submit() {
   startValidation.value = true;
-}
+  console.log('email', isEmailValid.value);
+  console.log('firstname', checkFirstName.value);
+  console.log('lastname', checkLastName.value);
+  console.log('check password', checkPassword.value);
+  console.log('password confirmed', isPasswordConfirmed.value);
+  // console.log('email', isEmailValid.value);
+
+  if (
+    isEmailValid.value &&
+    !checkFirstName.value &&
+    !checkLastName.value &&
+    checkPassword.value &&
+    isPasswordConfirmed.value &&
+    isPhoneNumber.value
+  ) {
+    const data = {
+      // email: email.value,
+      // firstname: firstName.value,
+      // lastname: lastName.value,
+      // password: password.value,
+      // phonenumber: phoneNumber.value,
+      email: "ama1@gmail.com",
+      firstname: "ama",
+      lastname: "ghana",
+      password: "kofiGhana001@",
+      phonenumber: "0000000000",
+    };
+
+    const y = await applicantSignup(data);
+
+    console.log(y);
+    // console.log(response);
+    // return response;
+    // //if(response){}
+  }
+};
 
 const isEmailValid = computed(() => {
   return startValidation.value
@@ -48,7 +105,6 @@ const checkPassword = computed(() => {
       /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})/.test(password.value)
     : null;
 });
-
 
 const isPasswordConfirmed = computed(() => {
   return startValidation.value ? password.value === confirmPassword.value : null;
@@ -75,8 +131,6 @@ const checkLastName = computed(() => {
   return startValidation.value ? /\d/.test(lastName.value) : null;
 });
 
-
-
 // const applicantSignup = async () => {
 //   const data = {
 //     "email": "student@gmail.com",
@@ -96,7 +150,6 @@ const checkLastName = computed(() => {
 //   this.$router.push("LogIn");
 //   return response;
 // };
-
 
 //   applicantSignup
 //     .create()
@@ -135,7 +188,9 @@ const checkLastName = computed(() => {
         <div class="sectionInput">
           <label for="input">Email Address</label>
           <input type="text" class="input-field" v-model="email" />
-          <span v-if="startValidation && !isEmailValid && email !== ''" class="alert"> Enter a valid email</span>
+          <span v-if="startValidation && !isEmailValid && email !== ''" class="alert">
+            Enter a valid email</span
+          >
         </div>
 
         <div class="sectionInput">
