@@ -79,9 +79,12 @@ const onSubmit = () => {
       </form>
     </div>
     <div>
-      <RouterLink class="btn-btn" to="dashboard"
-        ><ButtonComponent buttonText="Sign Up"
+      <div class="btn-btn">
+        <RouterLink  to="dashboard"
+        ><ButtonComponent buttonText="Submit"
       /></RouterLink>
+      </div>
+     
       <!-- <div class="subText">Already have an account? <a id="sigIn" href="#">Sign In</a></div> -->
       <div class="subText">
         Already have an account? <RouterLink id="signIn" to="SignUp">Sign In</RouterLink>
@@ -207,13 +210,14 @@ input placeholder {
 }
 
 .btn-btn {
-  display: inline-block;
+  padding-top: 50px;
+  /* display: inline-block;
   justify-content: center;
   align-items: center;
-  margin-top: 43px;
-  width: 500px;
+  margin-top: 43px; */
+  /* width: 50px;
   height: 50px;
-  color: #ffffff;
+  color: #ffffff; */
   /* top: 829px
 left: 524px */
 }

@@ -1,13 +1,24 @@
 <script setup>
 import ButtonComponent from "../components/ButtonComponent.vue";
+import AlertMessageComponent from "../components/AlertMessageComponent.vue";
 import { ref, computed } from "vue";
-// import { faEye } from '@fortawesome/free-solid-svg-icons';
-// import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { applicantSignup } from "../utils/data-utils";
+// import axios from "axios";
+import { useRouter } from "vue-router";
 
-const showPassword = ref(false);
-function togglePasswordVisibility() {
-  showPassword.value = !showPassword.value;
-}
+const router = useRouter();
+
+// const http = axios.create({
+//   baseURL: "http://localhost:7000/api/v1",
+//   headers: {
+//     "Content-type": "application/json",
+//   },
+// });
+
+// const applicantSignup = async (data) => {
+//   const response = await http.post("/apply", data);
+//   return response;
+// };
 
 const firstName = ref("");
 const lastName = ref("");
@@ -16,28 +27,128 @@ const password = ref("");
 const phoneNumber = ref("");
 const confirmPassword = ref("");
 
+// const firstName = ref("ama");
+// const lastName = ref("ghana");
+// const email = ref("ama@gmail.com");
+// const password = ref("kofiGhana001@");
+// const phoneNumber = ref("0000000000");
+// const confirmPassword = ref("kofiGhana001@");
+
 //TODO form validators component
 // sign up
 // log in
 // application
 
-// const buttonState = ref(true);
+const existingAccount = ref(false);
+const signUpState = ref(false);
+const errorSignUpState = ref(false);
+const errorState = ref(false);
 
 const startValidation = ref(false);
 
-function submit() {
-  startValidation.value = true;
+function reloadPage() {
+  window.location.reload();
 }
+// const applicantSignup = async (data) => {
+//   const response = await axios
+//     .create({
+//   baseURL: "http://localhost:7000/api/v1/",
+//   headers: {
+//     "Content-type": "application/json",
+//   },
+// }).post("apply/signup", data);
+// console.log(response)
+//   // this.$router.push("LogIn");
+//   return response;
+// };
 
+async function submit() {
+  try {
+    startValidation.value = true;
+    console.log("email", isEmailValid.value);
+    console.log("firstname", checkFirstName.value);
+    console.log("lastname", checkLastName.value);
+    console.log("check password", checkPassword.value);
+    console.log("password confirmed", isPasswordConfirmed.value);
+    console.log("email", isEmailValid.value);
+
+    if (
+      isEmailValid.value &&
+      !checkFirstName.value &&
+      !checkLastName.value &&
+      checkPassword.value &&
+      isPasswordConfirmed.value &&
+      isPhoneNumber.value
+    ) {
+      const data = {
+        email: email.value,
+        firstname: firstName.value,
+        lastname: lastName.value,
+        password: password.value,
+        phonenumber: phoneNumber.value,
+        // email: "ama1@gmail.com",
+        // firstname: "ama",
+        // lastname: "ghana",
+        // password: "kofiGhana001@",
+        // phonenumber: "0000000000",
+      };
+
+      const response = await applicantSignup(data);
+      console.log(response);
+      if (response.status === 201) {
+
+        console.log(response);
+
+        signUpState.value = true;
+
+        setTimeout(() => {
+          signUpState.value = false;
+        }, 2000);
+
+        router.push("LogIn");
+
+      } else if (response.status === 409) {
+        // display error message
+
+        existingAccount.value = true;
+
+        setTimeout(() => {
+          existingAccount.value = false;
+        }, 4000);
+
+        reloadPage();
+
+        console.log(response);
+      }
+    } else {
+      errorSignUpState.value = true;
+      setTimeout(() => {
+        errorSignUpState.value = false;
+      }, 2500);
+    }
+  } catch (error) {
+
+    errorState.value = true;
+    setTimeout(() => {
+      errorState.value = false;
+    }, 4000);
+    reloadPage();
+    console.log(error);
+    // console.log(response);
+    // return response;
+    // //if(response){}
+  }
+}
 const isEmailValid = computed(() => {
   return startValidation.value
-    ? /^\w+([\.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email.value)
+    ? /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email.value)
     : null;
 });
 
 const checkPassword = computed(() => {
   return startValidation.value
-    ? /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})/.test(password.value)
+    ? // ? /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})/.test(password.value)
+      /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})/.test(password.value)
     : null;
 });
 
@@ -45,42 +156,70 @@ const isPasswordConfirmed = computed(() => {
   return startValidation.value ? password.value === confirmPassword.value : null;
 });
 
-
+// check if the phone number
+// is more than equal to 10 or more
+// if it consists of numbers
 const isPhoneNumber = computed(() => {
   return startValidation.value
     ? phoneNumber.value.length >= 10 && /^[0-9]*$/.test(phoneNumber.value)
     : null;
 });
 
-
-
+// check if the name has a number in it
 const checkFirstName = computed(() => {
   //  return startValidation.value ? typeof firstName.value == "string" : null;
 
   return startValidation.value ? /\d/.test(firstName.value) : null;
 });
 
+// check if the name has a number in it
 const checkLastName = computed(() => {
   return startValidation.value ? /\d/.test(lastName.value) : null;
 });
 
-if (
-  checkPassword.value &&
-  checkFirstName.value &&
-  checkLastName.value &&
-  isEmailValid.value &&
-  isPhoneNumber.value &&
-  isPasswordConfirmed.value
-){
+// const applicantSignup = async () => {
+//   const data = {
+//     "email": "student@gmail.com",
+//     "firstname": "student",
+//     "lastname": "traveller",
+//     "password": "thetraveller?",
+//     "phonenumber": "00000000000"
+//   }
+//   const response = await axios
+//     .create({
+//   baseURL: "http://localhost:7000/api/v1/",
+//   headers: {
+//     "Content-type": "application/json",
+//   },
+// }).post("apply/signup", data);
+// console.log(response)
+//   this.$router.push("LogIn");
+//   return response;
+// };
 
-// send data api for validation against the db
-}
-  
+//   applicantSignup
+//     .create()
+//     .then((response) => {
+//       dbResponse.value = response.data;
+//       console.log(response.data);
+//     })
+//     .catch((e) => {
+//       console.log(e);
+//     });
+// }
 </script>
 
 <template>
-
-  <section class="sectionTwo">
+  <div class="sectionTwo">
+    <div v-if="errorSignUpState">
+      <AlertMessageComponent message="Input fields cannot be empty!" />
+    </div>
+    <div v-if="existingAccount">
+      <AlertMessageComponent message="The account already exists!" />
+    </div>
+    <div v-if="errorState">
+      <AlertMessageComponent message="An error occured. Try again!" />
+    </div>
     <div class="logo-Div">
       <img src="../assets/icons/Main-logo.svg" alt="" class="logo" />
       <h4>Applicant Sign Up</h4>
@@ -90,7 +229,9 @@ if (
         <div class="sectionInput">
           <label for="input">First Name</label>
           <input type="text" class="input-field" v-model="firstName" />
-          <span v-if="checkFirstName && firstName !== ''" class="alert"> Enter valid first name!</span>
+          <span v-if="checkFirstName && firstName !== ''" class="alert">
+            Enter valid first name!</span
+          >
         </div>
         <div class="sectionInput">
           <label for="input">Last Name</label>
@@ -102,38 +243,40 @@ if (
         <div class="sectionInput">
           <label for="input">Email Address</label>
           <input type="text" class="input-field" v-model="email" />
-          <span v-if="!isEmailValid && email !== ''" class="alert"> Enter a valid email</span>
+          <span v-if="startValidation && !isEmailValid && email !== ''" class="alert">
+            Enter a valid email</span
+          >
         </div>
+
         <div class="sectionInput">
           <label for="input">Phone Number</label>
           <input type="text" class="input-field" v-model="phoneNumber" />
-          <span v-if="!isPhoneNumber && phoneNumber != ''" class="alert">
+          <span v-if="startValidation && !isPhoneNumber && phoneNumber != ''" class="alert">
             Enter a valid phone number!</span
           >
         </div>
       </div>
+
       <div class="Options">
         <div class="sectionInput">
           <label for="input">Password</label>
 
-          <input
-            :type="showPassword ? 'text' : 'password'"
-            class="input-field"
-            v-model="password"
-          />
-          <span v-if="!checkPassword && password !== ''" class="alert">
-            Password must have a number, uppercase and <br> lowecase letters and special characters</span
+          <input class="input-field" v-model="password" />
+
+          <span v-if="startValidation && !checkPassword && password !== ''" class="alert">
+            Password must have a number, uppercase and <br />
+            lowecase letters and special characters</span
           >
-          <span @click="togglePasswordVisibility"><font-awesome-icon :icon="faEye" /></span>
+          <!-- <span @click="togglePasswordVisibility"><font-awesome-icon :icon="faEye" /></span> -->
         </div>
+
         <div class="sectionInput">
           <label for="input">Confirm Password</label>
-          <input
-            :type="showPassword ? 'text' : 'password'"
-            class="input-field"
-            v-model="confirmPassword"
-          />
-          <span v-if="!isPasswordConfirmed && confirmPassword !== ''" class="alert">
+          <input class="input-field" v-model="confirmPassword" />
+          <span
+            v-if="startValidation && !isPasswordConfirmed && confirmPassword !== ''"
+            class="alert"
+          >
             Passwords do not match!</span
           >
         </div>
@@ -150,6 +293,7 @@ if (
 
           <div>
             <ButtonComponent @click="submit" id="custom-button_2" buttonText="Sign Up" />
+            <!-- <ButtonComponent @click="applicantSignup" id="custom-button_2" buttonText="Sign Up" /> -->
           </div>
         </div>
 
@@ -160,20 +304,24 @@ if (
         </h4>
       </div>
     </div>
-  </section>
+  </div>
 </template>
 
 <style scoped>
 .sectionTwo {
-  padding: 120px;
-  font-family: Lato;
+  /* padding: 50px;
+  font-family: Lato; */
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .logo-Div {
   display: flex;
   flex-direction: column;
-  align-content: center;
-  justify-content: center;
-  gap: 24px;
+  gap: 15px;
+  padding-top: 30px;
+  padding-bottom: 30px;
 }
 
 .logo {
