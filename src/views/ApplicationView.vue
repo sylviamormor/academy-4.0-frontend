@@ -84,34 +84,36 @@ async function submitForm() {
 
     if (checkValidDate.value && checkCgpa.value && dob && university && course && cgpa) {
       const data = {
-        dob: dob,
-        address: address,
-        university: university,
-        course: course,
-        cgpa: cgpa,
+        dob: dob.value,
+        address: address.value,
+        university: university.value,
+        course: course.value,
+        cgpa: cgpa.value,
       };
 
-      const response = await submitApplication(data);
+      console.log(data);
 
-      console.log(response);
-      if (response.status === 200) {
-        console.log(response.data.data);
+      // const response = await submitApplication(data);
 
-        const { firstname, lastname, email, token } = response.data.data;
+      // console.log(response);
+      // if (response.status === 200) {
+      //   console.log(response.data.data);
 
-        const applicantDetails = { firstname, lastname, email };
+      //   const { firstname, lastname, email, token } = response.data.data;
 
-        localStorage.setItem("applicantDetails", JSON.stringify(applicantDetails));
-        localStorage.setItem("applicantToken", token);
+      //   const applicantDetails = { firstname, lastname, email };
 
-        applicationState.value = true;
+      //   localStorage.setItem("applicantDetails", JSON.stringify(applicantDetails));
+      //   localStorage.setItem("applicantToken", token);
 
-        setTimeout(() => {
-          applicationState.value = false;
-        }, 2000);
+      //   applicationState.value = true;
 
-        router.push("dashboard");
-      }
+      //   setTimeout(() => {
+      //     applicationState.value = false;
+      //   }, 2000);
+
+      //   router.push("dashboard");
+      // }
     } else {
       emptyFields.value = true;
       setTimeout(() => {
@@ -123,7 +125,7 @@ async function submitForm() {
     setTimeout(() => {
       errorState.value = false;
     }, 4000);
-    reloadPage();
+    // reloadPage();
     console.log(error);
     // console.log(response);
     // return response;
@@ -151,6 +153,7 @@ async function submitForm() {
           name="cv"
           accept="application/pdf"
         />
+        <div v-if="startValidation && cv === ''" class="alert">Select File</div>
 
         <!-- <input type="file" id="file" name="cv" accept="application/pdf" /> -->
 
@@ -164,6 +167,7 @@ async function submitForm() {
           name="image"
           accept="image/png, image/jpeg, image/jpg"
         />
+        <div v-if="startValidation && image === ''" class="alert">Select an Image</div>
 
         <!-- <input type="file" id="file" name="image" accept="image/png, iamge/jpeg, image/jpg" /> -->
       </div>
@@ -177,13 +181,11 @@ async function submitForm() {
 
           <label for="address">Address</label>
           <input type="text" id="address" v-model="address" required />
-          <span v-if="startValidation && address === ''" class="alert"> Enter an Address </span>
+          <div v-if="startValidation && address === ''" class="alert">Enter an Address</div>
 
           <label for="course">Course Of Study</label>
           <input type="text" id="course" v-model="course" required />
-          <span v-if="startValidation && course === ''" class="alert">
-            Enter the course of study
-          </span>
+          <div v-if="startValidation && course === ''" class="alert">Enter the course of study</div>
         </div>
 
         <div>
@@ -192,19 +194,19 @@ async function submitForm() {
 
           <label for="date of birth">Date of Birth</label>
           <input type="text" id="date" v-model="dob" placeholder="dd/mm/yyyy" required />
-          <span v-if="startValidation && !checkValidDate" class="alert">
+          <div v-if="startValidation && !checkValidDate" class="alert">
             Enter a valid Date of Birth
-          </span>
+          </div>
 
           <label for="university">University</label>
           <input type="text" id="uni" v-model="university" required />
-          <span v-if="startValidation && university === ''" class="alert"> Enter an Address </span>
+          <div v-if="startValidation && university === ''" class="alert">
+            Enter a valid university name
+          </div>
 
           <label for="CGPA">CGPA</label>
           <input type="text" id="CGPA" v-model="cgpa" required />
-          <span v-if="startValidation && !checkCgpa && cgpa === ''" class="alert">
-            Enter a cgpa
-          </span>
+          <div v-if="startValidation && !checkCgpa && cgpa === ''" class="alert">Enter a cgpa</div>
         </div>
       </div>
 
@@ -335,5 +337,10 @@ input placeholder {
 
 #signIn {
   color: black;
+}
+.alert {
+  color: red;
+  text-decoration-line: none;
+  font-style: none;
 }
 </style>
