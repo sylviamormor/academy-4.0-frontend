@@ -42,16 +42,16 @@
         <h3 class="batch1">15 Students</h3>
         <h3 class="batch1">Started 11/09/15</h3>
     </div>
-     <!-- <div class="batch">
+     <div class="batch">
         <h3>Academy Batch 2</h3>
         <h3>15 Students</h3>
         <h3>Started 11/09/15</h3>  
-    </div> -->
-    <!-- <div class="batch">
+    </div>
+    <div class="batch">
         <h3>Academy Batch 3</h3>
         <h3>15 Students</h3>
         <h3>Started 11/09/15</h3>   
-    </div> -->
+    </div>
   </div>
       <div class="take">
       <h3>Create Assessment</h3>
@@ -210,8 +210,10 @@ padding: 77px 0 4px 0;
 
 .batch{
     display: flex;
+   /* flex-direction: column; */
  align-items: center;
    justify-content:space-between;  
+    /* font-family: Nunito Sans; */
 font-size: 16px;
 font-weight: 400;
 line-height: 22px;
@@ -221,22 +223,13 @@ color: #4F4F4F;
 gap: 55px;
 /* margin-left: 85px; */
 padding: 20px 0 10px 0;
-border-radius: 8px;
-border-left: 7px solid #7557d3;
 
 }
-
-.batch:hover{
-  /* display:flex;
-  flex-direction: column; */
-  background: #ffffff;
-  box-shadow: 0px 5px 15px rgba(33, 31, 38, 0.05);
-  border-left: 7px solid #7557d3;
-  border-radius: 8px 0px 0px 8px;
-  margin-top: 20px;
-  cursor: pointer;
-}
-
+/* 
+.batch1{
+  display:flex;
+  flex-direction: column;
+} */
 
  .student{
   display: flex;
