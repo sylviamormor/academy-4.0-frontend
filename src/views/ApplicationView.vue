@@ -1,15 +1,18 @@
 <script setup>
-import { ref, computed, computed} from "vue";
+import { ref, computed } from "vue";
 import moment from "moment";
-import { submitApplication } from "../utils/data-utils";
+import { submitApplication, baseUrl } from "../utils/data-utils";
 import { reloadPage } from "../utils/pageReload";
 import ButtonComponent from "../components/ButtonComponent.vue";
+import AlertMessageComponent from "../components/AlertMessageComponent.vue";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
 
 const applicantInfo = localStorage.getItem("applicantDetails");
 const { firstname, lastname, email } = JSON.parse(applicantInfo);
+
+const token = localStorage.getItem("applicantToken");
 
 const startValidation = ref(false);
 const errorState = ref(false);
@@ -62,6 +65,8 @@ const onFileChanged = (event) => {
     cv.value = fileUpload.name;
   } else if (imageExtensions.includes(fileExtension)) {
     image.value = fileUpload.name;
+  } else {
+    invalidSelectedFiles.value = true;
   }
 };
 
@@ -79,10 +84,8 @@ const checkCgpa = computed(() => {
 async function submitForm() {
   try {
     startValidation.value = true;
-    console.log("check date", checkValidDate.value);
-    console.log("email", checkCgpa.value);
 
-    if (checkValidDate.value && checkCgpa.value && dob && university && course && cgpa) {
+    if (checkValidDate.value && checkCgpa.value && dob && university && course && cgpa && token) {
       const data = {
         dob: dob.value,
         address: address.value,
@@ -91,29 +94,24 @@ async function submitForm() {
         cgpa: cgpa.value,
       };
 
-      console.log(data);
+      const response = await submitApplication(data, token);
 
-      // const response = await submitApplication(data);
+      if (response.status === 201) {
+        // const { firstname, lastname, email, token } = response.data.data;
 
-      // console.log(response);
-      // if (response.status === 200) {
-      //   console.log(response.data.data);
+        // const applicantDetails = { firstname, lastname, email };
 
-      //   const { firstname, lastname, email, token } = response.data.data;
+        // localStorage.setItem("applicantDetails", JSON.stringify(applicantDetails));
+        // localStorage.setItem("applicantToken", token);
 
-      //   const applicantDetails = { firstname, lastname, email };
+        applicationState.value = true;
 
-      //   localStorage.setItem("applicantDetails", JSON.stringify(applicantDetails));
-      //   localStorage.setItem("applicantToken", token);
+        setTimeout(() => {
+          applicationState.value = false;
+        }, 2000);
 
-      //   applicationState.value = true;
-
-      //   setTimeout(() => {
-      //     applicationState.value = false;
-      //   }, 2000);
-
-      //   router.push("dashboard");
-      // }
+        router.push("dashboard");
+      }
     } else {
       emptyFields.value = true;
       setTimeout(() => {
@@ -125,23 +123,28 @@ async function submitForm() {
     setTimeout(() => {
       errorState.value = false;
     }, 4000);
-    // reloadPage();
-    console.log(error);
-    // console.log(response);
-    // return response;
-    // //if(response){}
+    reloadPage();
   }
 }
 </script>
 
 <template>
   <div class="form-container">
+    <div class="notification" v-if="errorState">
+      <AlertMessageComponent message="An error occured. Try again!" />
+    </div>
     <div class="logo">
       <img src="../assets/icons/enyatalogo.png" alt="" />
       <h2>Application Form</h2>
     </div>
 
-    <form method="post" enctype="multipart/form-data" class="form" @submit.prevent="onSubmit">
+    <form
+      method="post"
+      action="/apply/upload"
+      enctype="multipart/form-data"
+      class="form"
+      @submit.prevent="onSubmit"
+    >
       <div class="loader">
         <label class="uploader" for="cv">+Upload CV</label>
 
@@ -171,31 +174,34 @@ async function submitForm() {
 
         <!-- <input type="file" id="file" name="image" accept="image/png, iamge/jpeg, image/jpg" /> -->
       </div>
+      <div v-if="startValidation && invalidSelectedFiles" class="alert">Invalid File Format!</div>
 
       <div class="formInput">
         <div>
           <label for="first Name">First Name</label>
-          <input type="text" id="first" v-model="firstName" required />
+          <input type="text" id="first" v-model="firstName" readonly />
           <label for="email">Email</label>
-          <input type="text" id="email" v-model="email" required />
+          <input type="text" id="email" v-model="applicantEmail" readonly />
+
           <label for="address">Address</label>
           <input type="text" id="address" v-model="address" required />
           <div v-if="startValidation && address === ''" class="alert">Enter an Address</div>
 
-          <input type="text" id="address" v-model="address" required />
           <label for="course">Course Of Study</label>
           <input type="text" id="course" v-model="course" required />
           <div v-if="startValidation && course === ''" class="alert">Enter the course of study</div>
-          <input type="text" id="course" v-model="course" required />
         </div>
 
         <div>
           <label for="last name">Lastname</label>
-          <input type="text" id="last" v-model="lastName" required />
+          <input type="text" id="last" v-model="lastName" readonly />
 
-          <input type="text" id="last" v-model="lastName" required />
           <label for="date of birth">Date of Birth</label>
-          <input type="text" id="date" v-model="dateOfBirth" placeholder="dd/mm/yyyy" required />
+          <input type="text" id="date" v-model="dob" placeholder="dd/mm/yyyy" required />
+          <div v-if="startValidation && !checkValidDate" class="alert">
+            Enter a valid Date of Birth
+          </div>
+
           <label for="university">University</label>
           <input type="text" id="uni" v-model="university" required />
           <div v-if="startValidation && university === ''" class="alert">
@@ -215,9 +221,9 @@ async function submitForm() {
         </div>
 
         <!-- <div class="subText">Already have an account? <a id="sigIn" href="#">Sign In</a></div> -->
-        <!-- <div class="subText">
-          Already have an account? <RouterLink id="signIn" to="dashboard">Sign In</RouterLink>
-        </div> -->
+        <div class="subText">
+          Already have an account? <RouterLink id="signIn" to="SignUp">Sign In</RouterLink>
+        </div>
       </div>
     </form>
   </div>
@@ -227,7 +233,11 @@ async function submitForm() {
 .main {
   background-color: #ffffff;
 }
-
+.notification {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .form-container {
   display: flex;
   flex-direction: column;

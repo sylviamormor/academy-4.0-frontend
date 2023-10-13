@@ -3,20 +3,20 @@ import DashboardHeaderComponent from '../../components/DashboardHeaderComponent.
 
 
 const questions = {
-    name: "Who is your hero",
+    name: "how old are you",
     solve: {
-        q1: "how are you",
-        q2: "what is yur pet's name",
-        q3: "who took a break",
-        q4: "what is your favorite food"
+        q1: "hey there",
+        q2: "i am here",
+        q3: "appuuu",
+        q4: "apppppp"
     }
 }
 
 </script>
 
 <template>
-    <div class="main">
-        <div class="header">
+    <div class="container">
+        <div class="head">
             <DashboardHeaderComponent 
             cardTitle="Take Assessment" 
             cardText="Click the finish button below to submit assessment, 
@@ -24,7 +24,7 @@ const questions = {
             />
 
             <div class="timer">
-                <h3 class="title">Timer</h3>
+                <h3 class="heading">Timer</h3>
                 <h4 class="time">
                     <span class="hour">00</span><span class="minutes">mins</span>
                     <span class="seconds">000</span><span class="minutes">sec</span>
@@ -58,24 +58,22 @@ const questions = {
                 </button>
                 <button class="next-button" @click="next()">Next</button>
               </div>
-              
               <button
                 class="finish-button"
                 @click="stop(); finish();"
               >
                 Finish
               </button>
-            
         </div>
     </div>
 </template>
 <style scoped>
-.header {
+.head {
     display: flex;
     justify-content: space-between;
 }
 
-.title {
+.heading {
     color: #4F4F4F;
     font-family: 'Lato';
     font-size: 14px;

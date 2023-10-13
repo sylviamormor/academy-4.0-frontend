@@ -14,36 +14,52 @@ const baseUrl = "http://localhost:7000/api/v1/";
 // };
 
 const applicantSignup = async (data) => {
-  const response = await axios
-    .create({
-      baseURL: baseUrl,
-      headers: {
-        "Content-type": "application/json",
-      },
-    })
-    .post("apply/signup", data);
-  // this.$router.push("LogIn");
-  return response;
+  try {
+    const response = await axios
+      .create({
+        baseURL: baseUrl,
+        headers: {
+          "Content-type": "application/json",
+        },
+      })
+      .post("apply/signup", data);
+
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
 };
-
-
 
 const applicantLogIn = async (data) => {
-  const response = await axios.post(`${baseUrl}apply/login`, data);
-  // this.$router.push("LogIn");
-  return response;
+  try {
+    const response = await axios.post(`${baseUrl}apply/login`, data);
+
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
+const submitApplication = async (data, token) => {
+  try {
+    const header = {
+      Authorization: `Bearer ${token}`,
+      Accept: "application/json",
+      "Content-Type": "multipart/form-data",
+    };
+    const response = await axios.post(`http://localhost:7000/api/v1/apply/upload`, data, {
+      header,
+    });
 
-
-const submitApplication = async (data) => {
-  const response = await axios.post(`${baseUrl}apply/login`, data);
-  // this.$router.push("LogIn");
-  return response;
+    return response;
+  } catch (error) {
+    console.log(error.message);
+  }
 };
 
+export { applicantSignup, applicantLogIn, submitApplication, baseUrl };
 
-export { applicantSignup, applicantLogIn, submitApplication };
+
 //   update(id, data) {
 //     return http.put(`/admin/${id}`, data);
 //   }

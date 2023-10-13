@@ -23,8 +23,6 @@ function reloadPage() {
 async function logIn() {
   try {
     startValidation.value = true;
-    console.log("check password", checkPassword.value);
-    console.log("email", isEmailValid.value);
 
     if (isEmailValid.value && checkPassword.value) {
       const data = {
@@ -34,9 +32,7 @@ async function logIn() {
 
       const response = await applicantLogIn(data);
 
-      console.log(response);
       if (response.status === 200) {
-        console.log(response.data.data);
 
         const { firstname, lastname, email, token } = response.data.data;
 
@@ -65,8 +61,6 @@ async function logIn() {
       errorState.value = false;
     }, 4000);
     reloadPage();
-    console.log(error);
-    // console.log(response);
     // return response;
     // //if(response){}
   }

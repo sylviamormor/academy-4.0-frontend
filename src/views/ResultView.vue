@@ -11,7 +11,7 @@ import { RouterLink } from 'vue-router';
             <!-- <DashboardDetailComponent /> -->
             <div class="assess">
             <h2>Take Assessment </h2>
-            <p>Thank you</p>
+            <p>Thamk you</p>
         </div>
 
             <div class="timer">
@@ -27,7 +27,7 @@ import { RouterLink } from 'vue-router';
             <img src="../assets/icons/confetti (1).svg" alt="">
             <p>We have received your assessment test, we will get back to you soon.
              Best of luck</p>
-         <RouterLink class="last-btn" to="/">Home</RouterLink>
+         <RouterLink to="/">Home</RouterLink>
         </div>
        
         </div>
@@ -37,9 +37,7 @@ import { RouterLink } from 'vue-router';
 .head {
     display: flex;
     /* flex-direction: column; */
-    justify-content: space-between;
-    gap: 533px;
-    /* padding-top: 10px; */
+    justify-content: space-evenly;
 }
 
 .assess{
@@ -49,41 +47,26 @@ import { RouterLink } from 'vue-router';
     /* justify-content: center; */
 }
 
-.assess h2{
-color: #2B3C4E;
-font-size: 44px;
-font-weight: 300;
-line-height: 52px;
-letter-spacing: -0.02em;
-text-align: left;
-/* padding-top: 107px; */
-
-}
-
-.assess p{
-color: #2B3C4E;
-font-size: 16px;
-font-style: italic;
-font-weight: 500;
-line-height: 19px;
-letter-spacing: 0em;
-text-align: left;
-
-}
-
 .heading {
-font-size: 14px;
-font-weight: 400;
-line-height: 17px;
-letter-spacing: 0em;
-/* text-align: center; */
-color: #4F4F4F;
-padding-bottom: 9px;
-
+    color: #4F4F4F;
+    font-family: 'Lato';
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
 }
- .hour {
-    color: #2B3C4E;
-} 
+/* h5 {
+  font-family: "Lato";
+  display: flex;
+  flex-direction: column;
+  font-style: italic;
+  font-weight: 500;
+  font-size: 25px;
+  line-height: 17px;
+  color: #2b3c4e;
+  text-align: center;
+  margin-bottom: 48px;
+  margin-top: 14px;
+} */
 
 .congrat{
     display: flex;
@@ -94,54 +77,19 @@ padding-bottom: 9px;
     gap: 23px;
 }
 
-.congrat p{
-width: 524px;
-height: 46px;
-top: 491px;
-left: 568px;
-font-size: 17px;
-font-weight: 400;
-line-height: 20px;
-letter-spacing: 0em;
-text-align: center;
-color: #4F4F4F;
-
-
-}
-
 .time {
-font-style: normal;
-color: #2B3C4E;
-font-size: 48px;
-font-weight: 300;
-line-height: 58px;
-letter-spacing: 0em;
-text-align: center;
 
+    font-size: 48px;
+    font-style: normal;
+    font-weight: 300;
 }
 
 .minutes {
     color: #4F4F4F;
+    font-family: 'Lato';
     font-size: 12px;
     font-style: normal;
     font-weight: 400;
-}
-
-.last-btn{
-width: 205px;
-height: 41px;
-color: #ffff;
-background: #7557D3;
-text-align:center;
-text-decoration: none;
-font-size: 16px;
-font-weight: 700;
-line-height: 19px;
-letter-spacing: 0em;
-padding: 10px 80px 11px 81px;
-margin-top: 34px;
-
-
 }
 
 /* .cards {
