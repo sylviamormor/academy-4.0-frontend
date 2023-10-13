@@ -7,12 +7,13 @@ import UserDashboardView from "../views/users/UserDashboardView.vue"
 import QuestionView from "../views/users/QuestionView.vue"
 import SignUpView from "../views/SignUpView.vue";
 import LogInView from "../views/LogInView.vue";
+import ResultView from "../views/ResultView.vue"
 // admin
 import AdminDashboardLayout from "../layouts/AdminDashboardLayout.vue";
 import AdminLoginView from "../views/admin/AdminLoginView.vue";
 import AdminDashboardView from "../views/admin/AdminDashboardView.vue";
  import CreateAppView from "../views/admin/CreateAppView.vue";
-//import ApplicationEntriesView from "../views/ApplicationEntriesView.vue";
+//  import ApplicationEntriesView from "../views/admin/ApplicationEntriesView.vue";
 // import ComposeAssessmentView from "../views/ComposeAssessmentView.vue";
 // import AssessmentHistoryView from "../views/AssessmentHistoryView.vue";
 // import AssessmentResultView from "../views/AssessmentResultView.vue";
@@ -71,6 +72,11 @@ const router = createRouter({
           name: "assessment",
           component: AssessmentView,
         },
+        {
+        path: "/result",
+        name: "result",
+        component: ResultView
+      },
        
       ],
     },
@@ -103,10 +109,10 @@ const router = createRouter({
             name: "createapp",
             component: CreateAppView
          },
-        // {
-        //   path: "/application-entries",
-        //   name: "applicationentries",
-        //   component: ApplicationEntriesView
+        //  {
+          // path: "/applicationentries",
+          //  name: "applicationentries",
+          // component: ApplicationEntriesView
         // },
         // {
         //   path: "/compose-assessment",

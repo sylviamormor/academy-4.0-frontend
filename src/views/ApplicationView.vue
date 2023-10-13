@@ -1,20 +1,163 @@
 <script setup>
-import { ref } from "vue";
+import { ref, computed} from "vue";
 import axios from "axios";
 import ButtonComponent from "../components/ButtonComponent.vue";
 
-const userInfo = ref({
-  firstName: "",
-  lastName: "",
-  emailAddress: "",
-  dateOfBirth: "",
-  address: "",
-  university: "",
-  course: "",
-  cgpa: "",
-  cv: null,
-  photo: null,
-});
+const firstName = ref("");
+const lastName = ref("");
+const email = ref("");
+const dateOfBirth = ref("");
+const address = ref("");
+const university = ref("");
+const course = ref("");
+const cgpa = ref("");
+const cv = ref("");
+const photo = ref("");
+
+// Assuming you have these error refs defined somewhere in your code
+// const firstNameError = ref("");
+// const lastNameError = ref("");
+// const emailError = ref("");
+// const dobError = ref("");
+// const addressError = ref("");
+// const universityError = ref("");
+// const courseError = ref("");
+// const gpaError = ref("");
+// const cvError = ref(null);
+// const photoError = ref(null);
+
+// const clearError = (key) => {
+//   // Use an object to map keys to error refs
+//   const errorRefs = {
+//     firstNameValue: firstNameError,
+//     lastNameValue: lastNameError,
+//     emailValue: emailError,
+//     dateOfBirthValue: dobError,
+//     addressValue: addressError,
+//     universityValue: universityError,
+//     courseValue: courseError,
+//     cgpaValue: gpaError,
+//     cvValue: cvError,
+//     photoValue: photoError,
+//   };
+
+//   // Check if the key exists in the errorRefs object
+//   if (errorRefs[key] !== undefined) {
+//     // Clear the corresponding error value
+//     errorRefs[key].value = null; // Assuming you want to set errors to null
+//   } else {
+//     // Handle the case where the key is not found
+//     console.error(`Error: Unknown key '${key}'`);
+//   }
+// };
+
+
+// const applicant = async () => {
+//   try {
+//     // Get the token from localStorage
+//     const token = localStorage.getItem("token");
+
+//     // Define the data to be sent in the POST request
+//     const postData = {
+//       first_Name: firstNameValue.value,
+//       last_Name: lastNameValue.value,
+//       cv_url: cvValue.value,
+//       image_url: photoValue.value,
+//       email: emailValue.value,
+//       date_of_birth: dateOfBirthValue.value,
+//       address: addressValue.value,
+//       university: universityValue.value,
+//       course: courseValue.value,
+//       CGPA: cgpaValue.value,
+//     };
+
+//     // Create FormData for multipart/form-data content type
+//     const formData = new FormData();
+//     for (const key in postData) {
+//       formData.append(key, postData[key]);
+//     }
+
+//     // Make the POST request using axios
+//     const response = await axios.post(
+//       "http://localhost:6001/api/v1/application/create",
+//       formData,
+//       {
+//         headers: {
+//           authorization: token,
+//           "Content-Type": "multipart/form-data",
+//         },
+//       }
+//     );
+
+//     // Log the response to the console
+//     console.log("res", response);
+
+//     // Extract relevant data from the response
+//     const {
+//       first_Name,
+//       last_Name,
+//       cv_url,
+//       image_url,
+//       email,
+//       date_of_birth,
+//       address,
+//       university,
+//       course,
+//       cgpa,
+//       status,
+//       id,
+//       user_id,
+//     } = response.data.data;
+
+//     // Create an object with the extracted data
+//     const userDetails = {
+//       first_Name,
+//       last_Name,
+//       cv_url,
+//       image_url,
+//       email,
+//       date_of_birth,
+//       address,
+//       university,
+//       course,
+//       cgpa,
+//       status,
+//       id,
+//       user_id,
+//     };
+
+//     // Save user details to localStorage
+//     localStorage.setItem("userApplicationDetails", JSON.stringify(userDetails));
+//     localStorage.setItem("userDetails", JSON.stringify(userDetails));
+
+//     // Redirect to the dashboard route
+//     router.push({ name: "dashboard" });
+//   } catch (error) {
+//     // Log any errors to the console
+//     console.log(error);
+//   }
+// };
+
+
+//  const applicantDetails = ref(false);
+
+//  async function submit() {
+//   try {
+//      applicantDetails.value = true;
+//      console.log("firstName", isFirstNameValid.value);
+//      console.log("lastName", isLastNameValid.value)
+//      console.log("email", isEmailValid.value);
+//      console.log("dateOfBirth", isDateOfBirthValid.value);
+//      console.log("address", isAddressValid.value);
+//      console.log("university", iskUniversityValid.value);
+//      console.log('course', isCourseValid.value);
+//      console.log('cgpa', isCgpaValid.value);
+//       console.log("cv", checkCv.value);
+//       console.log("photo", checkPhoto.value);
+//   };
+  
+      
+
 
 // upload files
 // const fileUpload = ref({
@@ -26,11 +169,11 @@ const userInfo = ref({
 //       }
 // })
 // for catching errors
-const onSubmit = () => {
-  if (!userInfo.value === "") {
-    alert("this field is required");
-  }
-};
+// const onSubmit = () => {
+//   if (!userInfo.value === "") {
+//     alert("this field is required");
+//   }
+// };
 </script>
 
 <template>
@@ -58,34 +201,35 @@ const onSubmit = () => {
       <form class="form" @submit.prevent="onSubmit">
         <div>
           <label for="first Name">First Name</label>
-          <input type="text" id="first" v-model="userInfo.first" required />
+          <input type="text" id="first" v-model="firstName" required />
           <label for="email">Email</label>
-          <input type="text" id="email" v-model="userInfo.email" required />
+          <input type="text" id="email" v-model="email" required />
           <label for="address">Address</label>
-          <input type="text" id="address" v-model="userInfo.address" required />
+          <input type="text" id="address" v-model="address" required />
           <label for="course">Course Of Study</label>
-          <input type="text" id="course" v-model="userInfo.course" required />
+          <input type="text" id="course" v-model="course" required />
         </div>
         <div>
           <label for="last name">Lastname</label>
-          <input type="text" id="last" v-model="userInfo.last" required />
+          <input type="text" id="last" v-model="lastName" required />
           <label for="date of birth">Date of Birth</label>
-          <input type="text" id="date" v-model="userInfo.date" placeholder="dd/mm/yyyy" required />
+          <input type="text" id="date" v-model="dateOfBirth" placeholder="dd/mm/yyyy" required />
           <label for="university">University</label>
-          <input type="text" id="uni" v-model="userInfo.uni" required />
+          <input type="text" id="uni" v-model="university" required />
           <label for="CGPA">CGPA</label>
-          <input type="text" id="CGPA" v-model="userInfo.CGPA" required />
+          <input type="text" id="CGPA" v-model="cgpa" required />
         </div>
       </form>
     </div>
-    <div>
-      <RouterLink class="btn-btn" to="dashboard"
-        ><ButtonComponent buttonText="Sign Up"
-      /></RouterLink>
+    <div class="btn-btn" >
+      <button type="submit" @click="applicant">
+      <RouterLink to="dashboard"
+      class="btn-2">signup</RouterLink>
+    </button>
       <!-- <div class="subText">Already have an account? <a id="sigIn" href="#">Sign In</a></div> -->
-      <div class="subText">
-        Already have an account? <RouterLink id="signIn" to="SignUp">Sign In</RouterLink>
-      </div>
+      <!-- <div class="subText">
+        Already have an account? <RouterLink id="signIn" to="dashboard">Sign In</RouterLink>
+      </div> -->
     </div>
   </div>
 </template>
@@ -216,6 +360,11 @@ input placeholder {
   color: #ffffff;
   /* top: 829px
 left: 524px */
+text-decoration: none;
+}
+
+btn-2{
+  color: #ffffff;
 }
 
 .subText{

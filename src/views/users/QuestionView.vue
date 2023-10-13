@@ -58,12 +58,14 @@ const questions = {
                 </button>
                 <button class="next-button" @click="next()">Next</button>
               </div>
+              
               <button
                 class="finish-button"
                 @click="stop(); finish();"
               >
                 Finish
               </button>
+            
         </div>
     </div>
 </template>
