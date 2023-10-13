@@ -36,7 +36,14 @@ async function logIn() {
 
       console.log(response);
       if (response.status === 200) {
-        console.log(response);
+        console.log(response.data.data);
+
+        const { firstname, lastname, email, token } = response.data.data;
+
+        const applicantDetails = { firstname, lastname, email };
+
+        localStorage.setItem("applicantDetails", JSON.stringify(applicantDetails));
+        localStorage.setItem("applicantToken", token);
 
         logInState.value = true;
 
@@ -46,12 +53,11 @@ async function logIn() {
 
         router.push("application");
       }
-
     } else {
       emptyFields.value = true;
       setTimeout(() => {
         emptyFields.value = false;
-      }, 1000);
+      }, 1500);
     }
   } catch (error) {
     errorState.value = true;
@@ -78,8 +84,6 @@ const checkPassword = computed(() => {
       /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})/.test(password.value)
     : null;
 });
-
-
 </script>
 
 <template>
@@ -128,7 +132,7 @@ const checkPassword = computed(() => {
 </template>
 
 <style scoped>
-.notification{
+.notification {
   display: flex;
   justify-content: center;
   align-items: center;

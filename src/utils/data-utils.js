@@ -35,7 +35,15 @@ const applicantLogIn = async (data) => {
 };
 
 
-export { applicantSignup, applicantLogIn };
+
+const submitApplication = async (data) => {
+  const response = await axios.post(`${baseUrl}apply/login`, data);
+  // this.$router.push("LogIn");
+  return response;
+};
+
+
+export { applicantSignup, applicantLogIn, submitApplication };
 //   update(id, data) {
 //     return http.put(`/admin/${id}`, data);
 //   }
