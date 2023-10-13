@@ -4,11 +4,11 @@
 
 <template>
     <section>
-        <div class="container">
+        <div class="main">
             <p>Are you sure you want to approve this application?</p>
-            <div class="btn-container">
-                <button class="btn-yes">Yes</button>
-                <button class="btn-no">No</button>
+            <div class="mainButton">
+                <button class="yes">Yes</button>
+                <button class="no">No</button>
             </div>
 
         </div>
@@ -16,7 +16,7 @@
 </template>
 
 <style scoped>
-.container {
+.main {
     display: flex;
     flex-direction: column;
     padding: 75px 96px;
@@ -26,7 +26,7 @@
     height: 300px;
 }
 
-.container p {
+.main p {
     color: #4F4F4F;
     text-align: center;
     font-family: 'Lato';
@@ -36,12 +36,12 @@
     line-height: 150%;
 }
 
-.btn-container {
+.mainButton {
     display: flex;
 
 }
 
-.btn-yes,
+.yes,
 btn-no {
     color: #FFF;
     font-family: 'Lato';
@@ -55,7 +55,7 @@ btn-no {
     background: #7557D3;
 }
 
-.btn-no {
+.no {
     color: #000;
     background: #FFF;
     font-family: 'Lato';

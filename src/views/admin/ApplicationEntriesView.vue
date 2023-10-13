@@ -1,7 +1,7 @@
 <script setup>
 import {ref, computed, onMounted} from 'vue';
-import ModalComponent from '../../components/ModalComponent.vue';
-import DashboardTitleComponent from '../../components/DashboardTitleComponent.vue';
+import ApproveChildWindowComponent from '../../components/ApproveChildWindowComponent.vue';
+import DashboardHeaderComponent from '../../components/DashboardHeaderComponent.vue';
 import axios from "axios";
 
 const openmodal = ref(false);
@@ -90,9 +90,9 @@ onMounted(async () => {
 
 <template>
  <div class="container">
-  <ModalComponent @close="closeModal" v-show="openmodal" class="main-modal" />
+  <ApproveChildWindowComponent @close="closeModal" v-show="openmodal" class="main-modal" />
   
-  <DashboardTitleComponent 
+  <DashboardHeaderComponent 
       cardTitle="Entries - Batch 1"
       cardText="Comprises of all that applied for batch 1"
   />

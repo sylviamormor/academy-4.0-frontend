@@ -1,47 +1,53 @@
+
+
+
+
 <template>
-    <div class="container">
-        <div class="profile">
+    <div class="main">
+        <div class="createProfile">
             <h1>Profiles Setting</h1>
             <button>Edit</button>
         </div>
         <form @submit.prevent="save()">
-            <div class="image">
-                <img src="../assets/icons/propic.svg" alt="profile image" srcset="" />
-                <div class="label-form">
-                    <input class="fileupload" type="file" id="file" name="filename" />
-                    <label class="file-label" for="file"> Upload new image</label>
+            <div class="img">
+                <img src="../assets/icons/propic.svg" alt="" srcset="" />
+                <div class="formLabel">
+                    <input class="fUpload" type="file" id="file" name="filename" />
+                    <label class="fLabel" for="file"> Upload new image</label>
                 </div>
+
                 <h2 class="remove">x Remove</h2>
             </div>
-            <div class="inputs-wrapper">
-                <div class="form-group">
+
+            <div class="container">
+                <div class="forms">
                     <div>
                         <label>Name</label>
-                        <input class="input-field" placeholder="Full Name" readonly />
+                        <input class="inputField" placeholder="Full Name" readonly />
                     </div>
                     <div>
                         <label>Email</label>
-                        <input class="input-field" placeholder="Fmai l" readonly />
+                        <input class="inputField" placeholder="Email" readonly />
                     </div>
 
                     <div>
                         <label>Phone number</label>
-                        <input type="tel" class="input-field" placeholder="Fhon eNumber" readonly/>
+                        <input type="tel" class="inputField" placeholder="Phone Number" readonly/>
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="forms">
                     <div>
                         <label>Country</label>
-                        <input class="input-field" placeholder="Foun try" readonly/>
+                        <input class="inputField" placeholder="Foun try" readonly/>
                     </div>
                     <div>
                         <label>Address</label>
-                        <input class="address-input" placeholder="address" readonly />
+                        <input class="inputAddress" placeholder="address" readonly />
                     </div>
                 </div>
             </div>
-            <div class="btn-container">
-                <button class="btn-save" type="submit">Save</button>
+            <div class="mainButton">
+                <button class="saveButton" type="submit">Save</button>
             </div>
         </form>
     </div>
@@ -52,18 +58,18 @@
 </script>
 
 <style scoped>
-.profile {
+.createProfile {
     display: flex;
     justify-content: space-between;
 }
 
-.form-group {
+.forms {
     display: flex;
     gap: 40px;
     margin-bottom: 40px;
 }
 
-.btn-save {
+.saveButton {
     height: 38px;
     width: 127px;
     border: none;
@@ -75,7 +81,7 @@
     font-size: 16px;
 }
 
-.address-input {
+.inputAddress {
     width: 469px;
     height: 54px;
     left: 595px;
@@ -84,11 +90,11 @@
     background: rgba(117, 87, 211, 0.04);
 }
 
-.btn-container {
+.mainButton {
     text-align: center;
 }
 
-.input-field {
+.inputField {
     width: 216px;
     height: 54px;
     left: 340px;
@@ -153,14 +159,14 @@ label {
     margin-bottom: 8px;
 }
 
-.image {
+.img {
     display: flex;
     gap: 32px;
     margin-top: 73px;
     margin-bottom: 40px;
 }
 
-.file-label {
+.fLabel {
     font-style: normal;
     font-weight: 400;
     font-size: 15px;
@@ -172,11 +178,11 @@ label {
     opacity: 0.5;
 }
 
-.fileupload {
+.fUpload {
     display: none;
 }
 
-.label-form {
+.formLabel {
     display: flex;
     justify-content: center;
 }

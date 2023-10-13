@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, computed} from "vue";
 import moment from "moment";
 import { submitApplication } from "../utils/data-utils";
 import { reloadPage } from "../utils/pageReload";
@@ -177,27 +177,25 @@ async function submitForm() {
           <label for="first Name">First Name</label>
           <input type="text" id="first" v-model="firstName" required />
           <label for="email">Email</label>
-          <input type="text" id="email" v-model="applicantEmail" required />
-
+          <input type="text" id="email" v-model="email" required />
           <label for="address">Address</label>
           <input type="text" id="address" v-model="address" required />
           <div v-if="startValidation && address === ''" class="alert">Enter an Address</div>
 
+          <input type="text" id="address" v-model="address" required />
           <label for="course">Course Of Study</label>
           <input type="text" id="course" v-model="course" required />
           <div v-if="startValidation && course === ''" class="alert">Enter the course of study</div>
+          <input type="text" id="course" v-model="course" required />
         </div>
 
         <div>
           <label for="last name">Lastname</label>
           <input type="text" id="last" v-model="lastName" required />
 
+          <input type="text" id="last" v-model="lastName" required />
           <label for="date of birth">Date of Birth</label>
-          <input type="text" id="date" v-model="dob" placeholder="dd/mm/yyyy" required />
-          <div v-if="startValidation && !checkValidDate" class="alert">
-            Enter a valid Date of Birth
-          </div>
-
+          <input type="text" id="date" v-model="dateOfBirth" placeholder="dd/mm/yyyy" required />
           <label for="university">University</label>
           <input type="text" id="uni" v-model="university" required />
           <div v-if="startValidation && university === ''" class="alert">
@@ -217,9 +215,9 @@ async function submitForm() {
         </div>
 
         <!-- <div class="subText">Already have an account? <a id="sigIn" href="#">Sign In</a></div> -->
-        <div class="subText">
-          Already have an account? <RouterLink id="signIn" to="SignUp">Sign In</RouterLink>
-        </div>
+        <!-- <div class="subText">
+          Already have an account? <RouterLink id="signIn" to="dashboard">Sign In</RouterLink>
+        </div> -->
       </div>
     </form>
   </div>
