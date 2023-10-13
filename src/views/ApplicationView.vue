@@ -8,7 +8,6 @@ import { useRouter } from "vue-router";
 
 const router = useRouter();
 
-
 const applicantInfo = localStorage.getItem("applicantDetails");
 const { firstname, lastname, email } = JSON.parse(applicantInfo);
 
@@ -16,6 +15,7 @@ const startValidation = ref(false);
 const errorState = ref(false);
 const emptyFields = ref(false);
 const applicationState = ref(false);
+const invalidSelectedFiles = ref(false);
 
 const firstName = ref(firstname);
 const lastName = ref(lastname);
@@ -53,6 +53,18 @@ function isDateValid(date) {
   return false;
 }
 
+const onFileChanged = (event) => {
+  const imageExtensions = ["image/png", "image/jpeg", "image/jpg"];
+  const fileUpload = event.target.files[0];
+  const fileExtension = fileUpload.type;
+
+  if (fileExtension === "application/pdf") {
+    cv.value = fileUpload.name;
+  } else if (imageExtensions.includes(fileExtension)) {
+    image.value = fileUpload.name;
+  }
+};
+
 // address, course of study, university cannot be empty
 // cgpa must be numbers
 
@@ -70,7 +82,7 @@ async function submitForm() {
     console.log("check date", checkValidDate.value);
     console.log("email", checkCgpa.value);
 
-    if (checkValidDate.value && checkValidDate.value) {
+    if (checkValidDate.value && checkCgpa.value && dob && university && course && cgpa) {
       const data = {
         dob: dob,
         address: address,
@@ -131,7 +143,14 @@ async function submitForm() {
       <div class="loader">
         <label class="uploader" for="cv">+Upload CV</label>
 
-        <input type="file" id="cv" class="upload" name="cv" accept="application/pdf" />
+        <input
+          type="file"
+          id="cv"
+          @change="onFileChanged"
+          class="upload"
+          name="cv"
+          accept="application/pdf"
+        />
 
         <!-- <input type="file" id="file" name="cv" accept="application/pdf" /> -->
 
@@ -140,6 +159,7 @@ async function submitForm() {
         <input
           type="file"
           id="image"
+          @change="onFileChanged"
           class="upload"
           name="image"
           accept="image/png, image/jpeg, image/jpg"
