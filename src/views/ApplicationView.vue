@@ -221,11 +221,13 @@ const photo = ref("");
         </div>
       </form>
     </div>
-    <div class="btn-btn" >
-      <button type="submit" @click="applicant">
-      <RouterLink to="dashboard"
-      class="btn-2">signup</RouterLink>
-    </button>
+    <div>
+      <div class="btn-btn">
+        <RouterLink  to="dashboard"
+        ><ButtonComponent buttonText="Submit"
+      /></RouterLink>
+      </div>
+     
       <!-- <div class="subText">Already have an account? <a id="sigIn" href="#">Sign In</a></div> -->
       <!-- <div class="subText">
         Already have an account? <RouterLink id="signIn" to="dashboard">Sign In</RouterLink>
@@ -351,13 +353,14 @@ input placeholder {
 }
 
 .btn-btn {
-  display: inline-block;
+  padding-top: 50px;
+  /* display: inline-block;
   justify-content: center;
   align-items: center;
-  margin-top: 43px;
-  width: 500px;
+  margin-top: 43px; */
+  /* width: 50px;
   height: 50px;
-  color: #ffffff;
+  color: #ffffff; */
   /* top: 829px
 left: 524px */
 text-decoration: none;

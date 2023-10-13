@@ -1,58 +1,58 @@
 <script setup>
-import DeclineModalComponent from './DeclineModalComponent.vue';
-import ApproveModalComponent from './ApproveModalComponent.vue';
+import DenyChildWindowComponent from './DenyChildWindowComponent.vue';
+import ApproveChildWindowComponent from './ApproveChildWindowComponent.vue';
 import { ref, computed } from "vue";
-const showDeclineModal = ref(false);
-const showApproveModal = ref(false);
+const showDenyWindow = ref(false);
+const showApproveWindow = ref(false);
 </script>
 
 <template>
-    <div class="main-container">
-        <div class="approveComponent" v-if="showApproveModal" @closeModal="showApproveModal = false">
-            <ApproveModalComponent />
+    <div class="Container">
+        <div class="approve" v-if="showApproveWindow" @closeModal="showApproveWindow = false">
+            <ApproveChildWindowComponent />
         </div>
-        <div class="declineComponent" v-if="showDeclineModal" @closeModal="showDeclineModal = false">
-            <DeclineModalComponent />
+        <div class="deny" v-if="showDenyWindow" @closeModal="showDenyWindow = false">
+            <DenyChildWindowComponent />
         </div>
-        <div v-if="!showApproveModal && !showDeclineModal" class="application-entries">
-            <div class="profile-picture">
-                <img src="" alt="app profile picture" />
+        <div  class="entries"  v-if="!showApproveWindow && !showDenyWindow" >
+            <div class="profilePic">
+                <img src="" alt="" />
             </div>
-            <p class="modal-text">Personal Details</p>
+            <p class="windowText">Personal Details</p>
             <hr />
-            <div class="main-form">
-                <div class="aprrove-container">
-                    <div class="form-group">
+            <div class="appForm">
+                <div class="aprrove">
+                    <div class="forms">
                         <label for="">Name</label>
                         <input placeholder="Ify Chinke" value="fullName" type="text" readonly />
                     </div>
-                    <div class="form group">
+                    <div class="forms">
                         <label for="">Address</label>
                         <input placeholder="3 Sabo Ave, Yaba, Lagos" value="applicant.address" type="text" readonly />
                     </div>
-                    <div class="form-group">
+                    <div class="forms">
                         <label for="">Course of study</label>
                         <input placeholder="Computer Science" value="applicant.course" type="text" readonly />
                     </div>
-                    <div class="form-group">
+                    <div class="forms">
                         <label for="">CGPA</label>
                         <input placeholder="5.0" value="applicant.cgpa" type="text" readonly />
                     </div>
-                    <div class="form-group">
+                    <div class="forms">
                         <label for="">Email</label>
                         <input mailto:placeholder="ify@enyata.com" value="applicant.emailAddress" type="text" readonly />
                     </div>
     
-                    <div class="form-group">
+                    <div class="forms">
                         <label for="">University</label>
                         <input placeholder="University of Nigeria Nsukka" value="applicant.university" type="text" readonly />
                     </div>
     
-                    <div class="form-group">
+                    <div class="forms">
                         <label for="">Date of birth</label>
                         <input placeholder="12/09/19 - 22" value="applicantDate" type="text" readonly />
                     </div>
-                    <div class="form-group">
+                    <div class="forms">
                         <label for="">CV</label>
                         <input value="applicant.cv" type="text" />
                     </div>
@@ -60,13 +60,13 @@ const showApproveModal = ref(false);
                 </div>
                 
                 
-                <div class="btn-container">
+                <div class="buttons">
                     
-                    <button class="btn-approve" @click="showApproveModal = true">
+                    <button class="approveButton" @click="showApproveModal = true">
                         Approve
                     </button>
 
-                    <button class="btn-decline" @click="showDeclineModal = true">
+                    <button class="denyButton" @click="showDeclineModal = true">
                         Decline
                     </button>
                 </div>
@@ -80,7 +80,7 @@ const showApproveModal = ref(false);
 
 
 <style scoped>
-.main-container {
+.Container {
     display: flex;
     justify-content: center;
     width: 100%;
@@ -92,19 +92,7 @@ const showApproveModal = ref(false);
     backdrop-filter: blur(4px);
 }
 
-
-
-.application-entries {
-    width: 600px;
-    background: #ffffff;
-    padding: 95px 58px 145px 48px;
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    right: 0;
-}
-
-.profile-picture {
+.profilePic {
     width: 179px;
     height: 179px;
     margin-bottom: 42px;
@@ -113,7 +101,7 @@ const showApproveModal = ref(false);
     flex-direction: column;
 }
 
-.modal-text {
+.windowText {
     font-family: "Lato";
     font-style: normal;
     font-weight: 700;
@@ -123,6 +111,15 @@ const showApproveModal = ref(false);
     margin-bottom: 14px;
 }
 
+.entries {
+    width: 600px;
+    background: #ffffff;
+    padding: 95px 58px 145px 48px;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    right: 0;
+}
 hr {
     width: 498px;
     height: 1px;
@@ -130,20 +127,20 @@ hr {
     margin-bottom: 32px;
     border: none;
 }
-.aprrove-container{
+.aprrove{
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-column-gap: 30px;
 }
-.main-form {
+.appForm {
     display: flex;
     flex-direction: column;
 }
-.form-group{
+.forms{
     margin: 0;
 }
 
-.main-form label {
+.appForm label {
     font-family: "Lato";
     font-style: normal;
     font-weight: 400;
@@ -152,7 +149,7 @@ hr {
     color: #b1b1b1;
 }
 
-.main-form input {
+.appForm input {
     width: 231px;
     height: 48px;
     border-radius: 4px;
@@ -161,7 +158,7 @@ hr {
     border-radius: 4px;
 }
 
-.main-form button {
+.appForm button {
     width: 125px;
     height: 48px;
     font-family: "Lato";
@@ -173,19 +170,19 @@ hr {
     cursor: pointer;
 }
 
-.btn-container{
+.buttons{
     display: flex;
     gap: 25px;
 }
 
-.btn-approve {
+.approveButton {
     background: #7557d3;
     color: #ffffff;
     border: 1px solid #cdcfd6;
     margin-left: 115px;
 }
 
-.btn-decline {
+.denyButton {
     color: #4f4f4f;
     border: 1px solid #cecece;
     background: #ffffff;
