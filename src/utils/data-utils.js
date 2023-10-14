@@ -42,13 +42,14 @@ const applicantLogIn = async (data) => {
 
 const submitApplication = async (data, token) => {
   try {
-    const header = {
-      Authorization: `Bearer ${token}`,
+    const headers = {
+      Authorization: `${token}`,
       Accept: "application/json",
       "Content-Type": "multipart/form-data",
     };
+
     const response = await axios.post(`http://localhost:7000/api/v1/apply/upload`, data, {
-      header,
+      headers,
     });
 
     return response;
@@ -57,8 +58,16 @@ const submitApplication = async (data, token) => {
   }
 };
 
-export { applicantSignup, applicantLogIn, submitApplication, baseUrl };
+const adminSignIn = async (data) => {
+  try {
+    const response = await axios.post(`${baseUrl}admin/login`, data);
+    return response;
+  } catch (error) {
+    console.log(error.message);
+  }
+};
 
+export { applicantSignup, applicantLogIn, submitApplication, adminSignIn };
 
 //   update(id, data) {
 //     return http.put(`/admin/${id}`, data);

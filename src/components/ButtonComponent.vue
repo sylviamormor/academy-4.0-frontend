@@ -30,5 +30,6 @@ button {
   font-weight: 700;
   line-height: normal;
   margin: 0 auto;
+  cursor: pointer;
 }
 </style>

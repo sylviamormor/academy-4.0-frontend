@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed } from "vue";
 import moment from "moment";
-import { submitApplication, baseUrl } from "../utils/data-utils";
+import { submitApplication } from "../utils/data-utils";
 import { reloadPage } from "../utils/pageReload";
 import ButtonComponent from "../components/ButtonComponent.vue";
 import AlertMessageComponent from "../components/AlertMessageComponent.vue";
@@ -17,7 +17,7 @@ const token = localStorage.getItem("applicantToken");
 const startValidation = ref(false);
 const errorState = ref(false);
 const emptyFields = ref(false);
-const applicationState = ref(false);
+const unauthorizedApplication = ref(false);
 const invalidSelectedFiles = ref(false);
 
 const firstName = ref(firstname);
@@ -97,33 +97,26 @@ async function submitForm() {
       const response = await submitApplication(data, token);
 
       if (response.status === 201) {
-        // const { firstname, lastname, email, token } = response.data.data;
-
-        // const applicantDetails = { firstname, lastname, email };
-
-        // localStorage.setItem("applicantDetails", JSON.stringify(applicantDetails));
-        // localStorage.setItem("applicantToken", token);
-
-        applicationState.value = true;
-
-        setTimeout(() => {
-          applicationState.value = false;
-        }, 2000);
-
         router.push("dashboard");
+      } else if (response.status === 401) {
+        unauthorizedApplication.value = true;
+        setTimeout(() => {
+          unauthorizedApplication.value = false;
+        }, 2000);
+      } else {
+        emptyFields.value = true;
+        setTimeout(() => {
+          emptyFields.value = false;
+        }, 1500);
       }
-    } else {
-      emptyFields.value = true;
-      setTimeout(() => {
-        emptyFields.value = false;
-      }, 1500);
     }
   } catch (error) {
+    console.log(error);
     errorState.value = true;
     setTimeout(() => {
       errorState.value = false;
     }, 4000);
-    reloadPage();
+    // reloadPage();
   }
 }
 </script>
@@ -132,6 +125,9 @@ async function submitForm() {
   <div class="form-container">
     <div class="notification" v-if="errorState">
       <AlertMessageComponent message="An error occured. Try again!" />
+    </div>
+    <div class="notification" v-if="unauthorizedApplication">
+      <AlertMessageComponent message="Unauthorized Application!" />
     </div>
     <div class="logo">
       <img src="../assets/icons/enyatalogo.png" alt="" />
@@ -146,7 +142,20 @@ async function submitForm() {
       @submit.prevent="onSubmit"
     >
       <div class="loader">
-        <label class="uploader" for="cv">+Upload CV</label>
+        <span class="cvSelected" v-if="cv !== ''">
+          <label class="uploader" for="cv">+Upload CV</label>
+
+          <input
+            type="file"
+            id="cv"
+            @change="onFileChanged"
+            class="upload"
+            name="cv"
+            accept="application/pdf"
+          />
+        </span>
+
+        <label v-else class="uploader" for="cv">+Upload CV</label>
 
         <input
           type="file"
@@ -156,11 +165,24 @@ async function submitForm() {
           name="cv"
           accept="application/pdf"
         />
+
         <div v-if="startValidation && cv === ''" class="alert">Select File</div>
 
         <!-- <input type="file" id="file" name="cv" accept="application/pdf" /> -->
+        <span v-if="image !== ''" class="imageSelected">
+          <label class="uploader" for="image">+Upload Photo</label>
 
-        <label class="uploader" for="image">+Upload Photo</label>
+          <input
+            type="file"
+            id="image"
+            @change="onFileChanged"
+            class="upload"
+            name="image"
+            accept="image/png, image/jpeg, image/jpg"
+          />
+        </span>
+
+        <label v-else class="uploader" for="image">+Upload Photo</label>
 
         <input
           type="file"
@@ -170,6 +192,7 @@ async function submitForm() {
           name="image"
           accept="image/png, image/jpeg, image/jpg"
         />
+
         <div v-if="startValidation && image === ''" class="alert">Select an Image</div>
 
         <!-- <input type="file" id="file" name="image" accept="image/png, iamge/jpeg, image/jpg" /> -->
@@ -215,7 +238,7 @@ async function submitForm() {
       </div>
 
       <div>
-        <div class="btn-btn">
+        <div class="submitButton">
           <!-- <RouterLink to=><ButtonComponent @click="dashboard" buttonText="Submit" /></RouterLink> -->
           <ButtonComponent @click="submitForm" buttonText="Submit" />
         </div>
@@ -334,7 +357,7 @@ input placeholder {
   text-align: left;
 }
 
-.btn-btn {
+.submitButton {
   padding-top: 20px;
 }
 
@@ -350,5 +373,12 @@ input placeholder {
   color: red;
   text-decoration-line: none;
   font-style: none;
+}
+
+.cvSelected,
+.imageSelected {
+  border: solid rgb(24, 216, 24);
+  padding: 4px;
+  border-radius: 5px;
 }
 </style>
