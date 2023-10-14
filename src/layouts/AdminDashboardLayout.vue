@@ -11,7 +11,7 @@ const route = useRoute();
                     <img class="profile" src="@/assets/icons/adminprofile.svg" alt="profile picture" />
                     <div class="sideDetails">
                         <h1 class="profileName">Josh Doe</h1>
-                        <p mailto:class="profile-gmail">j.doe@enyata.com</p>
+                        <p class="profile-gmail">j.doe@enyata.com</p>
                     </div>
                 </div>
 
@@ -47,15 +47,17 @@ const route = useRoute();
                         <p class="link-text">Settings</p>
                     </RouterLink>
 
-                    <RouterLink class="links logout" :to="{ name: 'user' }">
+                    <!-- <RouterLink class="links logout" :to="{ name: 'user' }">
                         <div class="icons"><img src="@/assets/icons/logout.svg" alt="" /></div>
                         <p class="link-text">Log Out</p>
-                    </RouterLink>  
+                    </RouterLink>   -->
                 </div>
             </div>
         </div>
         <div class="rightContent">
+            <div class="view">
             <RouterView />
+        </div>
         </div>
     </div>
 </template>
@@ -63,22 +65,29 @@ const route = useRoute();
 
 <style scoped>
 .sideNavigation {
-
-    width: 305px;
+    width: 292px;
+    height: 100vh;
     font-family: 'Lato';
     background: #ffffff;
     border-radius: 8px;
     box-shadow: 0px 5px 15px rgba(33, 31, 38, 0.05);
+    overflow: hidden;
+}
+.sideNavigation:hover{
+    overflow-y: scroll;
 
 }
-
-.layout {
+.layout{
     display: grid;
-    grid-template-columns: max-content max-content;
+    grid-template-columns: 1fr 11fr;
+    width: 100vh;
 }
+
+
+
 
 .profileimg{
-    background-color: #7557D3;
+    background: #7557D3;
     height: 255px;
     display: flex;
     flex-direction: column;
@@ -87,20 +96,20 @@ const route = useRoute();
     align-items: center;
     color: #fff;
 }
-
-.profile {
+.view{
+    padding: 60px 47px;
+}
+.profile{
     width: 80px;
     border-radius: 80px;
     height: 80px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
 }
 
 .sideDetails {
     display: flex;
     flex-direction: column;
     justify-content: center;
+
     gap: 5px;
     align-items: center;
 }
@@ -117,7 +126,7 @@ const route = useRoute();
 
 .profile-gmail {
     color: #FFF;
-    font-family: Lato;
+    font-family: 'Lato';
     font-size: 16px;
     font-style: italic;
     font-weight: 400;
@@ -127,9 +136,8 @@ const route = useRoute();
 .sideNavbar-links {
     display: flex;
     flex-direction: column;
-    padding: 45px;
-    gap: 28px;
-
+    padding: 20px 0;
+    gap: 15px;
 }
 
 .links {
@@ -142,7 +150,7 @@ const route = useRoute();
     text-decoration: none;
     color: #2B3C4E;
     text-align: center;
-
+    padding: 15px;
     line-height: normal;
 }
 
@@ -151,12 +159,14 @@ const route = useRoute();
     width: 12px;
 }
 
-.logout {
-    margin-top: 100px;
-}
+/* .logout {
+    margin-top: 32px;
+} */
 
 .rightContent {
-    padding: 102px 47px;
+    height: 100vh;
+    width: calc(100vw - 292px);
+    overflow-y: scroll;
 }
 
 .active {
@@ -167,7 +177,5 @@ const route = useRoute();
     font-weight: 700;
     font-style: normal;
     border-left: 4px solid #7557D3;
-
 }
 </style>
-

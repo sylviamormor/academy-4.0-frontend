@@ -10,7 +10,7 @@
         </div>
         <form @submit.prevent="save()">
             <div class="img">
-                <img src="../assets/icons/propic.svg" alt="" srcset="" />
+                <img src="../assets/icons/account.svg" alt="" srcset="" />
                 <div class="formLabel">
                     <input class="fUpload" type="file" id="file" name="filename" />
                     <label class="fLabel" for="file"> Upload new image</label>
@@ -38,7 +38,7 @@
                 <div class="forms">
                     <div>
                         <label>Country</label>
-                        <input class="inputField" placeholder="Foun try" readonly/>
+                        <input class="inputField" placeholder="Country" readonly/>
                     </div>
                     <div>
                         <label>Address</label>

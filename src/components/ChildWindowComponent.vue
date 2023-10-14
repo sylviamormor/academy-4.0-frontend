@@ -2,19 +2,19 @@
 import DenyChildWindowComponent from './DenyChildWindowComponent.vue';
 import ApproveChildWindowComponent from './ApproveChildWindowComponent.vue';
 import { ref, computed } from "vue";
-const showDenyWindow = ref(false);
-const showApproveWindow = ref(false);
+const displayDenyWindow = ref(false);
+const displayApproveWindow = ref(false);
 </script>
 
 <template>
     <div class="Container">
-        <div class="approve" v-if="showApproveWindow" @closeModal="showApproveWindow = false">
+        <div class="approve" v-if="showApproveWindow" @closeModal="displayApproveWindow = false">
             <ApproveChildWindowComponent />
         </div>
-        <div class="deny" v-if="showDenyWindow" @closeModal="showDenyWindow = false">
+        <div class="deny" v-if="displayDenyWindow" @closeModal="displayDenyWindow = false">
             <DenyChildWindowComponent />
         </div>
-        <div  class="entries"  v-if="!showApproveWindow && !showDenyWindow" >
+        <div  class="entries"  v-if="!displayApproveWindow && !displayDenyWindow" >
             <div class="profilePic">
                 <img src="" alt="" />
             </div>

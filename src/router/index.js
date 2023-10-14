@@ -7,6 +7,7 @@ import UserDashboardView from "../views/users/UserDashboardView.vue"
 import QuestionView from "../views/users/QuestionView.vue"
 import SignUpView from "../views/SignUpView.vue";
 import LogInView from "../views/LogInView.vue";
+import ResultView from "../views/ResultView.vue";
 // admin
 import AdminDashboardLayout from "../layouts/AdminDashboardLayout.vue";
 import AdminLoginView from "../views/admin/AdminLoginView.vue";
@@ -46,6 +47,11 @@ const router = createRouter({
       path: "/LogIn",
       name: "LogIn",
       component: LogInView,
+    },
+    {
+      path: "/results",
+      name: "results",
+      component: ResultView,
     },
     /*
     * USER ROUTES
