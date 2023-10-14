@@ -1,7 +1,7 @@
 <script setup>
 import {ref, computed, onMounted} from 'vue';
-import ModalComponent from '../../components/ModalComponent.vue';
-import DashboardTitleComponent from '../../components/DashboardTitleComponent.vue';
+import ApproveChildWindowComponent from '../../components/ApproveChildWindowComponent.vue';
+import DashboardHeaderComponent from '../../components/DashboardHeaderComponent.vue';
 import axios from "axios";
 
 const openmodal = ref(false);
@@ -90,9 +90,9 @@ onMounted(async () => {
 
 <template>
  <div class="container">
-  <ModalComponent @close="closeModal" v-show="openmodal" class="main-modal" />
+  <ApproveChildWindowComponent @close="closeModal" v-show="openmodal" class="main-modal" />
   
-  <DashboardTitleComponent 
+  <DashboardHeaderComponent 
       cardTitle="Entries - Batch 1"
       cardText="Comprises of all that applied for batch 1"
   />
@@ -121,7 +121,7 @@ onMounted(async () => {
                 </tr>
             </thead>
             <tbody>
-                <tr class="rows" v-for="person in sortedPeople" :key="person.id" @click="openMainModal">
+                <tr class="t-rows" v-for="person in sortedPeople" :key="person.id" @click="openMainModal">
                     <td>{{ fullName(person.first_name, person.last_name) }}</td>
                     <td>{{ person.email }}</td>
                     <td>{{ person.date_of_birth }}</td>
@@ -137,7 +137,7 @@ onMounted(async () => {
 
 
 <style scoped>
-.main{
+.container{
     height: 100vh;
     padding: 60px 47px;
     overflow-y: scroll;
@@ -157,7 +157,7 @@ th{
     color: #fff;
     padding: 14px 10px;
 }
-.sorting{
+.sortItems{
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -173,7 +173,7 @@ img {
 tbody {
     border-radius: 8px 0px 0px 8px;
 }
-.row:hover {
+.t-row:hover {
     margin-top: 20px;
     background: #ffffff;
   box-shadow: 0px 5px 15px rgba(33, 31, 38, 0.05);

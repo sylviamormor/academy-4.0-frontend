@@ -1,5 +1,53 @@
 <script setup>
-import { RouterLink } from 'vue-router'
+import { ref } from 'vue';
+import { RouterLink, useRouter } from 'vue-router';
+import axios from 'axios';
+
+
+
+const router = useRouter();
+
+const linkValue = ref('')
+const closureDate = ref('')
+const batchId = ref('')
+const imageValue = ref('')
+const instructionsValue = ref("");
+
+
+
+async function makeApplication() {
+  try {
+    const token = localStorage.getItem("token");
+    const response = await axios.post(
+      "",
+      {
+        batch_id: batchId.value,
+        image_url: imageValue.value,
+        link: linkValue.value,
+        deadline: closureDate.value,
+        instructions: instructionsValue.value,
+      },
+      {
+        headers: {
+          authorization: token,
+        },
+      }
+    );
+    console.log("res", response);
+    const { batch_id, link, image_url, deadline, instructions } = response.data.data;
+    const appDetails = { batch_id, image_url, link, deadline, instructions };
+    localStorage.setItem("token", response.data.data.token);
+    localStorage.setItem("applicationDetails", JSON.stringify(appDetails));
+    // const adminDetails = JSON.parse(localStorage.getItem("adminDetails"))   when you want to get admin details
+    router.push({ name: "adminDashboard" });
+  }
+  catch (error) {
+    console.log(error);
+  }
+}
+
+
+
 </script>
 
 <template>
@@ -14,17 +62,17 @@ import { RouterLink } from 'vue-router'
                     </div>
                     <div class="form-group">
                         <label class="labels">Link</label>
-                        <input class="form-input"/>
+                        <input class="form-input" v-model="linkValue"/>
                         
                     </div>
                     <div class="form-group">
                         <label class="labels">Application closure date</label>
-                        <input class="form-input" type="text" placeholder="dd/mm/yyyy"/>
+                        <input class="form-input" type="text" v-model="closureDate" placeholder="dd/mm/yyyy"/>
         
                     </div>
                     <div class="form-group">
                         <label class="labels">Batch ID</label>
-                        <input class="form-input"/>
+                        <input class="form-input" v-model="batchId"/>
                     </div>
                 </div>
                 <div class="form-group box3">
@@ -37,14 +85,9 @@ import { RouterLink } from 'vue-router'
             
         </div>
 </template>
+ 
 
-<style scoped>
-.container{
-    display: flex;
-    flex-direction: column;
-    gap: 65px;
-    font-family: 'Lato';
-}
+<style scope>
 
 h2{
     font-family: Lato;
