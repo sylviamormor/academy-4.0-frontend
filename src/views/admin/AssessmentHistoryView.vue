@@ -1,12 +1,12 @@
 <script setup>
 import { ref, computed } from 'vue';
 import { useRouter } from 'vue-router'
-import DashboardHeaderComponent from '../components/DashboardHeaderComponent.vue';
+import DashboardHeaderComponent from '../../components/DashboardHeaderComponent.vue';
 const router = useRouter()
 const GroupedIndividuals = ref([
-  { id: 1, batch: '1', date: '12 dec 2020', question: '30', time: '30 mins', status: 'taken' },
-  { id: 2, batch: '1', date: '12 dec 2020', question: '30', time: '30 mins', status: 'taken' },
-  { id: 3, batch: '1', date: '12 dec 2020', question: '30', time: '30 mins', status: 'taken' },
+  { id: 1, batch: '1', date: '12 dec 2020', question: '30', time: '30 mins', status: 'Taken' },
+  { id: 2, batch: '2', date: '12 dec 2020', question: '30', time: '30 mins', status: 'Taken' },
+  { id: 3, batch: '3', date: '12 dec 2020', question: '30', time: '30 mins', status: 'Taken' },
 ]);
 </script>
 
@@ -25,7 +25,7 @@ const GroupedIndividuals = ref([
         </tr>
       </thead>
       <tbody>
-        <tr class="table-content" @click="router.push('assessment-result')">
+        <tr class="table-content" @click="router.push('assessmentResult')">
           <td>Batch 1</td>
           <td>12/07/23</td>
           <td>30</td>
