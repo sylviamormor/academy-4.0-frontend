@@ -26,7 +26,7 @@ const route = useRoute();
                         <p class="link-text">Create Application</p>
                     </RouterLink> 
 
-                    <!-- <RouterLink class="links" :to="{ name: 'applicationentries' }" active-class="active">
+                     <RouterLink class="links" :to="{ name: 'applicationentries' }" active-class="active">
                             <div class="icons"><img src="@/assets/icons/application.svg" alt="" /></div>
                             <p class="link-text">Application Entries</p>
                         </RouterLink>
@@ -50,7 +50,8 @@ const route = useRoute();
                      <RouterLink class="links logout" :to="{ name: 'user' }">
                         <div class="icons"><img src="@/assets/icons/logout.svg" alt="" /></div>
                         <p class="link-text">Log Out</p>
-                    </RouterLink> -->  
+                    </RouterLink>
+
                 </div>
             </div>
         </div>

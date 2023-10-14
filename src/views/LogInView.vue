@@ -23,6 +23,8 @@ function reloadPage() {
 async function logIn() {
   try {
     startValidation.value = true;
+    console.log("check password", checkPassword.value);
+    console.log("email", isEmailValid.value);
 
     if (isEmailValid.value && checkPassword.value) {
       const data = {
@@ -32,14 +34,9 @@ async function logIn() {
 
       const response = await applicantLogIn(data);
 
+      console.log(response);
       if (response.status === 200) {
-
-        const { firstname, lastname, email, token } = response.data.data;
-
-        const applicantDetails = { firstname, lastname, email };
-
-        localStorage.setItem("applicantDetails", JSON.stringify(applicantDetails));
-        localStorage.setItem("applicantToken", token);
+        console.log(response);
 
         logInState.value = true;
 
@@ -49,11 +46,12 @@ async function logIn() {
 
         router.push("application");
       }
+
     } else {
       emptyFields.value = true;
       setTimeout(() => {
         emptyFields.value = false;
-      }, 1500);
+      }, 1000);
     }
   } catch (error) {
     errorState.value = true;
@@ -61,6 +59,8 @@ async function logIn() {
       errorState.value = false;
     }, 4000);
     reloadPage();
+    console.log(error);
+    // console.log(response);
     // return response;
     // //if(response){}
   }
@@ -78,6 +78,8 @@ const checkPassword = computed(() => {
       /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})/.test(password.value)
     : null;
 });
+
+
 </script>
 
 <template>
@@ -126,7 +128,7 @@ const checkPassword = computed(() => {
 </template>
 
 <style scoped>
-.notification {
+.notification{
   display: flex;
   justify-content: center;
   align-items: center;

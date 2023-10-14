@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 import axios from 'axios';
-import DashboardTitleComponent from '../../components/DashboardTitleComponent.vue';
+import DashboardHeaderComponent from '../../components/DashboardHeaderComponent.vue';
 
 
 const questionTemplate = {
@@ -75,7 +75,7 @@ const correctAns = (value) => {
 
 <template>
     <div class="container">
-        <DashboardTitleComponent cardTitle="Compose Assessment" />
+        <DashboardHeaderComponent cardTitle="Compose Assessment" />
         <form @submit.prevent="">
             <label class="form-label">{{ index + 1 }}/30</label>
 
