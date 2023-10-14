@@ -103,7 +103,7 @@ const checkPassword = computed(() => {
       </div>
       <div class="page">
         <label for="">Password</label>
-        <input type="pa" class="password" v-model="password" />
+        <input type="password" class="password" v-model="password" />
         <img src="src/assets/icons/eye.svg" alt="" class="eye" />
       </div>
       <div class="button" @click="signIn">

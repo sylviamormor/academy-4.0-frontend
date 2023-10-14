@@ -103,7 +103,7 @@ const checkPassword = computed(() => {
         </div>
         <div class="sectionInput">
           <label for="input">Password</label>
-          <input type="text" class="input-field" v-model="password" />
+          <input type="password" class="input-field" v-model="password" />
           <span v-if="startValidation && !checkPassword && password !== ''" class="alert">
             Password must have a number, uppercase and <br />
             lowecase letters and special characters</span

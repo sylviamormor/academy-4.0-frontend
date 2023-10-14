@@ -92,7 +92,10 @@ async function submitForm() {
         university: university.value,
         course: course.value,
         cgpa: cgpa.value,
+        image: image.value,
+        cv: cv.value,
       };
+      console.log("application view",data);
 
       const response = await submitApplication(data, token);
 
