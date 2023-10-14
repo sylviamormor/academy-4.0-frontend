@@ -7,7 +7,7 @@ import UserDashboardView from "../views/users/UserDashboardView.vue"
 import QuestionView from "../views/users/QuestionView.vue"
 import SignUpView from "../views/SignUpView.vue";
 import LogInView from "../views/LogInView.vue";
-import ResultView from "../views/ResultView.vue";
+// import ResultView from "../views/ResultView.vue";
 import ResultView from "../views/ResultView.vue"
 // admin
 import AdminDashboardLayout from "../layouts/AdminDashboardLayout.vue";
