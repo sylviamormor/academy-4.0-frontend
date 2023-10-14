@@ -31,17 +31,17 @@ const changeTab = (tab) => {
                     </div>
 
                     <div class="aboutSection">
-                        <!-- single item -->
+                        
                         <div  v-show="activeTab === 'profile'">
                             <ApplicantProfileComponent />
                         </div>
 
-                        <!-- end of single item -->
-                        <!-- single item -->
+                       
+                       
                         <div class="content" v-show="activeTab === 'timer'">
                             <TimerComponent />
                         </div>
-                        <!-- end of single item -->
+                       
                     </div>
                 </article>
             </div>
