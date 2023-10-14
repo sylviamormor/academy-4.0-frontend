@@ -206,13 +206,13 @@ input {
     display: flex;
     flex-direction: column;
     gap: 20px;
-    /* width: 100%; */
+    /* width: 100%;  */
 }
 
 .form-control {
     border: 1.5px solid #2b3c4e;
     height: 41px;
-    /* width: 456px; */
+    width: 456px; 
     border-radius: 4px;
 
 }
@@ -226,7 +226,7 @@ input {
 
 .text-area {
     height: 144px;
-    /* width: 976px; */
+    /* / width: 976px; / */
     border: 1.5px solid #2b3c4e;
     border-radius: 4px;
     resize: none;

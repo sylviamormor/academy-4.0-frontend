@@ -1,17 +1,16 @@
 ==========================
 <script setup>
 import { RouterLink } from 'vue-router';
-// import DashboardDetailComponent from '../components/DashboardDetailComponent.vue';
 
 </script>
 
 <template>
     <div class="container">
         <div class="head">
-            <!-- <DashboardDetailComponent /> -->
+          
             <div class="assess">
             <h2>Take Assessment </h2>
-            <p>Thamk you</p>
+            <p>Thank you</p>
         </div>
 
             <div class="timer">

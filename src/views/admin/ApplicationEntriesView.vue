@@ -24,11 +24,11 @@ const closeModal = () => {
     openmodal.value = false;
 };
 
-// const people = ref([
-//     { id: 1, name: 'jack jack', age: 12, email: 'jack@mail.com', address: '21 adom str.', university: 'University of Lagos', cgpa: 2.54 },
-//     { id: 2, name: 'Bongo', age: 13, email: 'bongo@mail.com', address: '21 adom str.', university: 'University of Lagos', cgpa: 3.54 },
-//     { id: 3, name: 'congo', age: 14, email: 'congo@mail.com', address: '21 adom str.', university: 'University of Lagos', cgpa: 3.24 },
-// ]);
+const people = ref([
+    { id: 1, name: 'jack jack', age: 12, email: 'jack@mail.com', address: '21 adom str.', university: 'University of Lagos', cgpa: 2.54 },
+    { id: 2, name: 'Bongo', age: 13, email: 'bongo@mail.com', address: '21 adom str.', university: 'University of Lagos', cgpa: 3.54 },
+    { id: 3, name: 'congo', age: 14, email: 'congo@mail.com', address: '21 adom str.', university: 'University of Lagos', cgpa: 3.24 },
+]);
 
 const sortedPeople = computed(() => {
     return [...people.value].sort((a, b) => a.age - b.age || a.cgpa - b.cgpa);
@@ -48,7 +48,7 @@ const cgpaDescending = () => {
     people.value.sort((a, b) => b.cgpa - a.cgpa);
 };
 
-const people = ref([])
+// const people = ref([])
 
 /*
 * methods
@@ -102,26 +102,26 @@ onMounted(async () => {
                 <tr>
                     <th>Name</th>
                     <th>Email</th>
-                    <th class="sorting">
+                    <th class="sortItems">
                         DOB - Age
                         <div class="icons">
-                            <button class="btn" @click="ageAscending"><img src="../../assets/icons/sortup.svg" alt="sortup" srcset=""></button>
-                            <button class="btn" @click="ageDescending"><img src="../../assets/icons/sortdown.svg" alt="sortdown" srcset=""></button>
+                            <img @click="ageAscending" src="../../assets/icons/sortingUp.svg" alt="sortup" srcset="">
+                            <img @click="ageDescending" src="../../assets/icons/sortingDown.svg" alt="sortdown" srcset="">
                         </div>
                     </th>
                     <th>Address</th>
                     <th>University</th>
-                    <th class="sorting">
+                    <th class="sortItems">
                         CGPA
                         <div class="icons">
-                            <button class="btn" @click="cgpaAscending"><img src="../../assets/icons/sortup.svg" alt="sortup" srcset=""></button>
-                            <button class="btn" @click="cgpaDescending"><img src="../../assets/icons/sortdown.svg" alt="sortdown" srcset=""></button>
+                            <img @click="cgpaAscending" src="../../assets/icons/sortingUp.svg" alt="sortup" srcset="">
+                            <img @click="cgpaDescending" src="../../assets/icons/sortingDown.svg" alt="sortdown" srcset="">
                         </div>
                     </th>
                 </tr>
             </thead>
             <tbody>
-                <tr class="t-row" v-for="person in sortedPeople" :key="person.id" @click="openMainModal">
+                <tr class="rows" v-for="person in sortedPeople" :key="person.id" @click="openMainModal">
                     <td>{{ fullName(person.first_name, person.last_name) }}</td>
                     <td>{{ person.email }}</td>
                     <td>{{ person.date_of_birth }}</td>
@@ -137,7 +137,7 @@ onMounted(async () => {
 
 
 <style scoped>
-.container{
+.main{
     height: 100vh;
     padding: 60px 47px;
     overflow-y: scroll;
@@ -173,7 +173,7 @@ img {
 tbody {
     border-radius: 8px 0px 0px 8px;
 }
-.t-row:hover {
+.row:hover {
     margin-top: 20px;
     background: #ffffff;
   box-shadow: 0px 5px 15px rgba(33, 31, 38, 0.05);
@@ -194,9 +194,11 @@ td{
     border: #7557D3 1px solid;
 }
 img {
+    cursor: pointer;
 }
 
-.main-modal {
+
+.mainWindow {
   position: absolute;
 }
 

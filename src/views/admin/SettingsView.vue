@@ -30,12 +30,12 @@ const changeTab = (tab) => {
                         <div class="content" v-show="activeTab === 'profile'">
                             <ProfileComponent />
                         </div>
-                        <!-- end of single item -->
-                        <!-- single item -->
+                       
+                       
                         <div class="content" v-show="activeTab === 'timer'">
                             <TimerComponent />
                         </div>
-                        <!-- end of single item -->
+                       
                     </div>
                 </article>
             </div>

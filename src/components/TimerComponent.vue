@@ -5,11 +5,11 @@ const selectedSeconds = ref('');
 
 const selectedTime = ref(null);
 const countries = ref([
-  { name: 'USA' },
+  { name: 'Germany' },
   { name: 'Canada' },
   { name: 'Australia' },
   { name: 'United Kingdom' },
-  { name: 'Germany' },
+  { name:  'South Africa'},
 ]);
 </script>
 
@@ -50,7 +50,7 @@ const countries = ref([
         </form>
 
         <div>
-            <label class="datalist-table" for="countries"></label>
+            <label class="datalist" for="countries"></label>
         <input list="countryList" type="text" id="countries" placeholder="00" name="countries" v-model="selectedTime" />
 
         <datalist id="countryList">
@@ -64,14 +64,14 @@ const countries = ref([
 
 
 <style scoped>
-.datalist-table{
+.datalist{
     /* border: 10px black solid; */
     padding: 10px;
 }
 #countries{
     display: none;
 }
-.timing {
+.time {
     /* width: 50px; */
     border: none;
     /* font-size: 100px; */
@@ -161,7 +161,7 @@ option {
 
 .minute::after,
 .seconds::after {
-    content: url("@/assets/entries-logo.svg");
+    /* content: url("@/assets/entries-logo.svg"); */
     justify-self: end;
 }
 

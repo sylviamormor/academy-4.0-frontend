@@ -1,4 +1,4 @@
-<script setup>
+ <script setup>
 
 
 </script>
@@ -6,7 +6,7 @@
 
 
 
-<template>
+ <template>
 <div class="dash">
     <h2>Dashboard</h2>
     <div class="main">
@@ -312,4 +312,5 @@ text-align: center;
   justify-content: center;
 }
 
-</style>
+</style> -->
+ -->

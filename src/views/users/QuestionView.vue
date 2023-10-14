@@ -26,40 +26,40 @@ const questions = {
             <div class="timer">
                 <h3 class="heading">Timer</h3>
                 <h4 class="time">
-                    <span class="hour">00</span><span class="minutes">mins</span>
-                    <span class="seconds">000</span><span class="minutes">sec</span>
+                    <span class="hour">00</span><span class="mins">mins</span>
+                    <span class="secs">000</span><span class="mins">sec</span>
                 </h4>
             </div>
         </div>
         <div class="cards">
-            <div class="question-containter">
+            <div class="questions">
                 <div>
                   <p>Question 1</p>
-                  <h5>How old are you?</h5>
-                  <div class="checkboxes">
+                  <h5>Which program are you interested in?</h5>
+                  <div class="checkbox">
                     <label>
                       <input
                         value="alphabet"
                         type="radio"
                         name="answers"
                       />
-                      <span> I am 15yrs</span>
+                      <span>UI/UX Design</span>
                     </label>
                   </div>
                 </div>
               </div>
               <div class="bottom">
                 <button
-                  class="preview-button"
+                  class="preview"
                   disabled
                   @click="previous()"
                 >
                   Previous
                 </button>
-                <button class="next-button" @click="next()">Next</button>
+                <button class="nextBtn" @click="next()">Next</button>
               </div>
               <button
-                class="finish-button"
+                class="finishButton"
                 @click="stop(); finish();"
               >
                 Finish
@@ -101,7 +101,7 @@ h5 {
     font-weight: 300;
 }
 
-.minutes {
+.mins {
     color: #4F4F4F;
     font-family: 'Lato';
     font-size: 12px;
@@ -116,7 +116,7 @@ h5 {
     margin: 100px;
     gap: 21px;
 }
-.question-containter,
+.questions,
 .checkboxes{
     text-align: center;
     padding: 0 30px;
@@ -126,7 +126,7 @@ h5 {
     justify-content: space-between;
     
 }
-.next-button {
+.nextBtn {
   height: 41px;
   width: 125px;
   left: 1110px;
@@ -137,7 +137,7 @@ h5 {
   border: none;
   cursor: pointer;
 }
-.preview-button {
+.preview {
   border: 1px solid rgba(0, 0, 0, 0.25);
   border-radius: 4px;
   height: 41px;
@@ -147,7 +147,7 @@ h5 {
   border-radius: 4px;
   cursor: pointer;
 }
-.finish-button {
+.finishButton {
   height: 41px;
   width: 205px;
   background: #cecece;
@@ -158,7 +158,7 @@ h5 {
   color: white;
   cursor: pointer;
 }
-.checkboxes input[type="radio"] {
+.checkbox input[type="radio"] {
   cursor: pointer;
   appearance: none;
   height: 10px;
@@ -181,11 +181,11 @@ label {
   text-align: left;
 }
 
-.checkboxes label {
+.checkbox label {
   cursor: pointer;
   margin-bottom: 37px;
 }
-.checkboxes {
+.checkbox {
   display: flex;
   flex-direction: column;
   justify-content: center;
