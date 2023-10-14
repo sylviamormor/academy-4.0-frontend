@@ -89,8 +89,8 @@ onMounted(async () => {
 </script>
 
 <template>
- <div class="container">
-  <ChildWindowComponent v-show="openmodal" class="main-modal" />
+ <div class="main">
+  <ChildWindowComponent v-show="openmodal" class="mainWindow" />
   
   <DashboardHeaderComponent 
       cardTitle="Entries - Batch 1"
@@ -102,7 +102,7 @@ onMounted(async () => {
                 <tr>
                     <th>Name</th>
                     <th>Email</th>
-                    <th class="sorting">
+                    <th class="sortItems">
                         DOB - Age
                         <div class="icons">
                             <img @click="ageAscending" src="../../assets/icons/sortingUp.svg" alt="sortup" srcset="">
@@ -111,7 +111,7 @@ onMounted(async () => {
                     </th>
                     <th>Address</th>
                     <th>University</th>
-                    <th class="sorting">
+                    <th class="sortItems">
                         CGPA
                         <div class="icons">
                             <img @click="cgpaAscending" src="../../assets/icons/sortingUp.svg" alt="sortup" srcset="">
@@ -121,7 +121,7 @@ onMounted(async () => {
                 </tr>
             </thead>
             <tbody>
-                <tr class="t-row" v-for="person in sortedPeople" :key="person.id" @click="openMainModal">
+                <tr class="rows" v-for="person in sortedPeople" :key="person.id" @click="openMainModal">
                     <td>{{ fullName(person.first_name, person.last_name) }}</td>
                     <td>{{ person.email }}</td>
                     <td>{{ person.date_of_birth }}</td>
@@ -137,7 +137,7 @@ onMounted(async () => {
 
 
 <style scoped>
-.container{
+.main{
     height: 100vh;
     padding: 60px 47px;
     overflow-y: scroll;
@@ -173,7 +173,7 @@ img {
 tbody {
     border-radius: 8px 0px 0px 8px;
 }
-.t-row:hover {
+.row:hover {
     margin-top: 20px;
     background: #ffffff;
   box-shadow: 0px 5px 15px rgba(33, 31, 38, 0.05);
@@ -198,7 +198,7 @@ img {
 }
 
 
-.main-modal {
+.mainWindow {
   position: absolute;
 }
 

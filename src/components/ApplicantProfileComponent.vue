@@ -42,7 +42,7 @@
                     </div>
                     <div>
                         <label>Address</label>
-                        <input class="inputAddress" placeholder="address" readonly />
+                        <input class="inputAddress" placeholder="Address" readonly />
                     </div>
                 </div>
             </div>

@@ -2,13 +2,15 @@
 import DenyChildWindowComponent from './DenyChildWindowComponent.vue';
 import ApproveChildWindowComponent from './ApproveChildWindowComponent.vue';
 import { ref, computed } from "vue";
+
+
 const displayDenyWindow = ref(false);
 const displayApproveWindow = ref(false);
 </script>
 
 <template>
     <div class="Container">
-        <div class="approve" v-if="showApproveWindow" @closeModal="displayApproveWindow = false">
+        <div class="approve" v-if="displayApproveWindow" @closeModal="displayApproveWindow = false">
             <ApproveChildWindowComponent />
         </div>
         <div class="deny" v-if="displayDenyWindow" @closeModal="displayDenyWindow = false">
@@ -40,7 +42,7 @@ const displayApproveWindow = ref(false);
                     </div>
                     <div class="forms">
                         <label for="">Email</label>
-                        <input mailto:placeholder="ify@enyata.com" value="applicant.emailAddress" type="text" readonly />
+                        <input placeholder="ify@enyata.com" value="applicant.emailAddress" type="text" readonly />
                     </div>
     
                     <div class="forms">
@@ -62,11 +64,11 @@ const displayApproveWindow = ref(false);
                 
                 <div class="buttons">
                     
-                    <button class="approveButton" @click="showApproveModal = true">
+                    <button class="approveButton" @click="displayApproveWindow = true">
                         Approve
                     </button>
 
-                    <button class="denyButton" @click="showDeclineModal = true">
+                    <button class="denyButton" @click="displayDenyWindow= true">
                         Decline
                     </button>
                 </div>
