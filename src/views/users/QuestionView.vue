@@ -2,29 +2,29 @@
 import DashboardHeaderComponent from '../../components/DashboardHeaderComponent.vue';
 
 
-const samplequestions = {
-    name: "Who is your hero?",
+const questions = {
+    name: "how old are you",
     solve: {
-        q1: "how are you",
-        q2: "what is yur pet's name",
-        q3: "who took a break",
-        q4: "what is your favorite food"
+        q1: "hey there",
+        q2: "i am here",
+        q3: "appuuu",
+        q4: "apppppp"
     }
 }
 
 </script>
 
 <template>
-    <div class="main">
-        <div class="header">
+    <div class="container">
+        <div class="head">
             <DashboardHeaderComponent 
             cardTitle="Take Assessment" 
             cardText="Click the finish button below to submit assessment, 
             you can go back at any time to edit your answers." 
             />
 
-            <div class="timeCheck">
-                <h3 class="title">Timer</h3>
+            <div class="timer">
+                <h3 class="heading">Timer</h3>
                 <h4 class="time">
                     <span class="hour">00</span><span class="mins">mins</span>
                     <span class="secs">000</span><span class="mins">sec</span>
@@ -68,12 +68,12 @@ const samplequestions = {
     </div>
 </template>
 <style scoped>
-.header {
+.head {
     display: flex;
     justify-content: space-between;
 }
 
-.title {
+.heading {
     color: #4F4F4F;
     font-family: 'Lato';
     font-size: 14px;

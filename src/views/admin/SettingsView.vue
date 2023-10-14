@@ -1,9 +1,8 @@
 <script setup>
 import { ref } from 'vue';
-import DashboardHeaderComponent from '../../components/DashboardHeaderComponent.vue';
-import ApplicantProfileComponent from '../../components/ApplicantProfileComponent.vue'
+import DashboardHeaderComponent from '../components/DashboardHeaderComponent.vue';
+import ProfileComponent from '../../components/ProfileComponent.vue'
 import TimerComponent from '../../components/TimerComponent.vue';
-
 const activeTab = ref('profile');
 const changeTab = (tab) => {
     activeTab.value = tab;
@@ -11,31 +10,26 @@ const changeTab = (tab) => {
 </script>
 
 <template>
-    <div class="main">
-
-        <div class="sectionOne">
-            <DashboardHeaderComponent cardTitle="Profiles and Settings" cardText="Helps you set admin profile and give other users permissions"/>
+    <div class="container">
+        <div class="section">
+            <DashboardTitleComponent cardTitle="Profiles and Settings" cardText="Helps you set admin profile and give other users permissions"/>
 
 
             <div class="about-center section-center">
                 <article class="about">
+                    <!-- btn section -->
 
-                    
-
-                    <div class="button">
-                        <button class="tabButton" :class="{ active: activeTab === 'profile' }"
+                    <div class="btn-section">
+                        <button class="tab-btn" :class="{ active: activeTab === 'profile' }"
                             @click="changeTab('profile')">Admin Profile</button>
-
-                        <button class="tabButton" :class="{ active: activeTab === 'timer' }"
+                        <button class="tab-btn" :class="{ active: activeTab === 'timer' }"
                             @click="changeTab('timer')">Timer Settings</button>
                     </div>
-
-                    <div class="aboutSection">
-                        
-                        <div  v-show="activeTab === 'profile'">
-                            <ApplicantProfileComponent />
+                    <div class="about-content">
+                        <!-- single item -->
+                        <div class="content" v-show="activeTab === 'profile'">
+                            <ProfileComponent />
                         </div>
-
                        
                        
                         <div class="content" v-show="activeTab === 'timer'">
@@ -52,19 +46,19 @@ const changeTab = (tab) => {
 
 
 <style scoped>
-.main{
+.container{
     padding: 60px 47px;
     height: 100vh;
     /* overflow-y: scroll; */
 }
-.sectionOne{
+.section{
     display: flex;
     flex-direction: column;
     gap: 47px;
     max-width: 763px;
     
 }
-    .tabButton{
+    .tab-btn{
         color: #333758;
         font-family: 'Lato';
         font-size: 14px;
