@@ -47,10 +47,10 @@ const route = useRoute();
                         <p class="link-text">Settings</p>
                     </RouterLink>
 
-                    <!-- <RouterLink class="links logout" :to="{ name: 'user' }">
+                     <RouterLink class="links logout" :to="{ name: 'user' }">
                         <div class="icons"><img src="@/assets/icons/logout.svg" alt="" /></div>
                         <p class="link-text">Log Out</p>
-                    </RouterLink> -->  -->
+                    </RouterLink> -->  
                 </div>
             </div>
         </div>
