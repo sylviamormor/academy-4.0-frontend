@@ -137,7 +137,7 @@ onMounted(async () => {
 
 
 <style scoped>
-.main{
+.container{
     height: 100vh;
     padding: 60px 47px;
     overflow-y: scroll;
