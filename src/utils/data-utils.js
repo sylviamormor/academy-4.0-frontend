@@ -48,13 +48,14 @@ const submitApplication = async (data, token) => {
       "Content-Type": "multipart/form-data",
     };
 
-    const response = await axios.post(`http://localhost:7000/api/v1/apply/upload`, data, {
+    const response = await axios.post(`${baseUrl}apply/upload`, data, {
       headers,
     });
 
     return response;
   } catch (error) {
     console.log(error.message);
+    console.log(error.request.responseText);
   }
 };
 

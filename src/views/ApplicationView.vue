@@ -5,6 +5,7 @@ import { submitApplication } from "../utils/data-utils";
 import { reloadPage } from "../utils/pageReload";
 import ButtonComponent from "../components/ButtonComponent.vue";
 import AlertMessageComponent from "../components/AlertMessageComponent.vue";
+import LoadingComponent from "../components/LoadingComponent.vue";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
@@ -19,6 +20,7 @@ const errorState = ref(false);
 const emptyFields = ref(false);
 const unauthorizedApplication = ref(false);
 const invalidSelectedFiles = ref(false);
+const loading = ref(false);
 
 const firstName = ref(firstname);
 const lastName = ref(lastname);
@@ -33,6 +35,7 @@ const cgpa = ref("");
 const cv = ref("");
 const image = ref("");
 
+// TODO: fix date of birth validators
 function isDateFormatValid(date) {
   const pattern = /\d{1,2}[/]\d{1,2}[/]\d{4}/;
   return pattern.test(date);
@@ -46,8 +49,8 @@ function isDateValid(date) {
   const month = parseInt(splitDate[1], 10);
   const year = parseInt(splitDate[2], 10);
 
-  if (day > 0 && day < 32) {
-    if (month > 1 && month < 13) {
+  if (day !== 0 && day < 32) {
+    if (month !== 0 && month < 13) {
       if (year <= currentYear) {
         return true;
       }
@@ -55,6 +58,8 @@ function isDateValid(date) {
   }
   return false;
 }
+
+
 
 const onFileChanged = (event) => {
   const imageExtensions = ["image/png", "image/jpeg", "image/jpg"];
@@ -87,6 +92,9 @@ async function submitForm() {
 
     if (checkValidDate.value && checkCgpa.value && dob && university && course && cgpa && token) {
       const data = {
+        firstname: firstName.value,
+        lastname: lastName.value,
+        email: applicantEmail.value,
         dob: dob.value,
         address: address.value,
         university: university.value,
@@ -95,23 +103,24 @@ async function submitForm() {
         image: image.value,
         cv: cv.value,
       };
-      console.log("application view",data);
 
+      loading.value = true;
       const response = await submitApplication(data, token);
-
       if (response.status === 201) {
+        loading.value = false;
         router.push("dashboard");
-      } else if (response.status === 401) {
+      } else {
+        loading.value = false;
         unauthorizedApplication.value = true;
         setTimeout(() => {
           unauthorizedApplication.value = false;
         }, 2000);
-      } else {
-        emptyFields.value = true;
-        setTimeout(() => {
-          emptyFields.value = false;
-        }, 1500);
       }
+    } else {
+      emptyFields.value = true;
+      setTimeout(() => {
+        emptyFields.value = false;
+      }, 1500);
     }
   } catch (error) {
     console.log(error);
@@ -119,7 +128,7 @@ async function submitForm() {
     setTimeout(() => {
       errorState.value = false;
     }, 4000);
-    // reloadPage();
+    reloadPage();
   }
 }
 </script>
@@ -217,7 +226,7 @@ async function submitForm() {
           <input type="text" id="course" v-model="course" required />
           <div v-if="startValidation && course === ''" class="alert">Enter the course of study</div>
         </div>
-
+        <LoadingComponent v-if="loading" />
         <div>
           <label for="last name">Lastname</label>
           <input type="text" id="last" v-model="lastName" readonly />

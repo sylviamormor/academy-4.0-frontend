@@ -37,7 +37,7 @@ async function signIn() {
 
         const adminDetails = { firstname, lastname, email };
 
-        console.log(adminDetails);
+       
 
         localStorage.setItem("adminDetails", JSON.stringify(adminDetails));
         localStorage.setItem("adminToken", token);
