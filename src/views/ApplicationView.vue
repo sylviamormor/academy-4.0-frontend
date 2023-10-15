@@ -1,142 +1,95 @@
 <script setup>
-import { ref, computed} from "vue";
-import axios from "axios";
+import { ref, computed } from "vue";
+import moment from "moment";
+import { submitApplication } from "../utils/data-utils";
+import { reloadPage } from "../utils/pageReload";
 import ButtonComponent from "../components/ButtonComponent.vue";
+import AlertMessageComponent from "../components/AlertMessageComponent.vue";
+import LoadingComponent from "../components/LoadingComponent.vue";
+import { useRouter } from "vue-router";
 
-const firstName = ref("");
-const lastName = ref("");
-const email = ref("");
-const dateOfBirth = ref("");
+const router = useRouter();
+
+const applicantInfo = localStorage.getItem("applicantDetails");
+const { firstname, lastname, email } = JSON.parse(applicantInfo);
+
+const token = localStorage.getItem("applicantToken");
+
+const startValidation = ref(false);
+const errorState = ref(false);
+const emptyFields = ref(false);
+const unauthorizedApplication = ref(false);
+const invalidSelectedFiles = ref(false);
+const loading = ref(false);
+
+const firstName = ref(firstname);
+const lastName = ref(lastname);
+const applicantEmail = ref(email);
+
+// dob date of birth
+const dob = ref("");
 const address = ref("");
 const university = ref("");
 const course = ref("");
 const cgpa = ref("");
 const cv = ref("");
-const photo = ref("");
+const image = ref("");
 
-// Assuming you have these error refs defined somewhere in your code
-// const firstNameError = ref("");
-// const lastNameError = ref("");
-// const emailError = ref("");
-// const dobError = ref("");
-// const addressError = ref("");
-// const universityError = ref("");
-// const courseError = ref("");
-// const gpaError = ref("");
-// const cvError = ref(null);
-// const photoError = ref(null);
+// TODO: fix date of birth validators
+function isDateFormatValid(date) {
+  const pattern = /\d{1,2}[/]\d{1,2}[/]\d{4}/;
+  return pattern.test(date);
+}
 
-// const clearError = (key) => {
-//   // Use an object to map keys to error refs
-//   const errorRefs = {
-//     firstNameValue: firstNameError,
-//     lastNameValue: lastNameError,
-//     emailValue: emailError,
-//     dateOfBirthValue: dobError,
-//     addressValue: addressError,
-//     universityValue: universityError,
-//     courseValue: courseError,
-//     cgpaValue: gpaError,
-//     cvValue: cvError,
-//     photoValue: photoError,
-//   };
+function isDateValid(date) {
+  const currentYear = moment().year();
 
-//   // Check if the key exists in the errorRefs object
-//   if (errorRefs[key] !== undefined) {
-//     // Clear the corresponding error value
-//     errorRefs[key].value = null; // Assuming you want to set errors to null
-//   } else {
-//     // Handle the case where the key is not found
-//     console.error(`Error: Unknown key '${key}'`);
-//   }
-// };
+  const splitDate = date.split("/");
+  const day = parseInt(splitDate[0], 10);
+  const month = parseInt(splitDate[1], 10);
+  const year = parseInt(splitDate[2], 10);
+
+  if (day !== 0 && day < 32) {
+    if (month !== 0 && month < 13) {
+      if (year <= currentYear) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
 
 
-// const applicant = async () => {
-//   try {
-//     // Get the token from localStorage
-//     const token = localStorage.getItem("token");
 
-//     // Define the data to be sent in the POST request
-//     const postData = {
-//       first_Name: firstNameValue.value,
-//       last_Name: lastNameValue.value,
-//       cv_url: cvValue.value,
-//       image_url: photoValue.value,
-//       email: emailValue.value,
-//       date_of_birth: dateOfBirthValue.value,
-//       address: addressValue.value,
-//       university: universityValue.value,
-//       course: courseValue.value,
-//       CGPA: cgpaValue.value,
-//     };
+const onFileChanged = (event) => {
+  const imageExtensions = ["image/png", "image/jpeg", "image/jpg"];
+  const fileUpload = event.target.files[0];
+  const fileExtension = fileUpload.type;
 
-//     // Create FormData for multipart/form-data content type
-//     const formData = new FormData();
-//     for (const key in postData) {
-//       formData.append(key, postData[key]);
-//     }
+  if (fileExtension === "application/pdf") {
+    cv.value = fileUpload.name;
+  } else if (imageExtensions.includes(fileExtension)) {
+    image.value = fileUpload.name;
+  } else {
+    invalidSelectedFiles.value = true;
+  }
+};
 
-//     // Make the POST request using axios
-//     const response = await axios.post(
-//       "http://localhost:6001/api/v1/application/create",
-//       formData,
-//       {
-//         headers: {
-//           authorization: token,
-//           "Content-Type": "multipart/form-data",
-//         },
-//       }
-//     );
+// address, course of study, university cannot be empty
+// cgpa must be numbers
 
-//     // Log the response to the console
-//     console.log("res", response);
+const checkValidDate = computed(() => {
+  return startValidation.value ? isDateFormatValid(dob.value) && isDateValid(dob.value) : null;
+});
 
-//     // Extract relevant data from the response
-//     const {
-//       first_Name,
-//       last_Name,
-//       cv_url,
-//       image_url,
-//       email,
-//       date_of_birth,
-//       address,
-//       university,
-//       course,
-//       cgpa,
-//       status,
-//       id,
-//       user_id,
-//     } = response.data.data;
+const checkCgpa = computed(() => {
+  return startValidation.value ? typeof parseFloat(cgpa) === "number" : null;
+});
 
-//     // Create an object with the extracted data
-//     const userDetails = {
-//       first_Name,
-//       last_Name,
-//       cv_url,
-//       image_url,
-//       email,
-//       date_of_birth,
-//       address,
-//       university,
-//       course,
-//       cgpa,
-//       status,
-//       id,
-//       user_id,
-//     };
+async function submitForm() {
+  try {
+    startValidation.value = true;
 
-//     // Save user details to localStorage
-//     localStorage.setItem("userApplicationDetails", JSON.stringify(userDetails));
-//     localStorage.setItem("userDetails", JSON.stringify(userDetails));
-
-//     // Redirect to the dashboard route
-//     router.push({ name: "dashboard" });
-//   } catch (error) {
-//     // Log any errors to the console
-//     console.log(error);
-//   }
-// };
     if (checkValidDate.value && checkCgpa.value && dob && university && course && cgpa && token) {
       const data = {
         firstname: firstName.value,
@@ -151,42 +104,6 @@ const photo = ref("");
         cv: cv.value,
       };
 
-
-//  const applicantDetails = ref(false);
-
-//  async function submit() {
-//   try {
-//      applicantDetails.value = true;
-//      console.log("firstName", isFirstNameValid.value);
-//      console.log("lastName", isLastNameValid.value)
-//      console.log("email", isEmailValid.value);
-//      console.log("dateOfBirth", isDateOfBirthValid.value);
-//      console.log("address", isAddressValid.value);
-//      console.log("university", iskUniversityValid.value);
-//      console.log('course', isCourseValid.value);
-//      console.log('cgpa', isCgpaValid.value);
-//       console.log("cv", checkCv.value);
-//       console.log("photo", checkPhoto.value);
-//   };
-  
-      
-
-
-// upload files
-// const fileUpload = ref({
-//     cv: { accept:'file_extention',
-//       label: 'Upload CV'},
-//       photo: {
-//         accept:'jpg',
-//         label: 'Upload Photo'
-//       }
-// })
-// for catching errors
-// const onSubmit = () => {
-//   if (!userInfo.value === "") {
-//     alert("this field is required");
-//   }
-// };
       loading.value = true;
       const response = await submitApplication(data, token);
       if (response.status === 201) {
@@ -211,7 +128,7 @@ const photo = ref("");
     setTimeout(() => {
       errorState.value = false;
     }, 4000);
-    reloadPage();
+    // reloadPage();
   }
 }
 </script>
@@ -228,57 +145,122 @@ const photo = ref("");
       <img src="../assets/icons/enyatalogo.png" alt="" />
       <h2>Application Form</h2>
     </div>
-    <div class="main">
-      <div class="loader">
-        <label class="uploader" for="file">+Upload CV</label>
-        <input type="file" id="file" class="upload" />
-        <label class="uploader" for="file">+Upload Photo</label>
-        <input type="file" id="file" class="upload" />
-      </div>
-      <!-- <div class="uploader">
-         <div v-for ="(input,index) in fileUpload" :key="index">
-            <input class="upload" type="file" :id="index"
-            :name="index"
-            :accept="input.accept">
-            
-        </div> 
-    </div> -->
 
-      <form class="form" @submit.prevent="onSubmit">
+    <form
+      method="post"
+      action="/apply/upload"
+      enctype="multipart/form-data"
+      class="form"
+      @submit.prevent="onSubmit"
+    >
+      <div class="loader">
+        <span class="cvSelected" v-if="cv !== ''">
+          <label class="uploader" for="cv">+Upload CV</label>
+
+          <input
+            type="file"
+            id="cv"
+            @change="onFileChanged"
+            class="upload"
+            name="cv"
+            accept="application/pdf"
+          />
+        </span>
+
+        <label v-else class="uploader" for="cv">+Upload CV</label>
+
+        <input
+          type="file"
+          id="cv"
+          @change="onFileChanged"
+          class="upload"
+          name="cv"
+          accept="application/pdf"
+        />
+
+        <div v-if="startValidation && cv === ''" class="alert">Select File</div>
+
+        <!-- <input type="file" id="file" name="cv" accept="application/pdf" /> -->
+        <span v-if="image !== ''" class="imageSelected">
+          <label class="uploader" for="image">+Upload Photo</label>
+
+          <input
+            type="file"
+            id="image"
+            @change="onFileChanged"
+            class="upload"
+            name="image"
+            accept="image/png, image/jpeg, image/jpg"
+          />
+        </span>
+
+        <label v-else class="uploader" for="image">+Upload Photo</label>
+
+        <input
+          type="file"
+          id="image"
+          @change="onFileChanged"
+          class="upload"
+          name="image"
+          accept="image/png, image/jpeg, image/jpg"
+        />
+
+        <div v-if="startValidation && image === ''" class="alert">Select an Image</div>
+
+        <!-- <input type="file" id="file" name="image" accept="image/png, iamge/jpeg, image/jpg" /> -->
+      </div>
+      <div v-if="startValidation && invalidSelectedFiles" class="alert">Invalid File Format!</div>
+
+      <div class="formInput">
         <div>
           <label for="first Name">First Name</label>
-          <input type="text" id="first" v-model="firstName" required />
+          <input type="text" id="first" v-model="firstName" readonly />
           <label for="email">Email</label>
-          <input type="text" id="email" v-model="email" required />
+          <input type="text" id="email" v-model="applicantEmail" readonly />
+
           <label for="address">Address</label>
           <input type="text" id="address" v-model="address" required />
+          <div v-if="startValidation && address === ''" class="alert">Enter an Address</div>
+
           <label for="course">Course Of Study</label>
           <input type="text" id="course" v-model="course" required />
+          <div v-if="startValidation && course === ''" class="alert">Enter the course of study</div>
         </div>
+        <LoadingComponent v-if="loading" />
         <div>
           <label for="last name">Lastname</label>
-          <input type="text" id="last" v-model="lastName" required />
+          <input type="text" id="last" v-model="lastName" readonly />
+
           <label for="date of birth">Date of Birth</label>
-          <input type="text" id="date" v-model="dateOfBirth" placeholder="dd/mm/yyyy" required />
+          <input type="text" id="date" v-model="dob" placeholder="dd/mm/yyyy" required />
+          <div v-if="startValidation && !checkValidDate" class="alert">
+            Enter a valid Date of Birth
+          </div>
+
           <label for="university">University</label>
           <input type="text" id="uni" v-model="university" required />
+          <div v-if="startValidation && university === ''" class="alert">
+            Enter a valid university name
+          </div>
+
           <label for="CGPA">CGPA</label>
           <input type="text" id="CGPA" v-model="cgpa" required />
+          <div v-if="startValidation && !checkCgpa && cgpa === ''" class="alert">Enter a cgpa</div>
         </div>
-      </form>
-    </div>
-    <div>
-      <div class="btn-btn">
-        <RouterLink  to="dashboard"
-        ><ButtonComponent buttonText="Submit"
-      /></RouterLink>
       </div>
-     
-      <!-- <div class="subText">Already have an account? <a id="sigIn" href="#">Sign In</a></div> -->
-      <!-- <div class="subText">
-        Already have an account? <RouterLink id="signIn" to="dashboard">Sign In</RouterLink>
-      </div> -->
-    </div>
+
+      <div>
+        <div class="submitButton">
+          <!-- <RouterLink to=><ButtonComponent @click="dashboard" buttonText="Submit" /></RouterLink> -->
+          <ButtonComponent @click="submitForm" buttonText="Submit" />
+        </div>
+
+        <!-- <div class="subText">Already have an account? <a id="sigIn" href="#">Sign In</a></div> -->
+        <div class="subText">
+          Already have an account? <RouterLink id="signIn" to="SignUp">Sign In</RouterLink>
+        </div>
+      </div>
+    </form>
   </div>
 </template>
 
@@ -286,23 +268,31 @@ const photo = ref("");
 .main {
   background-color: #ffffff;
 }
-
-.loader {
+.notification {
   display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.form-container {
+  display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+.loader {
+  display: flex;
   gap: 32px;
 }
 
 .upload {
   display: none;
-  /* flex-direction: column;  */
-  /* justify-content: center;
-    align-items: center;
-    padding: 10px;
-    gap: 30px;
-    border-radius: 6px;
-    border: 1px dashed black; */
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  gap: 30px;
+  border-radius: 6px;
+  border: 1px dashed black;
 }
 
 .uploader {
@@ -323,37 +313,25 @@ left: 494px */
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 40px 0 60px 0;
+  padding: 20px 0 40px 0;
 }
 
-.form-container {
-  display: flex;
-  flex-direction: column;
-  /* width: 100%;
-    height: 100vh;  */
-  /* display:flex; */
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto;
-  /* padding-top: 100px; */
-  /* background-color: aquamarine; */
-}
 .form {
   display: flex;
+  flex-direction: column;
+
   align-items: center;
   justify-content: center;
-  /* width: 963px;
-height: 643px;
-top: 275px;
-left: 239px; */
   border-radius: 8px;
 
-  gap: 73px;
-  /* padding-top: 100px; */
+  gap: 30px;
   margin: 0 auto;
-  /* width: 700px;  */
-  /* border-radius: 40px; */
-  /* flex-direction: column; */
+}
+
+.formInput {
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
 }
 
 label {
@@ -378,18 +356,11 @@ input {
 left: 300px */
   border-radius: 4px;
   border: 1.5px solid #2b3c4e;
-
-  /* box-sizing: border-box; */
-  /* width: 379px;  */
-  /* height: 48px; */
-  /* border-radius: 4px;
-border: 1.5px ; */
   color: #2b3c4e;
 }
 
 input placeholder {
   color: #cecece;
-  /* font-family: Lato; */
   font-size: 10px;
   font-style: italic;
   font-weight: 400;
@@ -399,29 +370,27 @@ input placeholder {
 }
 
 .submitButton {
-  padding-top: 50px;
-  /* display: inline-block;
-  justify-content: center;
-  align-items: center;
-  margin-top: 43px; */
-  /* width: 50px;
-  height: 50px;
-  color: #ffffff; */
-  /* top: 829px
-left: 524px */
-text-decoration: none;
+  padding-top: 20px;
 }
 
-btn-2{
-  color: #ffffff;
+.subText {
+  padding: 15px;
+  text-align: center;
 }
 
-.subText{
-    padding: 30px;
-    text-align: center;
+#signIn {
+  color: black;
+}
+.alert {
+  color: red;
+  text-decoration-line: none;
+  font-style: none;
 }
 
-#signIn{
-    color: black;
+.cvSelected,
+.imageSelected {
+  border: solid rgb(24, 216, 24);
+  padding: 4px;
+  border-radius: 5px;
 }
 </style>
