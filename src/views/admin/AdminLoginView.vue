@@ -49,7 +49,7 @@ async function signIn() {
     }
   } catch (error) {
     // console.log(error);
-    //reloadPage();
+    reloadPage();
     // return response;
     // //if(response){}
   }

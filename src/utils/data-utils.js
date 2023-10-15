@@ -12,7 +12,7 @@ const baseUrl = "http://localhost:7000/api/v1/";
 //   });
 //   return axiosInstance;
 // };
-
+// TODO remove this instance
 const applicantSignup = async (data) => {
   try {
     const response = await axios
@@ -68,7 +68,18 @@ const adminSignIn = async (data) => {
   }
 };
 
-export { applicantSignup, applicantLogIn, submitApplication, adminSignIn };
+// fetch admin data
+const fetchAdminData = async (endpoint) => {
+  try {
+    const response = await axios.get(`${baseUrl}admin/${endpoint}`);
+    return response;
+  } catch (error) {
+    return error;
+  }
+};
+
+
+export { applicantSignup, applicantLogIn, submitApplication, adminSignIn, fetchAdminData };
 
 //   update(id, data) {
 //     return http.put(`/admin/${id}`, data);
