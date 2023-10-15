@@ -1,6 +1,6 @@
 <script setup>
-import { RouterLink, useRoute, RouterView } from 'vue-router';
-const route = useRoute();
+import { RouterLink, useRoute, RouterView } from "vue-router";
+// const route = useRoute();
 </script>
 
 <template>
@@ -21,11 +21,11 @@ const route = useRoute();
             <p class="link-text">Dashboard</p>
           </RouterLink>
 
-           <RouterLink class="links" :to="{ name: 'assessment' }" active-class="active">
+          <RouterLink class="links" :to="{ name: 'assessment' }" active-class="active">
             <div class="icons"><img src="../assets/icons/note.svg" alt="" /></div>
             <p class="link-text">Assessment</p>
-          </RouterLink> 
-<!-- 
+          </RouterLink>
+          <!-- 
             <RouterLink class="links logout" :to="{ name: 'user' }">
             <div class="icons"><img src="../assets/icons/logout.svg" alt="" /></div>
             <p class="link-text">Log Out</p>
@@ -34,6 +34,7 @@ const route = useRoute();
       </div>
     </div>
     <div class="rightContent">
+      
       <RouterView />
     </div>
   </div>
@@ -41,24 +42,19 @@ const route = useRoute();
 
 <style scoped>
 .sideNavigation {
-  
   width: 292px;
   height: 100vh;
-  font-family: 'Lato';
+  font-family: "Lato";
   background: #ffffff;
   border-radius: 8px;
   box-shadow: 0px 5px 15px rgba(33, 31, 38, 0.05);
-  
 }
-.layoutPart {
+/* .layoutPart {
   display: flex;
-}
-
-
-
+} */
 
 .profilePart {
-  background: #7557D3;
+  background: #7557d3;
   height: 255px;
   display: flex;
   flex-direction: column;
@@ -78,15 +74,15 @@ const route = useRoute();
   display: flex;
   flex-direction: column;
   justify-content: center;
-  
+
   gap: 5px;
   align-items: center;
 }
 
 .profile-name {
-  font-family: 'Lato';
-  
-  color: #FFF;
+  font-family: "Lato";
+
+  color: #fff;
   font-size: 20px;
   font-style: normal;
   font-weight: 700;
@@ -94,7 +90,7 @@ const route = useRoute();
 }
 
 .profile-gmail {
-  color: #FFF;
+  color: #fff;
   font-family: Lato;
   font-size: 16px;
   font-style: italic;
@@ -108,11 +104,11 @@ const route = useRoute();
   padding: 45px;
   gap: 28px;
 }
-.layout{
+.layout {
   display: flex;
 }
 .sidenav {
-  font-family: 'Lato';
+  font-family: "Lato";
   width: 292px;
   height: 100vh;
   background: #ffffff;
@@ -120,78 +116,77 @@ const route = useRoute();
   border-radius: 8px;
 }
 
-
 .profile {
-    background: #7557D3;
-    height: 255px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 13px;
-    color: #fff;
+  background: #7557d3;
+  height: 255px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 13px;
+  color: #fff;
 }
 
 .profile-img {
-    border-radius: 80px;
-    width: 80px;
-    height: 80px;
+  border-radius: 80px;
+  width: 80px;
+  height: 80px;
 }
 
 .details {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
 }
 
 .profile-name {
-    color: #FFF;
-    font-family: 'Lato';
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 700;
-    letter-spacing: -0.4px;
+  color: #fff;
+  font-family: "Lato";
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: -0.4px;
 }
 
 .profile-mail {
-    color: #FFF;
-    font-family: Lato;
-    font-size: 16px;
-    font-style: italic;
-    font-weight: 400;
-    letter-spacing: -0.32px;
+  color: #fff;
+  font-family: Lato;
+  font-size: 16px;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.32px;
 }
-.sidenav-links{
-    display: flex;
-    flex-direction: column;
-    gap: 28px;
-    padding: 45px;
+.sidenav-links {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  padding: 45px;
 }
 
 .links {
   display: flex;
   gap: 21px;
   align-items: center;
-  font-family: 'Lato';
+  font-family: "Lato";
   font-size: 16px;
   font-weight: 400;
   text-decoration: none;
-  color: #2B3C4E;
+  color: #2b3c4e;
   text-align: center;
-  
+
   text-decoration: none;
-  color: #2B3C4E;
+  color: #2b3c4e;
   text-align: center;
-  font-family: 'Lato';
+  font-family: "Lato";
   font-size: 16px;
   font-weight: 400;
   line-height: normal;
 }
 
 .icons {
- height: 15.789px;
+  height: 15.789px;
   width: 12px;
   width: 12px;
   height: 15.789px;
@@ -201,27 +196,26 @@ const route = useRoute();
   margin-top: 32px;
 }
 .rightContent {
-  padding: 102px 47px;
-} 
+  padding: 50px;
+}
 .active {
-  font-family: 'Lato';
+  font-family: "Lato";
   font-size: 16px;
-  color: #2B3C4E;
+  color: #2b3c4e;
   text-align: center;
   font-weight: 700;
   font-style: normal;
- 
 }
 
-.active{
-    color: #2B3C4E;
-    text-align: center;
-    font-family: 'Lato';
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 700;
+.active {
+  color: #2b3c4e;
+  text-align: center;
+  font-family: "Lato";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
 }
-.rightContent{
+/* .rightContent{
   padding: 102px 47px;
-}
+} */
 </style>
