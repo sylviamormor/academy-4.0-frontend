@@ -35,6 +35,23 @@ const cgpa = ref("");
 const cv = ref("");
 const image = ref("");
 
+const onFileChanged = (event) => {
+  const imageExtensions = ["image/png", "image/jpeg", "image/jpg"];
+  const fileUpload = event.target.files[0];
+  const fileExtension = fileUpload.type;
+
+  if (fileExtension === "application/pdf") {
+    cv.value = fileUpload.name;
+  } else if (imageExtensions.includes(fileExtension)) {
+    image.value = fileUpload.name;
+  } else {
+    invalidSelectedFiles.value = true;
+  }
+};
+
+// address, course of study, university cannot be empty
+// cgpa must be numbers
+
 // TODO: fix date of birth validators
 function isDateFormatValid(date) {
   const pattern = /\d{1,2}[/]\d{1,2}[/]\d{4}/;
@@ -59,25 +76,6 @@ function isDateValid(date) {
   return false;
 }
 
-
-
-const onFileChanged = (event) => {
-  const imageExtensions = ["image/png", "image/jpeg", "image/jpg"];
-  const fileUpload = event.target.files[0];
-  const fileExtension = fileUpload.type;
-
-  if (fileExtension === "application/pdf") {
-    cv.value = fileUpload.name;
-  } else if (imageExtensions.includes(fileExtension)) {
-    image.value = fileUpload.name;
-  } else {
-    invalidSelectedFiles.value = true;
-  }
-};
-
-// address, course of study, university cannot be empty
-// cgpa must be numbers
-
 const checkValidDate = computed(() => {
   return startValidation.value ? isDateFormatValid(dob.value) && isDateValid(dob.value) : null;
 });
@@ -91,21 +89,32 @@ async function submitForm() {
     startValidation.value = true;
 
     if (checkValidDate.value && checkCgpa.value && dob && university && course && cgpa && token) {
-      const data = {
-        firstname: firstName.value,
-        lastname: lastName.value,
-        email: applicantEmail.value,
-        dob: dob.value,
-        address: address.value,
-        university: university.value,
-        course: course.value,
-        cgpa: cgpa.value,
-        image: image.value,
-        cv: cv.value,
+
+      const applicantData = {
+        "firstname": firstName.value,
+        "lastname": lastName.value,
+        "email": applicantEmail.value,
+        "dob": dob.value,
+        "address": address.value,
+        "university": university.value,
+        "course": course.value,
+        "cgpa": cgpa.value,
+        // "image": image.value,
+        // "cv": cv.value,
       };
 
+      const formData = new FormData();
+
+
+      formData.append("image", image.value);
+      formData.append("cv", cv.value);
+
+      for (const [key, value] of Object.entries(applicantData)) {
+        formData.append(key, value);
+      }
+
       loading.value = true;
-      const response = await submitApplication(data, token);
+      const response = await submitApplication(formData, token);
       if (response.status === 201) {
         loading.value = false;
         router.push("dashboard");
@@ -123,12 +132,11 @@ async function submitForm() {
       }, 1500);
     }
   } catch (error) {
-    console.log(error);
     errorState.value = true;
     setTimeout(() => {
       errorState.value = false;
     }, 4000);
-    // reloadPage();
+    reloadPage();
   }
 }
 </script>
