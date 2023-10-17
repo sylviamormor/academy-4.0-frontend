@@ -30,7 +30,7 @@ async function signIn() {
       };
 
       const response = await adminSignIn(data);
-      console.log(response.status);
+
       if (response.status === 200) {
         const { firstname, lastname, email, token } = response.data.data;
 
@@ -50,8 +50,6 @@ async function signIn() {
   } catch (error) {
     // console.log(error);
     reloadPage();
-    // return response;
-    // //if(response){}
   }
 }
 

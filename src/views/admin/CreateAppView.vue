@@ -33,7 +33,7 @@ async function makeApplication() {
         },
       }
     );
-    console.log("res", response);
+
     const { batch_id, link, image_url, deadline, instructions } = response.data.data;
     const appDetails = { batch_id, image_url, link, deadline, instructions };
     localStorage.setItem("token", response.data.data.token);
