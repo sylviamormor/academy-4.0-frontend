@@ -6,6 +6,8 @@ import { applicantLogIn } from "../utils/data-utils";
 // import axios from "axios";
 import { useRouter } from "vue-router";
 
+import { reloadPage } from "../utils/pageReload";
+
 const router = useRouter();
 
 const email = ref("");
@@ -16,9 +18,17 @@ const errorState = ref(false);
 const emptyFields = ref(false);
 const logInState = ref(false);
 
-function reloadPage() {
-  window.location.reload();
-}
+
+const passwordFieldType = ref("password");
+
+const visiblePassword = ref(false);
+
+
+
+const  changeVisibility = () =>
+  (passwordFieldType.value = passwordFieldType.value === "password" ? "text" : "password");
+
+
 
 async function logIn() {
   try {
@@ -100,7 +110,12 @@ const checkPassword = computed(() => {
         </div>
         <div class="sectionInput">
           <label for="input">Password</label>
-          <input type="password" class="input-field" v-model="password" />
+          <div class="password-input-field">
+            <input :type="passwordFieldType" class="password-field" v-model="password" />
+            <v-icon v-if="visiblePassword" name="fa-regular-eye-slash" @click="changeVisibility" />
+            <v-icon v-if="!visiblePassword" name="fa-regular-eye" @click="changeVisibility" />
+          </div>
+
           <span v-if="startValidation && !checkPassword && password !== ''" class="alert">
             Password must have a number, uppercase and <br />
             lowecase letters and special characters</span
@@ -237,5 +252,22 @@ input {
   color: red;
   text-decoration-line: none;
   font-style: none;
+}
+
+.password-input-field{
+  display: flex;
+  align-items: center;
+  border-radius: 4px;
+  border: 1.5px solid #bdbdbd;
+  width: 379px;
+  height: 48px;
+  flex-shrink: 0;
+
+}
+.password-field{
+  border: none;
+  outline: none;
+  height: 20px;
+  width: 320px;
 }
 </style>

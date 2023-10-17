@@ -89,7 +89,7 @@ async function getAllApplicants() {
       headers: { authorization: token },
     });
     setPeople(response.data.data);
-    console.log(response);
+
   } catch (error) {
     console.log(error);
   }
@@ -164,7 +164,7 @@ onMounted(async () => {
       </thead>
       <tbody>
         <tr class="t-rows" v-for="person in sortedPeople" :key="person.id" @click="openMainModal">
-          <td>{{ fullName(person.first_name, person.last_name) }}</td>
+          <td>{{ person.name }}</td>
           <td>{{ person.email }}</td>
           <td>{{ person.date_of_birth }}</td>
           <td>{{ person.address }}</td>

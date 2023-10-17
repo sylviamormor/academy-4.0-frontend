@@ -8,18 +8,6 @@ import { useRouter } from "vue-router";
 
 const router = useRouter();
 
-// const http = axios.create({
-//   baseURL: "http://localhost:7000/api/v1",
-//   headers: {
-//     "Content-type": "application/json",
-//   },
-// });
-
-// const applicantSignup = async (data) => {
-//   const response = await http.post("/apply", data);
-//   return response;
-// };
-
 const firstName = ref("");
 const lastName = ref("");
 const email = ref("");
@@ -27,50 +15,31 @@ const password = ref("");
 const phoneNumber = ref("");
 const confirmPassword = ref("");
 
-// const firstName = ref("ama");
-// const lastName = ref("ghana");
-// const email = ref("ama@gmail.com");
-// const password = ref("kofiGhana001@");
-// const phoneNumber = ref("0000000000");
-// const confirmPassword = ref("kofiGhana001@");
-
-//TODO form validators component
-// sign up
-// log in
-// application
 
 const existingAccount = ref(false);
 const signUpState = ref(false);
 const errorSignUpState = ref(false);
 const errorState = ref(false);
-
 const startValidation = ref(false);
+
+const passwordFieldType = ref("password");
+
+const visiblePassword = ref(false);
+
+
+
+const  changeVisibility = () =>
+  (passwordFieldType.value = passwordFieldType.value === "password" ? "text" : "password");
+
 
 function reloadPage() {
   window.location.reload();
-}
-// const applicantSignup = async (data) => {
-//   const response = await axios
-//     .create({
-//   baseURL: "http://localhost:7000/api/v1/",
-//   headers: {
-//     "Content-type": "application/json",
-//   },
-// }).post("apply/signup", data);
-// console.log(response)
-//   // this.$router.push("LogIn");
-//   return response;
-// };
+};
+
 
 async function submit() {
   try {
     startValidation.value = true;
-    console.log("email", isEmailValid.value);
-    console.log("firstname", checkFirstName.value);
-    console.log("lastname", checkLastName.value);
-    console.log("check password", checkPassword.value);
-    console.log("password confirmed", isPasswordConfirmed.value);
-    console.log("email", isEmailValid.value);
 
     if (
       isEmailValid.value &&
@@ -86,18 +55,11 @@ async function submit() {
         lastname: lastName.value,
         password: password.value,
         phonenumber: phoneNumber.value,
-        // email: "ama1@gmail.com",
-        // firstname: "ama",
-        // lastname: "ghana",
-        // password: "kofiGhana001@",
-        // phonenumber: "0000000000",
       };
 
       const response = await applicantSignup(data);
-      console.log(response);
-      if (response.status === 201) {
 
-        console.log(response);
+      if (response.status === 201) {
 
         signUpState.value = true;
 
@@ -117,8 +79,6 @@ async function submit() {
         }, 4000);
 
         reloadPage();
-
-        console.log(response);
       }
     } else {
       errorSignUpState.value = true;
@@ -133,10 +93,8 @@ async function submit() {
       errorState.value = false;
     }, 4000);
     reloadPage();
-    console.log(error);
-    // console.log(response);
-    // return response;
-    // //if(response){}
+    // console.log(error);
+
   }
 }
 const isEmailValid = computed(() => {
@@ -148,7 +106,8 @@ const isEmailValid = computed(() => {
 const checkPassword = computed(() => {
   return startValidation.value
     ? // ? /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})/.test(password.value)
-      /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})/.test(password.value)
+      /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})/.test(password.value) &&
+        password.value.length > 7
     : null;
 });
 
@@ -177,36 +136,6 @@ const checkLastName = computed(() => {
   return startValidation.value ? /\d/.test(lastName.value) : null;
 });
 
-// const applicantSignup = async () => {
-//   const data = {
-//     "email": "student@gmail.com",
-//     "firstname": "student",
-//     "lastname": "traveller",
-//     "password": "thetraveller?",
-//     "phonenumber": "00000000000"
-//   }
-//   const response = await axios
-//     .create({
-//   baseURL: "http://localhost:7000/api/v1/",
-//   headers: {
-//     "Content-type": "application/json",
-//   },
-// }).post("apply/signup", data);
-// console.log(response)
-//   this.$router.push("LogIn");
-//   return response;
-// };
-
-//   applicantSignup
-//     .create()
-//     .then((response) => {
-//       dbResponse.value = response.data;
-//       console.log(response.data);
-//     })
-//     .catch((e) => {
-//       console.log(e);
-//     });
-// }
 </script>
 
 <template>
@@ -260,19 +189,28 @@ const checkLastName = computed(() => {
       <div class="Options">
         <div class="sectionInput">
           <label for="input">Password</label>
-
-          <input class="input-field" v-model="password" />
+          <div class="password-input-field">
+            <input :type="passwordFieldType" class="password-field"  v-model="password" />
+            <v-icon v-if="visiblePassword" name="fa-regular-eye-slash" @click="changeVisibility" />
+            <v-icon v-if="!visiblePassword" name="fa-regular-eye" @click="changeVisibility" />
+          </div>
 
           <span v-if="startValidation && !checkPassword && password !== ''" class="alert">
             Password must have a number, uppercase and <br />
-            lowecase letters and special characters</span
+            lowecase letters and special characters<br />
+            it must not be less than seven characters</span
           >
           <!-- <span @click="togglePasswordVisibility"><font-awesome-icon :icon="faEye" /></span> -->
         </div>
 
         <div class="sectionInput">
           <label for="input">Confirm Password</label>
-          <input class="input-field" v-model="confirmPassword" />
+          <div class="password-input-field">
+            <input :type="passwordFieldType" class="password-field"  v-model="confirmPassword" />
+            <v-icon v-if="visiblePassword" name="fa-regular-eye-slash" @click="changeVisibility" />
+            <v-icon v-if="!visiblePassword" name="fa-regular-eye" @click="changeVisibility" />
+          </div>
+          <!-- <input type="password" class="input-field" v-model="confirmPassword" /> -->
           <span
             v-if="startValidation && !isPasswordConfirmed && confirmPassword !== ''"
             class="alert"
@@ -434,5 +372,22 @@ input {
   color: red;
   text-decoration-line: none;
   font-style: none;
+}
+
+.password-input-field{
+  display: flex;
+  align-items: center;
+  border-radius: 4px;
+  border: 1.5px solid #bdbdbd;
+  width: 379px;
+  height: 48px;
+  flex-shrink: 0;
+
+}
+.password-field{
+  border: none;
+  outline: none;
+  height: 20px;
+  width: 320px;
 }
 </style>

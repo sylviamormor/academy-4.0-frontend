@@ -1,6 +1,5 @@
 <script setup>
 import { ref, computed } from "vue";
-import moment from "moment";
 import { submitApplication } from "../utils/data-utils";
 import { reloadPage } from "../utils/pageReload";
 import ButtonComponent from "../components/ButtonComponent.vue";
@@ -25,25 +24,33 @@ const loading = ref(false);
 const firstName = ref(firstname);
 const lastName = ref(lastname);
 const applicantEmail = ref(email);
-
 // dob date of birth
 const dob = ref("");
 const address = ref("");
 const university = ref("");
 const course = ref("");
 const cgpa = ref("");
+
+
 const cv = ref("");
 const image = ref("");
 
+const file = ref("");
+const cvFile = ref("");
+const imageFile = ref("");
+
 const onFileChanged = (event) => {
   const imageExtensions = ["image/png", "image/jpeg", "image/jpg"];
-  const fileUpload = event.target.files[0];
-  const fileExtension = fileUpload.type;
+  file.value = event.target.files[0];
+  const fileExtension = file.value.type;
+
 
   if (fileExtension === "application/pdf") {
-    cv.value = fileUpload.name;
+    cv.value = file.value.name;
+    cvFile.value = file.value;
   } else if (imageExtensions.includes(fileExtension)) {
-    image.value = fileUpload.name;
+    image.value = file.value.name;
+    imageFile.value = file.value;
   } else {
     invalidSelectedFiles.value = true;
   }
@@ -59,7 +66,8 @@ function isDateFormatValid(date) {
 }
 
 function isDateValid(date) {
-  const currentYear = moment().year();
+  const getDate = new Date();
+  let currentYear = getDate.getFullYear();
 
   const splitDate = date.split("/");
   const day = parseInt(splitDate[0], 10);
@@ -99,15 +107,13 @@ async function submitForm() {
         "university": university.value,
         "course": course.value,
         "cgpa": cgpa.value,
-        // "image": image.value,
-        // "cv": cv.value,
       };
 
       const formData = new FormData();
 
 
-      formData.append("image", image.value);
-      formData.append("cv", cv.value);
+      formData.append("image", imageFile.value, image.value);
+      formData.append("cv", cvFile.value, cv.value);
 
       for (const [key, value] of Object.entries(applicantData)) {
         formData.append(key, value);
@@ -115,6 +121,7 @@ async function submitForm() {
 
       loading.value = true;
       const response = await submitApplication(formData, token);
+
       if (response.status === 201) {
         loading.value = false;
         router.push("dashboard");
@@ -132,11 +139,12 @@ async function submitForm() {
       }, 1500);
     }
   } catch (error) {
+    // console.log(error);
     errorState.value = true;
     setTimeout(() => {
       errorState.value = false;
     }, 4000);
-    reloadPage();
+    // reloadPage();
   }
 }
 </script>
@@ -321,7 +329,7 @@ left: 494px */
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 20px 0 40px 0;
+  padding: 20px 0px 0px 0px;
 }
 
 .form {
